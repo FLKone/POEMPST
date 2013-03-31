@@ -120,5 +120,7 @@ Classes/Config.h
 
 
 # xcode noise
+*.xcodeproj/*.xcworkspace/xcuserdata/*.xcuserdatad/*
+*.xcodeproj/*.xcworkspace/*
 *.xcodeproj/*.xcworkspace/*
 *.xcodeproj/*.perspectivev3

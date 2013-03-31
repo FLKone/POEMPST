@@ -31,6 +31,7 @@
 		CAA1EF151707EC5D002BF206 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF0C1707EC5D002BF206 /* UIImageView+AFNetworking.m */; };
 		CAA1EF201707EE76002BF206 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA1EF1F1707EE76002BF206 /* MobileCoreServices.framework */; };
 		CAA1EF241707EED1002BF206 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA1EF231707EED1002BF206 /* SystemConfiguration.framework */; };
+		CAA1EF281707F2FF002BF206 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF271707F2FF002BF206 /* RegexKitLite.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +74,8 @@
 		CAA1EF211707EEC3002BF206 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ViewController_iPhone.xib; sourceTree = "<group>"; };
 		CAA1EF221707EEC3002BF206 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
 		CAA1EF231707EED1002BF206 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		CAA1EF261707F2FF002BF206 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
+		CAA1EF271707F2FF002BF206 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +164,7 @@
 		CAA1EEF81707EBA6002BF206 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				CAA1EF251707F2FF002BF206 /* RegexKitLite */,
 				CAA1EEF91707EC5D002BF206 /* AFNetworking */,
 			);
 			name = Vendor;
@@ -191,6 +195,16 @@
 			);
 			name = AFNetworking;
 			path = vendor/AFNetworking;
+			sourceTree = "<group>";
+		};
+		CAA1EF251707F2FF002BF206 /* RegexKitLite */ = {
+			isa = PBXGroup;
+			children = (
+				CAA1EF261707F2FF002BF206 /* RegexKitLite.h */,
+				CAA1EF271707F2FF002BF206 /* RegexKitLite.m */,
+			);
+			name = RegexKitLite;
+			path = vendor/RegexKitLite;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,6 +288,7 @@
 				CAA1EF131707EC5D002BF206 /* AFURLConnectionOperation.m in Sources */,
 				CAA1EF141707EC5D002BF206 /* AFXMLRequestOperation.m in Sources */,
 				CAA1EF151707EC5D002BF206 /* UIImageView+AFNetworking.m in Sources */,
+				CAA1EF281707F2FF002BF206 /* RegexKitLite.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,6 +425,7 @@
 				CAA1EEF41707E5AF002BF206 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

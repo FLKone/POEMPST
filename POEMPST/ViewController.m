@@ -33,6 +33,9 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 
+    static int minX = 0, minY = 0;
+    static int maxX = 0, maxY = 0;
+    
     NSURL *clientURL = [[NSBundle mainBundle] URLForResource:@"passive-skill-tree" withExtension:@"html"];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:clientURL];
@@ -58,11 +61,128 @@
         //JSONDecoder* decoder = [[JSONDecoder alloc]
         //                        initWithParseOptions:JKParseOptionNone];
         
-        NSArray* json = [JSData objectFromJSONString];
+        NSDictionary* json = [JSData objectFromJSONString];
         
-        //NSLog(@"%@", [json valueForKey:@"assets"]);
+        //NSLog(@"%@", [json valueForKey:@"groups"]);
+        NSLog(@"TOTAL %d", [[json valueForKey:@"groups"] count]);
+        
+        NSMutableDictionary *nodes = [[NSMutableDictionary alloc] init];
+        
+        for (NSDictionary *node in [json valueForKey:@"nodes"]) {
+            
+            NSLog(@"nodes %@", [node objectForKey:@"dn"]);
+
+            
+            [nodes setValue:node forKey:[node valueForKey:@"id"]];
+            break;
+        }
+        
+        NSLog(@"nodes %@", nodes);
+
+        for (NSNumber *key2 in nodes) {
+            
+            NSLog(@"key2 %@", key2);
+            NSLog(@"key2 %@", [nodes objectForKey:key2]);
+
+            
+        }
+        
+        NSLog(@"27271 %@", [[nodes objectForKey:[NSNumber numberWithInt:27271]] valueForKey:@"dn"]);
 
         
+        for (NSString *key in [json valueForKey:@"groups"]) {
+            //NSLog(@"%@", key);
+            
+            NSArray *node = [[json valueForKey:@"groups"] objectForKey:key];
+            
+            //NSLog(@"%d", [[node valueForKey:@"x"] integerValue]);
+
+            // MIN
+            if (minX > [[node valueForKey:@"x"] integerValue]) {
+                minX = [[node valueForKey:@"x"] integerValue];
+            }
+
+            
+            if (minY > [[node valueForKey:@"y"] integerValue]) {
+                minY = [[node valueForKey:@"y"] integerValue];
+            }
+
+            
+            //MAX
+            if (maxX < [[node valueForKey:@"x"] integerValue]) {
+                maxX = [[node valueForKey:@"x"] integerValue];
+            }
+            
+            if (maxY < [[node valueForKey:@"y"] integerValue]) {
+                maxY = [[node valueForKey:@"y"] integerValue];
+            }
+            
+        }
+
+        NSLog(@"minX %d", minX);
+        NSLog(@"minY %d", minY);
+        
+        NSLog(@"maxX %d", maxX);
+        NSLog(@"maxY %d", maxY);
+        
+        NSLog(@"%f %f", (float)(abs(maxX) + abs(minX)), (float)(abs(minY) + abs(maxY)));
+        
+        //[self performSelectorOnMainThread:@selector(myMethod:) withObject:anObj waitUntilDone:YES];
+
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^ {
+            
+            float fullX, fullY;
+            fullX = (float)(MAX(abs(maxX),abs(minX))*2);
+            fullY = (float)(MAX(abs(minY),abs(maxY))*2);
+            //fullY = (float)(abs(minY) + abs(maxY));
+            
+            
+            // Set up the container view to hold your custom view hierarchy
+            CGSize containerSize = CGSizeMake(fullX, fullY);
+            self.containerView = [[UIView alloc] initWithFrame:(CGRect){.origin=CGPointMake(0.0f, 0.0f), .size=containerSize}];
+            self.containerView.backgroundColor = [UIColor brownColor];
+            [self.scrollView addSubview:self.containerView];
+
+            for (NSNumber *key in [json valueForKey:@"groups"]) {
+                
+                NSArray *node = [[json valueForKey:@"groups"] objectForKey:key];
+                
+                //NSLog(@"%d", [[node valueForKey:@"x"] integerValue]);
+                float centerX, centerY;
+                centerX = [[node valueForKey:@"x"] floatValue] + fullX/2;
+                centerY = [[node valueForKey:@"y"] floatValue] + fullY/2;
+                
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(centerX, centerY, 100.0f, 50.0f)];
+                NSLog(@"key %@", key);
+                if (key == [NSNumber numberWithInt:27271]) {
+                    NSLog(@"TOTO");
+                }
+                [label setText:[[nodes objectForKey:[NSNumber numberWithInt:27271]] valueForKey:@"dn"]];
+                //NSLog(@"text %@ %d %@", key, [key integerValue], [nodes objectForKey:[NSNumber numberWithInt:[key integerValue]]]);
+                //UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"KeystoneFrameAllocated.png"]];
+
+                //imageView.center = CGPointMake(centerX, centerY);
+                [self.containerView addSubview:label];
+
+                
+            }
+            
+            // Tell the scroll view the size of the contents
+            self.scrollView.contentSize = containerSize;
+            
+            // Set up the minimum & maximum zoom scales
+            CGRect scrollViewFrame = self.scrollView.frame;
+            CGFloat scaleWidth = scrollViewFrame.size.width / self.scrollView.contentSize.width;
+            CGFloat scaleHeight = scrollViewFrame.size.height / self.scrollView.contentSize.height;
+            CGFloat minScale = MIN(scaleWidth, scaleHeight);
+            
+            self.scrollView.minimumZoomScale = minScale;
+            self.scrollView.maximumZoomScale = 1.0f;
+            self.scrollView.zoomScale = 1.0f;
+            
+            [self centerScrollViewContents];
+            
+        }];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
@@ -70,47 +190,14 @@
     
     [operation start];
     
-    // Set up the container view to hold your custom view hierarchy
-    CGSize containerSize = CGSizeMake(6400.0f, 6400.0f);
-    self.containerView = [[UIView alloc] initWithFrame:(CGRect){.origin=CGPointMake(0.0f, 0.0f), .size=containerSize}];
-    [self.scrollView addSubview:self.containerView];
-    
-    // Set up your custom view hierarchy
-    UIView *redView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 640.0f, 80.0f)];
-    redView.backgroundColor = [UIColor redColor];
-    [self.containerView addSubview:redView];
-    
-    UIView *blueView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 560.0f, 640.0f, 80.0f)];
-    blueView.backgroundColor = [UIColor blueColor];
-    [self.containerView addSubview:blueView];
-    
-    UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(160.0f, 160.0f, 320.0f, 320.0f)];
-    greenView.backgroundColor = [UIColor greenColor];
-    [self.containerView addSubview:greenView];
-    
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slow.png"]];
-    imageView.center = CGPointMake(320.0f, 320.0f);
-    [self.containerView addSubview:imageView];
-    
-    // Tell the scroll view the size of the contents
-    self.scrollView.contentSize = containerSize;
+
     
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    // Set up the minimum & maximum zoom scales
-    CGRect scrollViewFrame = self.scrollView.frame;
-    CGFloat scaleWidth = scrollViewFrame.size.width / self.scrollView.contentSize.width;
-    CGFloat scaleHeight = scrollViewFrame.size.height / self.scrollView.contentSize.height;
-    CGFloat minScale = MIN(scaleWidth, scaleHeight);
-    
-    self.scrollView.minimumZoomScale = minScale;
-    self.scrollView.maximumZoomScale = 1.0f;
-    self.scrollView.zoomScale = 1.0f;
-    
-    [self centerScrollViewContents];
+
 }
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

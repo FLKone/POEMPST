@@ -33,6 +33,7 @@
 		CAA1EF2B1707F81D002BF206 /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAA1EF291707F81D002BF206 /* ViewController_iPad.xib */; };
 		CAA1EF2C1707F81D002BF206 /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAA1EF2A1707F81D002BF206 /* ViewController_iPhone.xib */; };
 		CAA1EF6217080080002BF206 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF6117080080002BF206 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CAA1EF6417082025002BF206 /* KeystoneFrameAllocated.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA1EF6317082025002BF206 /* KeystoneFrameAllocated.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,6 +80,7 @@
 		CAA1EF2A1707F81D002BF206 /* ViewController_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController_iPhone.xib; sourceTree = "<group>"; };
 		CAA1EF6017080080002BF206 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		CAA1EF6117080080002BF206 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		CAA1EF6317082025002BF206 /* KeystoneFrameAllocated.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KeystoneFrameAllocated.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +161,7 @@
 		CAA1EEF51707EAD6002BF206 /* Test Files */ = {
 			isa = PBXGroup;
 			children = (
+				CAA1EF6317082025002BF206 /* KeystoneFrameAllocated.png */,
 				CAA1EEF61707EAEA002BF206 /* passive-skill-tree.html */,
 			);
 			name = "Test Files";
@@ -280,6 +283,7 @@
 				CAA1EEF71707EAEA002BF206 /* passive-skill-tree.html in Resources */,
 				CAA1EF2B1707F81D002BF206 /* ViewController_iPad.xib in Resources */,
 				CAA1EF2C1707F81D002BF206 /* ViewController_iPhone.xib in Resources */,
+				CAA1EF6417082025002BF206 /* KeystoneFrameAllocated.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

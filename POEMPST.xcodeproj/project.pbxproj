@@ -17,8 +17,6 @@
 		CAA1EEE41707E5AF002BF206 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA1EEE31707E5AF002BF206 /* Default@2x.png */; };
 		CAA1EEE61707E5AF002BF206 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA1EEE51707E5AF002BF206 /* Default-568h@2x.png */; };
 		CAA1EEE91707E5AF002BF206 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EEE81707E5AF002BF206 /* ViewController.m */; };
-		CAA1EEEC1707E5AF002BF206 /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAA1EEEA1707E5AF002BF206 /* ViewController_iPhone.xib */; };
-		CAA1EEEF1707E5AF002BF206 /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAA1EEED1707E5AF002BF206 /* ViewController_iPad.xib */; };
 		CAA1EEF71707EAEA002BF206 /* passive-skill-tree.html in Resources */ = {isa = PBXBuildFile; fileRef = CAA1EEF61707EAEA002BF206 /* passive-skill-tree.html */; };
 		CAA1EF0D1707EC5D002BF206 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EEFB1707EC5D002BF206 /* AFHTTPClient.m */; };
 		CAA1EF0E1707EC5D002BF206 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EEFD1707EC5D002BF206 /* AFHTTPRequestOperation.m */; };
@@ -31,7 +29,10 @@
 		CAA1EF151707EC5D002BF206 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF0C1707EC5D002BF206 /* UIImageView+AFNetworking.m */; };
 		CAA1EF201707EE76002BF206 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA1EF1F1707EE76002BF206 /* MobileCoreServices.framework */; };
 		CAA1EF241707EED1002BF206 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA1EF231707EED1002BF206 /* SystemConfiguration.framework */; };
-		CAA1EF281707F2FF002BF206 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF271707F2FF002BF206 /* RegexKitLite.m */; };
+		CAA1EF281707F2FF002BF206 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF271707F2FF002BF206 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CAA1EF2B1707F81D002BF206 /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAA1EF291707F81D002BF206 /* ViewController_iPad.xib */; };
+		CAA1EF2C1707F81D002BF206 /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAA1EF2A1707F81D002BF206 /* ViewController_iPhone.xib */; };
+		CAA1EF6217080080002BF206 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF6117080080002BF206 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,11 +72,13 @@
 		CAA1EF0B1707EC5D002BF206 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		CAA1EF0C1707EC5D002BF206 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		CAA1EF1F1707EE76002BF206 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		CAA1EF211707EEC3002BF206 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ViewController_iPhone.xib; sourceTree = "<group>"; };
-		CAA1EF221707EEC3002BF206 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
 		CAA1EF231707EED1002BF206 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		CAA1EF261707F2FF002BF206 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
 		CAA1EF271707F2FF002BF206 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
+		CAA1EF291707F81D002BF206 /* ViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController_iPad.xib; sourceTree = "<group>"; };
+		CAA1EF2A1707F81D002BF206 /* ViewController_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController_iPhone.xib; sourceTree = "<group>"; };
+		CAA1EF6017080080002BF206 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		CAA1EF6117080080002BF206 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,8 +133,8 @@
 				CAA1EEDF1707E5AF002BF206 /* AppDelegate.m */,
 				CAA1EEE71707E5AF002BF206 /* ViewController.h */,
 				CAA1EEE81707E5AF002BF206 /* ViewController.m */,
-				CAA1EEEA1707E5AF002BF206 /* ViewController_iPhone.xib */,
-				CAA1EEED1707E5AF002BF206 /* ViewController_iPad.xib */,
+				CAA1EF291707F81D002BF206 /* ViewController_iPad.xib */,
+				CAA1EF2A1707F81D002BF206 /* ViewController_iPhone.xib */,
 				CAA1EEF81707EBA6002BF206 /* Vendor */,
 				CAA1EEF51707EAD6002BF206 /* Test Files */,
 				CAA1EED61707E5AF002BF206 /* Supporting Files */,
@@ -164,6 +167,7 @@
 		CAA1EEF81707EBA6002BF206 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				CAA1EF5F17080080002BF206 /* JSONKit */,
 				CAA1EF251707F2FF002BF206 /* RegexKitLite */,
 				CAA1EEF91707EC5D002BF206 /* AFNetworking */,
 			);
@@ -205,6 +209,16 @@
 			);
 			name = RegexKitLite;
 			path = vendor/RegexKitLite;
+			sourceTree = "<group>";
+		};
+		CAA1EF5F17080080002BF206 /* JSONKit */ = {
+			isa = PBXGroup;
+			children = (
+				CAA1EF6017080080002BF206 /* JSONKit.h */,
+				CAA1EF6117080080002BF206 /* JSONKit.m */,
+			);
+			name = JSONKit;
+			path = vendor/JSONKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,9 +277,9 @@
 				CAA1EEE21707E5AF002BF206 /* Default.png in Resources */,
 				CAA1EEE41707E5AF002BF206 /* Default@2x.png in Resources */,
 				CAA1EEE61707E5AF002BF206 /* Default-568h@2x.png in Resources */,
-				CAA1EEEC1707E5AF002BF206 /* ViewController_iPhone.xib in Resources */,
-				CAA1EEEF1707E5AF002BF206 /* ViewController_iPad.xib in Resources */,
 				CAA1EEF71707EAEA002BF206 /* passive-skill-tree.html in Resources */,
+				CAA1EF2B1707F81D002BF206 /* ViewController_iPad.xib in Resources */,
+				CAA1EF2C1707F81D002BF206 /* ViewController_iPhone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,6 +303,7 @@
 				CAA1EF141707EC5D002BF206 /* AFXMLRequestOperation.m in Sources */,
 				CAA1EF151707EC5D002BF206 /* UIImageView+AFNetworking.m in Sources */,
 				CAA1EF281707F2FF002BF206 /* RegexKitLite.m in Sources */,
+				CAA1EF6217080080002BF206 /* JSONKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,22 +316,6 @@
 				CAA1EED91707E5AF002BF206 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		CAA1EEEA1707E5AF002BF206 /* ViewController_iPhone.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CAA1EF211707EEC3002BF206 /* Base */,
-			);
-			name = ViewController_iPhone.xib;
-			sourceTree = "<group>";
-		};
-		CAA1EEED1707E5AF002BF206 /* ViewController_iPad.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CAA1EF221707EEC3002BF206 /* Base */,
-			);
-			name = ViewController_iPad.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -349,6 +348,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-licucore";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -374,6 +374,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = "-licucore";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

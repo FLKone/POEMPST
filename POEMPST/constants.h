@@ -26,3 +26,4 @@ typedef enum {
 #import "SkillIcons.h"
 #import "SkillNode.h"
 #import "NodeGroup.h"
+#import "Asset.h"

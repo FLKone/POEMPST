@@ -37,6 +37,7 @@
 		CAA1EF681709F74B002BF206 /* SkillIcons.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF671709F74B002BF206 /* SkillIcons.m */; };
 		CAA1EF6C170A038D002BF206 /* SkillNode.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF6B170A038D002BF206 /* SkillNode.m */; };
 		CAA1EF6F170A07E2002BF206 /* NodeGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF6E170A07E1002BF206 /* NodeGroup.m */; };
+		CAA1EF72170A237C002BF206 /* Asset.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF71170A237C002BF206 /* Asset.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,6 +92,8 @@
 		CAA1EF6B170A038D002BF206 /* SkillNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SkillNode.m; path = Classes/Models/SkillNode.m; sourceTree = "<group>"; };
 		CAA1EF6D170A07E1002BF206 /* NodeGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NodeGroup.h; path = Classes/Models/NodeGroup.h; sourceTree = "<group>"; };
 		CAA1EF6E170A07E1002BF206 /* NodeGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NodeGroup.m; path = Classes/Models/NodeGroup.m; sourceTree = "<group>"; };
+		CAA1EF70170A237B002BF206 /* Asset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Asset.h; path = Classes/Models/Asset.h; sourceTree = "<group>"; };
+		CAA1EF71170A237C002BF206 /* Asset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Asset.m; path = Classes/Models/Asset.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,6 +248,8 @@
 				CAA1EF6B170A038D002BF206 /* SkillNode.m */,
 				CAA1EF6D170A07E1002BF206 /* NodeGroup.h */,
 				CAA1EF6E170A07E1002BF206 /* NodeGroup.m */,
+				CAA1EF70170A237B002BF206 /* Asset.h */,
+				CAA1EF71170A237C002BF206 /* Asset.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -336,6 +341,7 @@
 				CAA1EF681709F74B002BF206 /* SkillIcons.m in Sources */,
 				CAA1EF6C170A038D002BF206 /* SkillNode.m in Sources */,
 				CAA1EF6F170A07E2002BF206 /* NodeGroup.m in Sources */,
+				CAA1EF72170A237C002BF206 /* Asset.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

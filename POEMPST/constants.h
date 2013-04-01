@@ -27,3 +27,4 @@ typedef enum {
 #import "SkillNode.h"
 #import "NodeGroup.h"
 #import "Asset.h"
+#include "UIImage+WBImage.h"

@@ -38,6 +38,7 @@
 		CAA1EF6C170A038D002BF206 /* SkillNode.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF6B170A038D002BF206 /* SkillNode.m */; };
 		CAA1EF6F170A07E2002BF206 /* NodeGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF6E170A07E1002BF206 /* NodeGroup.m */; };
 		CAA1EF72170A237C002BF206 /* Asset.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF71170A237C002BF206 /* Asset.m */; };
+		CAA1EF76170A4765002BF206 /* UIImage+WBImage.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF75170A4765002BF206 /* UIImage+WBImage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,6 +95,8 @@
 		CAA1EF6E170A07E1002BF206 /* NodeGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NodeGroup.m; path = Classes/Models/NodeGroup.m; sourceTree = "<group>"; };
 		CAA1EF70170A237B002BF206 /* Asset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Asset.h; path = Classes/Models/Asset.h; sourceTree = "<group>"; };
 		CAA1EF71170A237C002BF206 /* Asset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Asset.m; path = Classes/Models/Asset.m; sourceTree = "<group>"; };
+		CAA1EF74170A4765002BF206 /* UIImage+WBImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+WBImage.h"; path = "vendor/UIImage+WBImage.h"; sourceTree = "<group>"; };
+		CAA1EF75170A4765002BF206 /* UIImage+WBImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+WBImage.m"; path = "vendor/UIImage+WBImage.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +191,8 @@
 				CAA1EF5F17080080002BF206 /* JSONKit */,
 				CAA1EF251707F2FF002BF206 /* RegexKitLite */,
 				CAA1EEF91707EC5D002BF206 /* AFNetworking */,
+				CAA1EF74170A4765002BF206 /* UIImage+WBImage.h */,
+				CAA1EF75170A4765002BF206 /* UIImage+WBImage.m */,
 			);
 			name = Vendor;
 			sourceTree = "<group>";
@@ -342,6 +347,7 @@
 				CAA1EF6C170A038D002BF206 /* SkillNode.m in Sources */,
 				CAA1EF6F170A07E2002BF206 /* NodeGroup.m in Sources */,
 				CAA1EF72170A237C002BF206 /* Asset.m in Sources */,
+				CAA1EF76170A4765002BF206 /* UIImage+WBImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,6 +15,7 @@
     self = [super init];
     if (self) {
         self.id = nodeid; //id
+        
         self.position = CGPointMake([[dictionary objectForKey:@"x"] floatValue], [[dictionary objectForKey:@"y"] floatValue]); //x, y
         self.occupiedOrbites = [dictionary objectForKey:@"oo"]; //oo
         self.nodes = [dictionary objectForKey:@"n"];; //n

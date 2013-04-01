@@ -61,50 +61,57 @@
 
         // Skill Sprites
         SkillIcons *iconActiveSkills = [[SkillIcons alloc] init];
+        SkillIcons *iconInactiveSkills = [[SkillIcons alloc] init];
         
         for (NSString *key in [json objectForKey:@"skillSprites"]) {
-            
+            //NSLog(@"key %@", key);
+
             if ([key rangeOfString:@"Inactive"].location != NSNotFound) {
                 continue;
             }
-            
+
             NSDictionary *jobj = [[[json valueForKey:@"skillSprites"] objectForKey:key] objectAtIndex:3];
             NSString *filename = [jobj objectForKey:@"filename"];
             
             [iconActiveSkills.images setValue:@"" forKey:filename];
             
-            //NSLog(@"iconActiveSkills.images %@", iconActiveSkills.images);
-            /*
             for (NSString *key2 in [jobj objectForKey:@"coords"]) {
                 
                 NSDictionary *jobj2 = [[jobj objectForKey:@"coords"] objectForKey:key2];
                 
                 NSDictionary *skill = [NSDictionary dictionaryWithObject:NSStringFromCGRect(CGRectMake([[jobj2 objectForKey:@"x"] floatValue], [[jobj2 objectForKey:@"y"] floatValue], [[jobj2 objectForKey:@"w"] floatValue], [[jobj2 objectForKey:@"h"] floatValue])) forKey:filename];
                 
-                NSLog(@"skill %@ %@", key2, skill);
-                
-                //[iconActiveSkills.images setValue:NULL forKey:@""];
-
-                //[NSDictionary dictionaryWithObjects:[jobj2 valueForKey:@"x"], [jobj2 valueForKey:@"y"], [jobj2 valueForKey:@"w"], [jobj2 valueForKey:@"h"] forKeys:<#(const id<NSCopying> *)#> count:4]
-                
-                
-                break;
-                //[iconActiveSkills setValue:NULL forKey:filename];
+                [iconActiveSkills.skillPositions setObject:skill forKey:key2];
 
             }
-            */
-            //NSLog(@"skillSprites %@ %@", key, filename);
-            
-            
-            //[iconActiveSkills setValue:node forKey:[node valueForKey:@"id"]]
-            //[iconActiveSkills setValue:node forKey:[node valueForKey:@"id"]];
-            
-            
-            //break;
+
         }
         
+        for (NSString *key in [json objectForKey:@"skillSprites"]) {
+            
+            if ([key rangeOfString:@"Active"].location != NSNotFound) {
+                continue;
+            }
+            
+            NSDictionary *jobj = [[[json valueForKey:@"skillSprites"] objectForKey:key] objectAtIndex:3];
+            NSString *filename = [jobj objectForKey:@"filename"];
+
+            [iconInactiveSkills.images setValue:@"" forKey:filename];
+            
+            for (NSString *key2 in [jobj objectForKey:@"coords"]) {
+                
+                NSDictionary *jobj2 = [[jobj objectForKey:@"coords"] objectForKey:key2];
+                
+                NSDictionary *skill = [NSDictionary dictionaryWithObject:NSStringFromCGRect(CGRectMake([[jobj2 objectForKey:@"x"] floatValue], [[jobj2 objectForKey:@"y"] floatValue], [[jobj2 objectForKey:@"w"] floatValue], [[jobj2 objectForKey:@"h"] floatValue])) forKey:filename];
+                
+                [iconInactiveSkills.skillPositions setObject:skill forKey:key2];
+                
+            }
+            
+        }
+
         [iconActiveSkills OpenOrDownloadImages];
-        //NSLog(@"iconActiveSkills %@", iconActiveSkills);
+        [iconInactiveSkills OpenOrDownloadImages];
         //-- Skill Sprites        
         
         NSMutableDictionary *nodes = [[NSMutableDictionary alloc] init];

@@ -8,10 +8,13 @@
 
 #import "ViewController.h"
 
-
+//Vendor
 #import "AFNetworking.h"
 #import "RegexKitLite.h"
 #import "JSONKit.h"
+
+//Models
+#import "SkillIcons.h"
 
 @interface ViewController ()
 
@@ -54,31 +57,65 @@
         
         NSRange r = NSMakeRange(27, JSData.length - 27 - 1);
         JSData = [JSData substringWithRange: r];
-        
-        
-        
-        //NSData* jsonData = [NSData data: path];
-        //JSONDecoder* decoder = [[JSONDecoder alloc]
-        //                        initWithParseOptions:JKParseOptionNone];
-        
         NSDictionary* json = [JSData objectFromJSONString];
+
+        // Skill Sprites
+        SkillIcons *iconActiveSkills = [[SkillIcons alloc] init];
         
-        //NSLog(@"%@", [json valueForKey:@"groups"]);
-        NSLog(@"TOTAL %d", [[json valueForKey:@"groups"] count]);
+        for (NSString *key in [json objectForKey:@"skillSprites"]) {
+            
+            if ([key rangeOfString:@"Inactive"].location != NSNotFound) {
+                continue;
+            }
+            
+            NSDictionary *jobj = [[[json valueForKey:@"skillSprites"] objectForKey:key] objectAtIndex:3];
+            NSString *filename = [jobj objectForKey:@"filename"];
+            
+            [iconActiveSkills.images setValue:@"" forKey:filename];
+            
+            //NSLog(@"iconActiveSkills.images %@", iconActiveSkills.images);
+            /*
+            for (NSString *key2 in [jobj objectForKey:@"coords"]) {
+                
+                NSDictionary *jobj2 = [[jobj objectForKey:@"coords"] objectForKey:key2];
+                
+                NSDictionary *skill = [NSDictionary dictionaryWithObject:NSStringFromCGRect(CGRectMake([[jobj2 objectForKey:@"x"] floatValue], [[jobj2 objectForKey:@"y"] floatValue], [[jobj2 objectForKey:@"w"] floatValue], [[jobj2 objectForKey:@"h"] floatValue])) forKey:filename];
+                
+                NSLog(@"skill %@ %@", key2, skill);
+                
+                //[iconActiveSkills.images setValue:NULL forKey:@""];
+
+                //[NSDictionary dictionaryWithObjects:[jobj2 valueForKey:@"x"], [jobj2 valueForKey:@"y"], [jobj2 valueForKey:@"w"], [jobj2 valueForKey:@"h"] forKeys:<#(const id<NSCopying> *)#> count:4]
+                
+                
+                break;
+                //[iconActiveSkills setValue:NULL forKey:filename];
+
+            }
+            */
+            //NSLog(@"skillSprites %@ %@", key, filename);
+            
+            
+            //[iconActiveSkills setValue:node forKey:[node valueForKey:@"id"]]
+            //[iconActiveSkills setValue:node forKey:[node valueForKey:@"id"]];
+            
+            
+            //break;
+        }
+        
+        [iconActiveSkills OpenOrDownloadImages];
+        //NSLog(@"iconActiveSkills %@", iconActiveSkills);
+        //-- Skill Sprites        
         
         NSMutableDictionary *nodes = [[NSMutableDictionary alloc] init];
         
         for (NSDictionary *node in [json valueForKey:@"nodes"]) {
-            
-            NSLog(@"nodes %@", [node objectForKey:@"dn"]);
-
-            
+            //NSLog(@"nodes %@", [node objectForKey:@"dn"]);
             [nodes setValue:node forKey:[node valueForKey:@"id"]];
-            break;
         }
         
-        NSLog(@"nodes %@", nodes);
-
+    //    NSLog(@"nodes %@", nodes);
+/*
         for (NSNumber *key2 in nodes) {
             
             NSLog(@"key2 %@", key2);
@@ -86,7 +123,7 @@
 
             
         }
-        
+  */
         NSLog(@"27271 %@", [[nodes objectForKey:[NSNumber numberWithInt:27271]] valueForKey:@"dn"]);
 
         
@@ -153,11 +190,8 @@
                 centerY = [[node valueForKey:@"y"] floatValue] + fullY/2;
                 
                 UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(centerX, centerY, 100.0f, 50.0f)];
-                NSLog(@"key %@", key);
-                if (key == [NSNumber numberWithInt:27271]) {
-                    NSLog(@"TOTO");
-                }
-                [label setText:[[nodes objectForKey:[NSNumber numberWithInt:27271]] valueForKey:@"dn"]];
+
+                //[label setText:[[nodes objectForKey:[NSNumber numberWithInt:27271]] valueForKey:@"dn"]];
                 //NSLog(@"text %@ %d %@", key, [key integerValue], [nodes objectForKey:[NSNumber numberWithInt:[key integerValue]]]);
                 //UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"KeystoneFrameAllocated.png"]];
 

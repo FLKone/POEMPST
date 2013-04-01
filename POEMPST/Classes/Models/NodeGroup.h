@@ -25,8 +25,10 @@
 */
 
 @property int id; //id
-@property CGPoint  *position; //x, y
+@property CGPoint position; //x, y
 @property (nonatomic, strong) NSMutableDictionary *occupiedOrbites; //oo
 @property (nonatomic, strong) NSMutableDictionary *nodes; //n
+
+-(id)initWithDictionary:(NSDictionary *)dictionary andId:(int)id;
 
 @end

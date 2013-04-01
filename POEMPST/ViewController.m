@@ -154,39 +154,84 @@
             CGSize containerSize = CGSizeMake(fullX, fullY);
             
             self.containerView = [[UIView alloc] initWithFrame:(CGRect){.origin=CGPointMake(0.0f, 0.0f), .size=containerSize}];
-            UIColor *backgroundColor = [[UIColor alloc] initWithPatternImage:[((Asset *)[assets objectForKey:@"Background1"]) UIImage]];
-            self.containerView.backgroundColor = backgroundColor;
+            //UIColor *backgroundColor = [[UIColor alloc] initWithPatternImage:[((Asset *)[assets objectForKey:@"Background1"]) UIImage]];
+            //self.containerView.backgroundColor = backgroundColor;
             
             [self.scrollView addSubview:self.containerView];
 
-            //BACKGROUND LAYER
+            // BACKGROUNDS LAYER
+            NSMutableArray *ngImages = [NSMutableArray arrayWithObjects:  [((Asset *)[assets objectForKey:@"PSGroupBackground1"]) UIImage],
+                                                            [((Asset *)[assets objectForKey:@"PSGroupBackground2"]) UIImage],
+                                                            [((Asset *)[assets objectForKey:@"PSGroupBackground3"]) UIImage], nil];
             
-            
-            
-            
-            //-- BACKGROUND LAYER
-            /*
-            for (NSNumber *key in [json valueForKey:@"groups"]) {
-                
-                NSArray *node = [[json valueForKey:@"groups"] objectForKey:key];
-                
-                //NSLog(@"%d", [[node valueForKey:@"x"] integerValue]);
-                float centerX, centerY;
-                centerX = [[node valueForKey:@"x"] floatValue] + fullX/2;
-                centerY = [[node valueForKey:@"y"] floatValue] + fullY/2;
-                
-                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(centerX, centerY, 100.0f, 50.0f)];
+            // BACKGROUND 3 transformation
+            UIImage *PSG2 = [ngImages objectAtIndex:2];
+            UIImage *PSG2r = [PSG2 rotate:UIImageOrientationDownMirrored];
+            CGSize newSize = CGSizeMake(PSG2.size.width, PSG2.size.height*2);
+            UIGraphicsBeginImageContext( newSize );
+            [PSG2 drawInRect:CGRectMake(0,0,PSG2.size.width,PSG2.size.height)];
+            [PSG2r drawInRect:CGRectMake(0,PSG2.size.height,PSG2.size.width,PSG2.size.height)];
+            UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            [ngImages replaceObjectAtIndex:2 withObject:newImage];
 
-                //[label setText:[[nodes objectForKey:[NSNumber numberWithInt:27271]] valueForKey:@"dn"]];
-                //NSLog(@"text %@ %d %@", key, [key integerValue], [nodes objectForKey:[NSNumber numberWithInt:[key integerValue]]]);
-                //UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"KeystoneFrameAllocated.png"]];
+            int i;
+            for (i = 0; i < [ngImages count]; i++) {
+                UIImage *object = [ngImages objectAtIndex:i];
+                
+                NSLog(@"%f %f", object.size.width, object.size.height);
+                
+                CGSize targetSize = CGSizeMake(object.size.width*2.65, object.size.height*2.65);
 
-                //imageView.center = CGPointMake(centerX, centerY);
-                [self.containerView addSubview:label];
+                UIGraphicsBeginImageContext(targetSize); // this will crop
+                
+                CGRect newSize = CGRectZero;
+                //thumbnailRect.origin = thumbnailPoint;
+                newSize.size.width  = targetSize.width;
+                newSize.size.height = targetSize.height;
+                
+                [object drawInRect:newSize];
+                
+                newImage = UIGraphicsGetImageFromCurrentImageContext();
+                
+                //pop the context to get back to the default
+                UIGraphicsEndImageContext();
+                
+                [ngImages replaceObjectAtIndex:i withObject:newImage];
 
                 
             }
-            */
+            //-- BACKGROUND 3 transformation
+
+            for (NSString *key in nodeGroups) {
+
+                NodeGroup *ng = [nodeGroups objectForKey:key];
+
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.intValue <= 3"];
+                NSArray *filteredArray = [ng.occupiedOrbites.allKeys filteredArrayUsingPredicate:predicate];
+                int cgrp = filteredArray.count;
+                if (cgrp == 0) continue;
+
+                NSNumber *maxr = [filteredArray valueForKeyPath:@"@max.intValue"];
+                int maxri = [maxr intValue];
+                if (maxri == 0) continue;
+                
+                maxri = maxri > 3 ? 2 : maxri - 1;
+                
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:[ngImages objectAtIndex:maxri]];
+                imageView.center = CGPointMake(ng.position.x + fullX/2, ng.position.y + fullY/2);
+                [self.containerView addSubview:imageView];
+
+            }
+            //-- BACKGROUNDS LAYER
+            
+            // SKILLS LAYER
+            
+            
+            //-- SKILLS LAYER            
+
+            
+            
             // Tell the scroll view the size of the contents
             self.scrollView.contentSize = containerSize;
             
@@ -196,9 +241,11 @@
             CGFloat scaleHeight = scrollViewFrame.size.height / self.scrollView.contentSize.height;
             CGFloat minScale = MIN(scaleWidth, scaleHeight);
             
+            //NSLog(@"%f", minScale);
+            
             self.scrollView.minimumZoomScale = minScale;
-            self.scrollView.maximumZoomScale = 1.0f;
-            self.scrollView.zoomScale = 1.0f;
+            self.scrollView.maximumZoomScale = 0.3835f;//0.3f;
+            self.scrollView.zoomScale = 0.3835f;
             
             [self centerScrollViewContents];
             

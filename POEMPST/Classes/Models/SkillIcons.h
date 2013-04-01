@@ -8,14 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-
-
 @interface SkillIcons : NSObject
 
-@property (nonatomic, retain) NSMutableDictionary *skillPositions;
-@property (nonatomic, retain) NSMutableDictionary *images;
+@property (nonatomic, strong) NSMutableDictionary *skillPositions;
+@property (nonatomic, strong) NSMutableDictionary *images;
 @property IconType iconType;
-@property (nonatomic, retain) NSString *urlPath;
+@property (nonatomic, strong) NSString *urlPath;
 
 - (void)OpenOrDownloadImages;
 

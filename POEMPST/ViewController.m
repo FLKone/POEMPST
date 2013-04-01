@@ -28,9 +28,6 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 
-    static int minX = 0, minY = 0;
-    static int maxX = 0, maxY = 0;
-    
     NSURL *clientURL = [[NSBundle mainBundle] URLForResource:@"passive-skill-tree" withExtension:@"html"];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:clientURL];
@@ -38,8 +35,6 @@
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
 
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        // Print the response body in text
-        //NSLog(@"Response: %@", [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
         
         NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         
@@ -56,7 +51,6 @@
         SkillIcons *iconInactiveSkills = [[SkillIcons alloc] init];
         
         for (NSString *key in [json objectForKey:@"skillSprites"]) {
-            //NSLog(@"key %@", key);
 
             if ([key rangeOfString:@"Inactive"].location != NSNotFound) {
                 continue;
@@ -106,89 +100,72 @@
         [iconInactiveSkills OpenOrDownloadImages];
         //-- Skill Sprites        
         
+        // Assets
+        NSMutableDictionary *assets = [NSMutableDictionary dictionary];
+        
+        for (NSString *key in [json objectForKey:@"assets"]) {
+            
+            Asset *asset = [[Asset alloc] init];
+            [asset setName:key];
+            [asset setUrlPath:[[[json objectForKey:@"assets"] objectForKey:key] objectForKey:@"0.3835"]];
+            [asset OpenOrDownloadImages];
+            
+            [assets setObject:asset forKey:key];
+        }
+        //-- Assets
+        
         // Nodes
         NSMutableDictionary *skillNodes = [NSMutableDictionary dictionary];
         
         for (NSDictionary *node in [json valueForKey:@"nodes"]) {
 
             SkillNode *skillNode = [[SkillNode alloc] initWithDictionary:node];
-            
             [skillNodes setValue:skillNode forKey:[node valueForKey:@"id"]];
         }
         //-- Nodes
         
         // Groups
-        
-        //-- Groups        
-        
-
-        
-    //    NSLog(@"nodes %@", nodes);
-/*
-        for (NSNumber *key2 in nodes) {
-            
-            NSLog(@"key2 %@", key2);
-            NSLog(@"key2 %@", [nodes objectForKey:key2]);
-
-            
-        }
-  */
-        //NSLog(@"27271 %@", [[nodes objectForKey:[NSNumber numberWithInt:27271]] valueForKey:@"dn"]);
-
+        NSMutableDictionary *nodeGroups = [NSMutableDictionary dictionary];
         
         for (NSString *key in [json valueForKey:@"groups"]) {
-            //NSLog(@"%@", key);
             
-            NSArray *node = [[json valueForKey:@"groups"] objectForKey:key];
-            
-            //NSLog(@"%d", [[node valueForKey:@"x"] integerValue]);
-
-            // MIN
-            if (minX > [[node valueForKey:@"x"] integerValue]) {
-                minX = [[node valueForKey:@"x"] integerValue];
-            }
-
-            
-            if (minY > [[node valueForKey:@"y"] integerValue]) {
-                minY = [[node valueForKey:@"y"] integerValue];
-            }
-
-            
-            //MAX
-            if (maxX < [[node valueForKey:@"x"] integerValue]) {
-                maxX = [[node valueForKey:@"x"] integerValue];
-            }
-            
-            if (maxY < [[node valueForKey:@"y"] integerValue]) {
-                maxY = [[node valueForKey:@"y"] integerValue];
-            }
-            
+            NSDictionary *group = [[json valueForKey:@"groups"] objectForKey:key];
+            NodeGroup *nodeGroup = [[NodeGroup alloc] initWithDictionary:group andId:[key intValue]];
+            [nodeGroups setValue:nodeGroup forKey:key];
         }
+        //-- Groups
 
-        NSLog(@"minX %d", minX);
-        NSLog(@"minY %d", minY);
-        
-        NSLog(@"maxX %d", maxX);
-        NSLog(@"maxY %d", maxY);
-        
-        NSLog(@"%f %f", (float)(abs(maxX) + abs(minX)), (float)(abs(minY) + abs(maxY)));
+        float min_x = [[json objectForKey:@"min_x"] floatValue];
+        float min_y = [[json objectForKey:@"min_y"] floatValue];
+        float max_x = [[json objectForKey:@"max_x"] floatValue];
+        float max_y = [[json objectForKey:@"max_y"] floatValue];
         
         //[self performSelectorOnMainThread:@selector(myMethod:) withObject:anObj waitUntilDone:YES];
 
         [[NSOperationQueue mainQueue] addOperationWithBlock:^ {
             
             float fullX, fullY;
-            fullX = (float)(MAX(abs(maxX),abs(minX))*2);
-            fullY = (float)(MAX(abs(minY),abs(maxY))*2);
+            fullX = (float)(MAX(abs(min_x),abs(max_x))*2.1);
+            fullY = (float)(MAX(abs(min_y),abs(max_y))*2.1);
             //fullY = (float)(abs(minY) + abs(maxY));
             
             
             // Set up the container view to hold your custom view hierarchy
             CGSize containerSize = CGSizeMake(fullX, fullY);
+            
             self.containerView = [[UIView alloc] initWithFrame:(CGRect){.origin=CGPointMake(0.0f, 0.0f), .size=containerSize}];
-            self.containerView.backgroundColor = [UIColor brownColor];
+            UIColor *backgroundColor = [[UIColor alloc] initWithPatternImage:[((Asset *)[assets objectForKey:@"Background1"]) UIImage]];
+            self.containerView.backgroundColor = backgroundColor;
+            
             [self.scrollView addSubview:self.containerView];
 
+            //BACKGROUND LAYER
+            
+            
+            
+            
+            //-- BACKGROUND LAYER
+            /*
             for (NSNumber *key in [json valueForKey:@"groups"]) {
                 
                 NSArray *node = [[json valueForKey:@"groups"] objectForKey:key];
@@ -209,7 +186,7 @@
 
                 
             }
-            
+            */
             // Tell the scroll view the size of the contents
             self.scrollView.contentSize = containerSize;
             

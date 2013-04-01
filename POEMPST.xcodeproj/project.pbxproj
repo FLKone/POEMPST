@@ -34,6 +34,7 @@
 		CAA1EF2C1707F81D002BF206 /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAA1EF2A1707F81D002BF206 /* ViewController_iPhone.xib */; };
 		CAA1EF6217080080002BF206 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF6117080080002BF206 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CAA1EF6417082025002BF206 /* KeystoneFrameAllocated.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA1EF6317082025002BF206 /* KeystoneFrameAllocated.png */; };
+		CAA1EF681709F74B002BF206 /* SkillIcons.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF671709F74B002BF206 /* SkillIcons.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +82,9 @@
 		CAA1EF6017080080002BF206 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		CAA1EF6117080080002BF206 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		CAA1EF6317082025002BF206 /* KeystoneFrameAllocated.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KeystoneFrameAllocated.png; sourceTree = "<group>"; };
+		CAA1EF661709F74B002BF206 /* SkillIcons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkillIcons.h; path = Classes/Models/SkillIcons.h; sourceTree = "<group>"; };
+		CAA1EF671709F74B002BF206 /* SkillIcons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SkillIcons.m; path = Classes/Models/SkillIcons.m; sourceTree = "<group>"; };
+		CAA1EF691709F850002BF206 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,10 +137,12 @@
 			children = (
 				CAA1EEDE1707E5AF002BF206 /* AppDelegate.h */,
 				CAA1EEDF1707E5AF002BF206 /* AppDelegate.m */,
+				CAA1EF691709F850002BF206 /* constants.h */,
 				CAA1EEE71707E5AF002BF206 /* ViewController.h */,
 				CAA1EEE81707E5AF002BF206 /* ViewController.m */,
 				CAA1EF291707F81D002BF206 /* ViewController_iPad.xib */,
 				CAA1EF2A1707F81D002BF206 /* ViewController_iPhone.xib */,
+				CAA1EF651709F68C002BF206 /* Models */,
 				CAA1EEF81707EBA6002BF206 /* Vendor */,
 				CAA1EEF51707EAD6002BF206 /* Test Files */,
 				CAA1EED61707E5AF002BF206 /* Supporting Files */,
@@ -224,6 +230,15 @@
 			path = vendor/JSONKit;
 			sourceTree = "<group>";
 		};
+		CAA1EF651709F68C002BF206 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CAA1EF661709F74B002BF206 /* SkillIcons.h */,
+				CAA1EF671709F74B002BF206 /* SkillIcons.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -308,6 +323,7 @@
 				CAA1EF151707EC5D002BF206 /* UIImageView+AFNetworking.m in Sources */,
 				CAA1EF281707F2FF002BF206 /* RegexKitLite.m in Sources */,
 				CAA1EF6217080080002BF206 /* JSONKit.m in Sources */,
+				CAA1EF681709F74B002BF206 /* SkillIcons.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

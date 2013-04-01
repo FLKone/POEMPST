@@ -8,6 +8,8 @@
 
 #import "SkillIcons.h"
 
+static NSString *urlPath = @"http://www.pathofexile.com/image/build-gen/passive-skill-sprite/";
+
 @implementation SkillIcons
 
 - (id)init {
@@ -15,10 +17,7 @@
 	if (self) {
         self.skillPositions = [NSMutableDictionary dictionary];
         self.images = [NSMutableDictionary dictionary];
-                
-        self.urlPath = @"http://www.pathofexile.com/image/build-gen/passive-skill-sprite/";
 
-        
 	}
 	return self;
 }
@@ -37,7 +36,7 @@
 		{
 			//NSLog(@"dl %@%@", self.urlPath, key);
 			
-			[fileManager createFileAtPath:[diskAssetsCachePath stringByAppendingPathComponent:key] contents:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.urlPath, key]]] attributes:nil];
+			[fileManager createFileAtPath:[diskAssetsCachePath stringByAppendingPathComponent:key] contents:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", urlPath, key]]] attributes:nil];
 		}
         
         //NSLog(@"path %@", [diskAssetsCachePath stringByAppendingPathComponent:key]);

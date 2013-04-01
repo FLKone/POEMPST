@@ -13,7 +13,6 @@
 @property (nonatomic, strong) NSMutableDictionary *skillPositions;
 @property (nonatomic, strong) NSMutableDictionary *images;
 @property IconType iconType;
-@property (nonatomic, strong) NSString *urlPath;
 
 - (void)OpenOrDownloadImages;
 

@@ -14,6 +14,30 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // DIRECTORIES
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+	NSString *diskDataCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data"];
+	
+	if (![[NSFileManager defaultManager] fileExistsAtPath:diskDataCachePath])
+	{
+		[[NSFileManager defaultManager] createDirectoryAtPath:diskDataCachePath
+								  withIntermediateDirectories:YES
+												   attributes:nil
+														error:NULL];
+	}
+    
+	NSString *diskDataAssetsCachePath = [diskDataCachePath stringByAppendingPathComponent:@"Assets"];
+	
+	if (![[NSFileManager defaultManager] fileExistsAtPath:diskDataAssetsCachePath])
+	{
+		[[NSFileManager defaultManager] createDirectoryAtPath:diskDataAssetsCachePath
+								  withIntermediateDirectories:YES
+												   attributes:nil
+														error:NULL];
+	}
+    // DIRECTORIES
+    
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {

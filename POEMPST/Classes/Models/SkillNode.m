@@ -36,21 +36,7 @@
 }
 
 - (NSString *)description {
-    /*
-    self.id;
-    self.icon
-    self.isKeystone
-    self.isNotable
-    self.name
-    self.isMastery
-    self.attributes
-    self.g
-    self.orbit
-    self.orbitIndex
-    self.sa
-    self.da
-    self.ia
-    */
+
     return [NSString stringWithFormat:@"\r%d\r%@\r%d\r%d\r%@\r%d\r%@\r%d\r%d\r%d\r%d\r%d\r%d", self.id, self.icon, self.isKeystone, self.isNotable, self.name, self.isMastery, [self.attributes description], self.g, self.orbit, self.orbitIndex, self.sa, self.da, self.ia];
 }
 

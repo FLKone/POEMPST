@@ -10,16 +10,12 @@
 
 @implementation SkillIcons
 
-@synthesize skillPositions, images, iconType, urlPath;
-
 - (id)init {
 	self = [super init];
 	if (self) {
         self.skillPositions = [NSMutableDictionary dictionary];
         self.images = [NSMutableDictionary dictionary];
-        
-        //self.iconType = [NSString string];
-        
+                
         self.urlPath = @"http://www.pathofexile.com/image/build-gen/passive-skill-sprite/";
 
         

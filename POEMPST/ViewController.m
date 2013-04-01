@@ -8,14 +8,6 @@
 
 #import "ViewController.h"
 
-//Vendor
-#import "AFNetworking.h"
-#import "RegexKitLite.h"
-#import "JSONKit.h"
-
-//Models
-#import "SkillIcons.h"
-
 @interface ViewController ()
 
 @property (nonatomic, strong) UIView *containerView;
@@ -114,12 +106,22 @@
         [iconInactiveSkills OpenOrDownloadImages];
         //-- Skill Sprites        
         
-        NSMutableDictionary *nodes = [[NSMutableDictionary alloc] init];
+        // Nodes
+        NSMutableDictionary *skillNodes = [NSMutableDictionary dictionary];
         
         for (NSDictionary *node in [json valueForKey:@"nodes"]) {
-            //NSLog(@"nodes %@", [node objectForKey:@"dn"]);
-            [nodes setValue:node forKey:[node valueForKey:@"id"]];
+
+            SkillNode *skillNode = [[SkillNode alloc] initWithDictionary:node];
+            
+            [skillNodes setValue:skillNode forKey:[node valueForKey:@"id"]];
         }
+        //-- Nodes
+        
+        // Groups
+        
+        //-- Groups        
+        
+
         
     //    NSLog(@"nodes %@", nodes);
 /*
@@ -131,7 +133,7 @@
             
         }
   */
-        NSLog(@"27271 %@", [[nodes objectForKey:[NSNumber numberWithInt:27271]] valueForKey:@"dn"]);
+        //NSLog(@"27271 %@", [[nodes objectForKey:[NSNumber numberWithInt:27271]] valueForKey:@"dn"]);
 
         
         for (NSString *key in [json valueForKey:@"groups"]) {

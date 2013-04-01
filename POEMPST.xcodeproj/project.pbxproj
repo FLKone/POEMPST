@@ -35,6 +35,8 @@
 		CAA1EF6217080080002BF206 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF6117080080002BF206 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CAA1EF6417082025002BF206 /* KeystoneFrameAllocated.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA1EF6317082025002BF206 /* KeystoneFrameAllocated.png */; };
 		CAA1EF681709F74B002BF206 /* SkillIcons.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF671709F74B002BF206 /* SkillIcons.m */; };
+		CAA1EF6C170A038D002BF206 /* SkillNode.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF6B170A038D002BF206 /* SkillNode.m */; };
+		CAA1EF6F170A07E2002BF206 /* NodeGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF6E170A07E1002BF206 /* NodeGroup.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +87,10 @@
 		CAA1EF661709F74B002BF206 /* SkillIcons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkillIcons.h; path = Classes/Models/SkillIcons.h; sourceTree = "<group>"; };
 		CAA1EF671709F74B002BF206 /* SkillIcons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SkillIcons.m; path = Classes/Models/SkillIcons.m; sourceTree = "<group>"; };
 		CAA1EF691709F850002BF206 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
+		CAA1EF6A170A038D002BF206 /* SkillNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkillNode.h; path = Classes/Models/SkillNode.h; sourceTree = "<group>"; };
+		CAA1EF6B170A038D002BF206 /* SkillNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SkillNode.m; path = Classes/Models/SkillNode.m; sourceTree = "<group>"; };
+		CAA1EF6D170A07E1002BF206 /* NodeGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NodeGroup.h; path = Classes/Models/NodeGroup.h; sourceTree = "<group>"; };
+		CAA1EF6E170A07E1002BF206 /* NodeGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NodeGroup.m; path = Classes/Models/NodeGroup.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +241,10 @@
 			children = (
 				CAA1EF661709F74B002BF206 /* SkillIcons.h */,
 				CAA1EF671709F74B002BF206 /* SkillIcons.m */,
+				CAA1EF6A170A038D002BF206 /* SkillNode.h */,
+				CAA1EF6B170A038D002BF206 /* SkillNode.m */,
+				CAA1EF6D170A07E1002BF206 /* NodeGroup.h */,
+				CAA1EF6E170A07E1002BF206 /* NodeGroup.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -324,6 +334,8 @@
 				CAA1EF281707F2FF002BF206 /* RegexKitLite.m in Sources */,
 				CAA1EF6217080080002BF206 /* JSONKit.m in Sources */,
 				CAA1EF681709F74B002BF206 /* SkillIcons.m in Sources */,
+				CAA1EF6C170A038D002BF206 /* SkillNode.m in Sources */,
+				CAA1EF6F170A07E2002BF206 /* NodeGroup.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

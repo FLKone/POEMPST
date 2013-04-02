@@ -28,13 +28,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 
-    //NSArray *arrayFaceNames = [NSArray arrayWithObjects:@"centermarauder", @"centerranger", @"centerwitch", @"centerduelist", @"centertemplar", @"centershadow", nil];
-    //NSArray *arrayCharName = [NSArray arrayWithObjects:@"MARAUDER", @"RANGER", @"WITCH", @"DUELIST", @"TEMPLAR", @"SIX", nil];
 
-    NSDictionary *dicoNodeBackgrounds =         [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"PSSkillFrame", @"NotableFrameUnallocated", @"KeystoneFrameUnallocated", nil]
-                                                                            forKeys:[NSArray arrayWithObjects:@"normal", @"notable", @"keystone", nil]];
-    NSDictionary *dicoNodeBackgroundsActive =         [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"PSSkillFrameActive", @"NotableFrameAllocated", @"KeystoneFrameAllocated", nil]
-                                                                            forKeys:[NSArray arrayWithObjects:@"normal", @"notable", @"keystone", nil]];
+    
     
     NSURL *clientURL = [[NSBundle mainBundle] URLForResource:@"passive-skill-tree" withExtension:@"html"];
     
@@ -43,6 +38,17 @@
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
 
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        // tempiVAR
+        int characterClassID = 0;
+        NSArray *arrayFaceNames = [NSArray arrayWithObjects:@"centermarauder", @"centerranger", @"centerwitch", @"centerduelist", @"centertemplar", @"centershadow", nil];
+        NSArray *arrayCharName = [NSArray arrayWithObjects:@"MARAUDER", @"RANGER", @"WITCH", @"DUELIST", @"TEMPLAR", @"SIX", nil];
+        NSDictionary *dicoNodeBackgrounds =         [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"PSSkillFrame", @"NotableFrameUnallocated", @"KeystoneFrameUnallocated", nil]
+                                                                                forKeys:[NSArray arrayWithObjects:@"normal", @"notable", @"keystone", nil]];
+        NSDictionary *dicoNodeBackgroundsActive =         [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"PSSkillFrameActive", @"NotableFrameAllocated", @"KeystoneFrameAllocated", nil]
+                                                                                      forKeys:[NSArray arrayWithObjects:@"normal", @"notable", @"keystone", nil]];
+        //-- tempiVAR
+        
         
         NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         
@@ -71,12 +77,16 @@
         
         DataString *ss = [[DataString alloc] init];
         [ss setDataString:theData];
-        int o = [ss readInt:0];
-        int u = [ss readInt8];
+        int o = [ss readInt:0]; //ver
+        int u = [ss readInt8];  //char
         int a = 0;
         o > 0 && (a = [ss readInt8]);
         
-        NSMutableArray *f = [NSMutableArray array];
+        NSLog(@"%d", u);
+        characterClassID = u;
+        
+        
+        NSMutableArray *f = [NSMutableArray array]; //skills
         while ([ss hasData]) {
             [f addObject:[NSNumber numberWithInteger:[ss readInt16]]];
         }
@@ -166,6 +176,12 @@
 
             SkillNode *skillNode = [[SkillNode alloc] initWithDictionary:node];
             [skillNodes setValue:skillNode forKey:[node valueForKey:@"id"]];
+            
+            // START NODES
+            if ([arrayCharName indexOfObject:[node valueForKey:@"dn"]] != NSNotFound) {
+                NSLog(@"%@ %@ %@", [node valueForKey:@"id"], [node valueForKey:@"dn"], [node valueForKey:@"g"]);
+            }
+            
         }
         //-- Nodes
         
@@ -285,55 +301,73 @@
             }
             //-- BACKGROUNDS LAYER
             
+            /*
+            
             // SKILLS LAYER
-            
-//            NSLog(@"%@", iconInactiveSkills.skillPositions);
-
-            
-            NSLog(@"BEGIN");
             float icontype;
+            NSMutableDictionary *spritesUnited = [NSMutableDictionary dictionary];
+            
+            
             
             for (NSString *key in skillNodes) {
-                //NSLog(@"SN");
-                SkillNode *sn = [skillNodes objectForKey:key];
                 
-                icontype = sn.isMastery ? 2.61f : (sn.isKeystone ? 2.61f : (sn.isNotable ? 2.61f : 2.1f));
-                //icontype = 2.61f;
-                CGRect rect = CGRectFromString([[[iconInactiveSkills.skillPositions objectForKey:[sn icon]] allValues] objectAtIndex:0]);
 
-                UIImage *sprite = [iconInactiveSkills.images objectForKey:[[[iconInactiveSkills.skillPositions objectForKey:[sn icon]] allKeys] objectAtIndex:0]];
-                                
-                CGImageRef cgIcon = CGImageCreateWithImageInRect(sprite.CGImage, rect);
                 
-                UIImage *icon = [UIImage imageWithCGImage:cgIcon];
-                CGImageRelease(cgIcon);
+                SkillNode *sn = [skillNodes objectForKey:key];
+
                 
-                CGSize targetSize = CGSizeMake(icon.size.width * icontype,  icon.size.height * icontype); //2.8 MASTERY
+                if ([spritesUnited objectForKey:[[[iconInactiveSkills.skillPositions objectForKey:[sn icon]] allKeys] objectAtIndex:0]] && [[spritesUnited objectForKey:[[[iconInactiveSkills.skillPositions objectForKey:[sn icon]] allKeys] objectAtIndex:0]] objectForKey:[sn icon]]) {
+
+                }
+                else
+                {
+                    
+                    icontype = sn.isMastery ? 2.61f : (sn.isKeystone ? 2.61f : (sn.isNotable ? 2.61f : 2.1f));
+                    //icontype = 2.61f;
+                    CGRect rect = CGRectFromString([[[iconInactiveSkills.skillPositions objectForKey:[sn icon]] allValues] objectAtIndex:0]);
+
+                    UIImage *sprite = [iconInactiveSkills.images objectForKey:[[[iconInactiveSkills.skillPositions objectForKey:[sn icon]] allKeys] objectAtIndex:0]];
+                                    
+                    CGImageRef cgIcon = CGImageCreateWithImageInRect(sprite.CGImage, rect);
+                    
+                    UIImage *icon = [UIImage imageWithCGImage:cgIcon];
+                    CGImageRelease(cgIcon);
+                    
+                    CGSize targetSize = CGSizeMake(icon.size.width * icontype,  icon.size.height * icontype); //2.8 MASTERY
+                    
+                    UIGraphicsBeginImageContext(targetSize); // this will crop
+                    
+                    CGRect newSize = CGRectZero;
+                    //thumbnailRect.origin = thumbnailPoint;
+                    newSize.size.width  = targetSize.width;
+                    newSize.size.height = targetSize.height;
+                    
+                    [icon drawInRect:newSize];
+                    
+                    newImage = UIGraphicsGetImageFromCurrentImageContext();
+                    
+                    //pop the context to get back to the default
+                    UIGraphicsEndImageContext();
+
+                    if ([spritesUnited objectForKey:[[[iconInactiveSkills.skillPositions objectForKey:[sn icon]] allKeys] objectAtIndex:0]]) {
+                        [[spritesUnited objectForKey:[[[iconInactiveSkills.skillPositions objectForKey:[sn icon]] allKeys] objectAtIndex:0]] setObject:newImage forKey:[sn icon]];
+                    }
+                    else {
+                        [spritesUnited setObject:[NSMutableDictionary dictionaryWithObject:newImage forKey:[sn icon]]
+                                          forKey:[[[iconInactiveSkills.skillPositions objectForKey:[sn icon]] allKeys] objectAtIndex:0]];
+                    }
+                     
+                }
                 
-                UIGraphicsBeginImageContext(targetSize); // this will crop
+
                 
-                CGRect newSize = CGRectZero;
-                //thumbnailRect.origin = thumbnailPoint;
-                newSize.size.width  = targetSize.width;
-                newSize.size.height = targetSize.height;
-                
-                [icon drawInRect:newSize];
-                
-                newImage = UIGraphicsGetImageFromCurrentImageContext();
-                
-                //pop the context to get back to the default
-                UIGraphicsEndImageContext();
-                
-                
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:newImage];
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:[[spritesUnited objectForKey:[[[iconInactiveSkills.skillPositions objectForKey:[sn icon]] allKeys] objectAtIndex:0]] objectForKey:[sn icon]]];
                 imageView.center = CGPointMake(sn.Position.x + fullX/2, sn.Position.y + fullY/2);
                 [self.containerView addSubview:imageView];
                 
                 //NSLog(@"%@ = %f %f %f %f", key, rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
                 
             }
-            
-            NSLog(@"END");
             
             NSMutableArray *snImages = [NSMutableArray arrayWithObjects:
                                         [((Asset *)[assets objectForKey:[dicoNodeBackgrounds objectForKey:@"normal"]]) UIImage],
@@ -346,19 +380,8 @@
             int j;
             for (j = 0; j < [snImages count]; j++) {
                 UIImage *object = [snImages objectAtIndex:j];
-                /*
-                if (j == 0 || j == 1) {
-                    icontype = 2.6f;
-                }
-                else if (j == 2 || j == 4) {
-                    icontype = 2.6f;
 
-                }
-                else if (j == 3 || j == 5) {
-                    icontype = 2.6f;
-                    
-                }
-                */
+                
                 icontype = 2.61f;
                 CGSize targetSize = CGSizeMake(object.size.width * icontype, object.size.height * icontype);
                 
@@ -379,8 +402,6 @@
                 [snImages replaceObjectAtIndex:j withObject:newImage];
                 
             }
-            
-            
             
             for (NSString *key in skillNodes) {
                 
@@ -408,9 +429,7 @@
                 
             }
             //-- SKILLS LAYER            
-
-            
-            
+            */
             // Tell the scroll view the size of the contents
             self.scrollView.contentSize = containerSize;
             

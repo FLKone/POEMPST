@@ -17,6 +17,9 @@ typedef enum {
 
 #endif
 
+#define SkillSpriteID 10000000
+#define SkillOverlayID 1
+
 //Vendor
 #import "AFNetworking.h"
 #import "RegexKitLite.h"

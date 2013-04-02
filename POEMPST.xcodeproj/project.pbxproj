@@ -42,6 +42,7 @@
 		CAA1EF79170A590A002BF206 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF78170A590A002BF206 /* NSData+Base64.m */; };
 		CAA1EF7C170A5F2B002BF206 /* base64.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF7B170A5F2B002BF206 /* base64.m */; };
 		CAA1EF80170A6568002BF206 /* DataString.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF7F170A6568002BF206 /* DataString.m */; };
+		CAA1EF8D170B9748002BF206 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA1EF8C170B9748002BF206 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -106,6 +107,7 @@
 		CAA1EF7B170A5F2B002BF206 /* base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = base64.m; path = vendor/base64.m; sourceTree = "<group>"; };
 		CAA1EF7E170A6568002BF206 /* DataString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataString.h; path = Classes/Helper/DataString.h; sourceTree = "<group>"; };
 		CAA1EF7F170A6568002BF206 /* DataString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataString.m; path = Classes/Helper/DataString.m; sourceTree = "<group>"; };
+		CAA1EF8C170B9748002BF206 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 				CAA1EED41707E5AF002BF206 /* CoreGraphics.framework in Frameworks */,
 				CAA1EF241707EED1002BF206 /* SystemConfiguration.framework in Frameworks */,
 				CAA1EF201707EE76002BF206 /* MobileCoreServices.framework in Frameworks */,
+				CAA1EF8D170B9748002BF206 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,6 +147,7 @@
 		CAA1EECE1707E5AF002BF206 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CAA1EF8C170B9748002BF206 /* QuartzCore.framework */,
 				CAA1EF231707EED1002BF206 /* SystemConfiguration.framework */,
 				CAA1EF1F1707EE76002BF206 /* MobileCoreServices.framework */,
 				CAA1EECF1707E5AF002BF206 /* UIKit.framework */,

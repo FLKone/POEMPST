@@ -39,6 +39,7 @@
 		CAA1EF6F170A07E2002BF206 /* NodeGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF6E170A07E1002BF206 /* NodeGroup.m */; };
 		CAA1EF72170A237C002BF206 /* Asset.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF71170A237C002BF206 /* Asset.m */; };
 		CAA1EF76170A4765002BF206 /* UIImage+WBImage.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF75170A4765002BF206 /* UIImage+WBImage.m */; };
+		CAA1EF79170A590A002BF206 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF78170A590A002BF206 /* NSData+Base64.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -97,6 +98,8 @@
 		CAA1EF71170A237C002BF206 /* Asset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Asset.m; path = Classes/Models/Asset.m; sourceTree = "<group>"; };
 		CAA1EF74170A4765002BF206 /* UIImage+WBImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+WBImage.h"; path = "vendor/UIImage+WBImage.h"; sourceTree = "<group>"; };
 		CAA1EF75170A4765002BF206 /* UIImage+WBImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+WBImage.m"; path = "vendor/UIImage+WBImage.m"; sourceTree = "<group>"; };
+		CAA1EF77170A590A002BF206 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Base64.h"; path = "vendor/NSData+Base64.h"; sourceTree = "<group>"; };
+		CAA1EF78170A590A002BF206 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Base64.m"; path = "vendor/NSData+Base64.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +196,8 @@
 				CAA1EEF91707EC5D002BF206 /* AFNetworking */,
 				CAA1EF74170A4765002BF206 /* UIImage+WBImage.h */,
 				CAA1EF75170A4765002BF206 /* UIImage+WBImage.m */,
+				CAA1EF77170A590A002BF206 /* NSData+Base64.h */,
+				CAA1EF78170A590A002BF206 /* NSData+Base64.m */,
 			);
 			name = Vendor;
 			sourceTree = "<group>";
@@ -348,6 +353,7 @@
 				CAA1EF6F170A07E2002BF206 /* NodeGroup.m in Sources */,
 				CAA1EF72170A237C002BF206 /* Asset.m in Sources */,
 				CAA1EF76170A4765002BF206 /* UIImage+WBImage.m in Sources */,
+				CAA1EF79170A590A002BF206 /* NSData+Base64.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

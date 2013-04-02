@@ -7,6 +7,8 @@
 //
 
 #import "SkillNode.h"
+#include <math.h>
+#include <stdio.h>
 
 @implementation SkillNode
 
@@ -37,16 +39,19 @@
 
 - (NSString *)description {
 
-    return [NSString stringWithFormat:@"\r%d\r%@\r%d\r%d\r%@\r%d\r%@\r%d\r%d\r%d\r%d\r%d\r%d", self.id, self.icon, self.isKeystone, self.isNotable, self.name, self.isMastery, [self.attributes description], self.g, self.orbit, self.orbitIndex, self.sa, self.da, self.ia];
+    return [NSString stringWithFormat:@"id = %d\r%@\r%d\r%d\r%@\r%d\r%@\r%d\r%d\r%d\r%d\r%d\r%d\r%@", self.id, self.icon, self.isKeystone, self.isNotable, self.name, self.isMastery, [self.attributes description], self.g, self.orbit, self.orbitIndex, self.sa, self.da, self.ia, [self.nodeGroup description]];
 }
 
 -(CGPoint)Position {
 
-    return CGPointMake(0, 0);
+    double d = orbitRadii[self.orbit];
+    double b = ( 2 * M_PI * self.orbitIndex / skillsPerOrbit[self.orbit]);
+    
+    return CGPointMake((self.nodeGroup.position.x - ( d * sin(-b) ) ), (self.nodeGroup.position.y - ( d * cos(-b) ) ));
 }
 
 -(double)Arc {
-    return 0.0f;
+    return ( 2 * M_PI * self.orbitIndex / skillsPerOrbit[self.orbit]);
 }
 
 @end

@@ -1,7 +1,7 @@
 // WBImage.mm -- extra UIImage methods
 // by allen brunson  march 29 2009
 
-#include "UIImage+WBImage.h"
+#import "UIImage+WBImage.h"
 
 static inline CGFloat degreesToRadians(CGFloat degrees)
 {

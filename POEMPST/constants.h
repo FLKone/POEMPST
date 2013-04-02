@@ -22,9 +22,16 @@ typedef enum {
 #import "RegexKitLite.h"
 #import "JSONKit.h"
 
+#import "UIImage+WBImage.h"
+#import "NSData+Base64.h"
+#import "base64.h"
+
+//Helper
+#import "DataString.h"
+
 //Models
 #import "SkillIcons.h"
 #import "SkillNode.h"
 #import "NodeGroup.h"
 #import "Asset.h"
-#include "UIImage+WBImage.h"
+

@@ -40,8 +40,10 @@ static NSString *urlPath = @"http://www.pathofexile.com/image/build-gen/passive-
 		}
         
         //NSLog(@"path %@", [diskAssetsCachePath stringByAppendingPathComponent:key]);
-        [self.images setValue:[diskAssetsCachePath stringByAppendingPathComponent:key] forKey:key];
+        [self.images setValue:[UIImage imageWithContentsOfFile:[diskAssetsCachePath stringByAppendingPathComponent:key]] forKey:key];
 		
+        //self.UIImage = [UIImage imageWithContentsOfFile:self.localPath];
+
     }
     
     //NSLog(@"self.images %@", self.images);

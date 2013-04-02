@@ -28,6 +28,14 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 
+    //NSArray *arrayFaceNames = [NSArray arrayWithObjects:@"centermarauder", @"centerranger", @"centerwitch", @"centerduelist", @"centertemplar", @"centershadow", nil];
+    //NSArray *arrayCharName = [NSArray arrayWithObjects:@"MARAUDER", @"RANGER", @"WITCH", @"DUELIST", @"TEMPLAR", @"SIX", nil];
+
+    NSDictionary *dicoNodeBackgrounds =         [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"PSSkillFrame", @"NotableFrameUnallocated", @"KeystoneFrameUnallocated", nil]
+                                                                            forKeys:[NSArray arrayWithObjects:@"normal", @"notable", @"keystone", nil]];
+    NSDictionary *dicoNodeBackgroundsActive =         [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"PSSkillFrameActive", @"NotableFrameAllocated", @"KeystoneFrameAllocated", nil]
+                                                                            forKeys:[NSArray arrayWithObjects:@"normal", @"notable", @"keystone", nil]];
+    
     NSURL *clientURL = [[NSBundle mainBundle] URLForResource:@"passive-skill-tree" withExtension:@"html"];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:clientURL];
@@ -46,14 +54,33 @@
         JSData = [JSData substringWithRange: r];
         NSDictionary* json = [JSData objectFromJSONString];
 
-        // URL
+        // LOAD URL
         NSString *siteUrl = @"http://www.pathofexile.com/passive-skill-tree/";
-        NSString *loadUrl = @"http://www.pathofexile.com/passive-skill-tree/AAAAAgEAIQIhVTTyOQ5XDWoecD57jIk_qXO-rtIh2WHcPd6W6hg=";
+        NSString *loadUrl = @"http://www.pathofexile.com/passive-skill-tree/AAAAAgUABVs8BUbXi4yf3-Fz7SDvfA==";
         
         NSString *s = [[[loadUrl stringByReplacingOccurrencesOfString:siteUrl withString:@""] stringByReplacingOccurrencesOfString:@"-" withString:@"+"] stringByReplacingOccurrencesOfString:@"_" withString:@"/"];
-        NSLog(@"s %@", s);
-        //-- URL
+
+        NSString *stringValue = s;
+        Byte inputData[[stringValue lengthOfBytesUsingEncoding:NSUTF8StringEncoding]];//prepare a Byte[]
+        [[stringValue dataUsingEncoding:NSUTF8StringEncoding] getBytes:inputData];//get the pointer of the data
+        size_t inputDataSize = (size_t)[stringValue length];
+        size_t outputDataSize = EstimateBas64DecodedDataSize(inputDataSize);//calculate the decoded data size
+        Byte outputData[outputDataSize];//prepare a Byte[] for the decoded data
+        Base64DecodeData(inputData, inputDataSize, outputData, &outputDataSize);//decode the data
+        NSData *theData = [[NSData alloc] initWithBytes:outputData length:outputDataSize];//create a NSData object from the decoded data
         
+        DataString *ss = [[DataString alloc] init];
+        [ss setDataString:theData];
+        int o = [ss readInt:0];
+        int u = [ss readInt8];
+        int a = 0;
+        o > 0 && (a = [ss readInt8]);
+        
+        NSMutableArray *f = [NSMutableArray array];
+        while ([ss hasData]) {
+            [f addObject:[NSNumber numberWithInteger:[ss readInt16]]];
+        }
+        //-- URL
         
         // Skill Sprites
         SkillIcons *iconActiveSkills = [[SkillIcons alloc] init];
@@ -64,11 +91,13 @@
             if ([key rangeOfString:@"Inactive"].location != NSNotFound) {
                 continue;
             }
-
+            
             NSDictionary *jobj = [[[json valueForKey:@"skillSprites"] objectForKey:key] objectAtIndex:3];
             NSString *filename = [jobj objectForKey:@"filename"];
             
             [iconActiveSkills.images setValue:@"" forKey:filename];
+            
+            NSLog(@"%@ = %@", filename, key);
             
             for (NSString *key2 in [jobj objectForKey:@"coords"]) {
                 
@@ -93,6 +122,8 @@
 
             [iconInactiveSkills.images setValue:@"" forKey:filename];
             
+            NSLog(@"%@ = %@", filename, key);
+            
             for (NSString *key2 in [jobj objectForKey:@"coords"]) {
                 
                 NSDictionary *jobj2 = [[jobj objectForKey:@"coords"] objectForKey:key2];
@@ -105,8 +136,13 @@
             
         }
 
+
+        
         [iconActiveSkills OpenOrDownloadImages];
         [iconInactiveSkills OpenOrDownloadImages];
+        
+        NSLog(@"%@", iconInactiveSkills.images);
+        NSLog(@"%@", iconActiveSkills.images);
         //-- Skill Sprites        
         
         // Assets
@@ -142,8 +178,24 @@
             NodeGroup *nodeGroup = [[NodeGroup alloc] initWithDictionary:group andId:[key intValue]];
             [nodeGroups setValue:nodeGroup forKey:key];
         }
+        
+        for (NSString *key in nodeGroups) {
+            //NSLog(@"===== key %@", key);
+            NodeGroup *ng = [nodeGroups objectForKey:key];
+            
+
+            
+            for (NSString *key2 in ng.nodes) {
+                
+                [[skillNodes objectForKey:key2] setNodeGroup:ng];
+                                
+                //NSLog(@"key2 %@", key2);
+            }
+        }
         //-- Groups
 
+        //NSLog(@"%@", skillNodes);
+        
         float min_x = [[json objectForKey:@"min_x"] floatValue];
         float min_y = [[json objectForKey:@"min_y"] floatValue];
         float max_x = [[json objectForKey:@"max_x"] floatValue];
@@ -154,6 +206,7 @@
         [[NSOperationQueue mainQueue] addOperationWithBlock:^ {
             
             float fullX, fullY;
+            //fullX = (float)(abs(min_x) + abs(max_x));
             fullX = (float)(MAX(abs(min_x),abs(max_x))*2.1);
             fullY = (float)(MAX(abs(min_y),abs(max_y))*2.1);
             //fullY = (float)(abs(minY) + abs(maxY));
@@ -188,7 +241,7 @@
             for (i = 0; i < [ngImages count]; i++) {
                 UIImage *object = [ngImages objectAtIndex:i];
                 
-                CGSize targetSize = CGSizeMake(object.size.width*2.65, object.size.height*2.65);
+                CGSize targetSize = CGSizeMake(object.size.width*2.61f, object.size.height*2.61f); //2.65;
 
                 UIGraphicsBeginImageContext(targetSize); // this will crop
                 
@@ -213,7 +266,7 @@
             for (NSString *key in nodeGroups) {
 
                 NodeGroup *ng = [nodeGroups objectForKey:key];
-
+                
                 NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.intValue <= 3"];
                 NSArray *filteredArray = [ng.occupiedOrbites.allKeys filteredArrayUsingPredicate:predicate];
                 int cgrp = filteredArray.count;
@@ -234,7 +287,126 @@
             
             // SKILLS LAYER
             
+//            NSLog(@"%@", iconInactiveSkills.skillPositions);
+
             
+            NSLog(@"BEGIN");
+            float icontype;
+            
+            for (NSString *key in skillNodes) {
+                //NSLog(@"SN");
+                SkillNode *sn = [skillNodes objectForKey:key];
+                
+                icontype = sn.isMastery ? 2.61f : (sn.isKeystone ? 2.61f : (sn.isNotable ? 2.61f : 2.1f));
+                //icontype = 2.61f;
+                CGRect rect = CGRectFromString([[[iconInactiveSkills.skillPositions objectForKey:[sn icon]] allValues] objectAtIndex:0]);
+
+                UIImage *sprite = [iconInactiveSkills.images objectForKey:[[[iconInactiveSkills.skillPositions objectForKey:[sn icon]] allKeys] objectAtIndex:0]];
+                                
+                CGImageRef cgIcon = CGImageCreateWithImageInRect(sprite.CGImage, rect);
+                
+                UIImage *icon = [UIImage imageWithCGImage:cgIcon];
+                CGImageRelease(cgIcon);
+                
+                CGSize targetSize = CGSizeMake(icon.size.width * icontype,  icon.size.height * icontype); //2.8 MASTERY
+                
+                UIGraphicsBeginImageContext(targetSize); // this will crop
+                
+                CGRect newSize = CGRectZero;
+                //thumbnailRect.origin = thumbnailPoint;
+                newSize.size.width  = targetSize.width;
+                newSize.size.height = targetSize.height;
+                
+                [icon drawInRect:newSize];
+                
+                newImage = UIGraphicsGetImageFromCurrentImageContext();
+                
+                //pop the context to get back to the default
+                UIGraphicsEndImageContext();
+                
+                
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:newImage];
+                imageView.center = CGPointMake(sn.Position.x + fullX/2, sn.Position.y + fullY/2);
+                [self.containerView addSubview:imageView];
+                
+                //NSLog(@"%@ = %f %f %f %f", key, rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+                
+            }
+            
+            NSLog(@"END");
+            
+            NSMutableArray *snImages = [NSMutableArray arrayWithObjects:
+                                        [((Asset *)[assets objectForKey:[dicoNodeBackgrounds objectForKey:@"normal"]]) UIImage],
+                                        [((Asset *)[assets objectForKey:[dicoNodeBackgroundsActive objectForKey:@"normal"]]) UIImage],
+                                        [((Asset *)[assets objectForKey:[dicoNodeBackgrounds objectForKey:@"keystone"]]) UIImage],
+                                        [((Asset *)[assets objectForKey:[dicoNodeBackgrounds objectForKey:@"notable"]]) UIImage],
+                                        [((Asset *)[assets objectForKey:[dicoNodeBackgroundsActive objectForKey:@"keystone"]]) UIImage],
+                                        [((Asset *)[assets objectForKey:[dicoNodeBackgroundsActive objectForKey:@"notable"]]) UIImage], nil];
+            
+            int j;
+            for (j = 0; j < [snImages count]; j++) {
+                UIImage *object = [snImages objectAtIndex:j];
+                /*
+                if (j == 0 || j == 1) {
+                    icontype = 2.6f;
+                }
+                else if (j == 2 || j == 4) {
+                    icontype = 2.6f;
+
+                }
+                else if (j == 3 || j == 5) {
+                    icontype = 2.6f;
+                    
+                }
+                */
+                icontype = 2.61f;
+                CGSize targetSize = CGSizeMake(object.size.width * icontype, object.size.height * icontype);
+                
+                UIGraphicsBeginImageContext(targetSize); // this will crop
+                
+                CGRect newSize = CGRectZero;
+                //thumbnailRect.origin = thumbnailPoint;
+                newSize.size.width  = targetSize.width;
+                newSize.size.height = targetSize.height;
+                
+                [object drawInRect:newSize];
+                
+                newImage = UIGraphicsGetImageFromCurrentImageContext();
+                
+                //pop the context to get back to the default
+                UIGraphicsEndImageContext();
+                
+                [snImages replaceObjectAtIndex:j withObject:newImage];
+                
+            }
+            
+            
+            
+            for (NSString *key in skillNodes) {
+                
+                SkillNode *sn = [skillNodes objectForKey:key];
+                
+                if (sn.isMastery) {
+                    continue;
+                }
+                
+                if (sn.isNotable) {
+                    UIImageView *imageView = [[UIImageView alloc] initWithImage:[snImages objectAtIndex:3]];
+                    imageView.center = CGPointMake(sn.Position.x + fullX/2, sn.Position.y + fullY/2);
+                    [self.containerView addSubview:imageView];
+                }
+                else if (sn.isKeystone) {
+                    UIImageView *imageView = [[UIImageView alloc] initWithImage:[snImages objectAtIndex:2]];
+                    imageView.center = CGPointMake(sn.Position.x + fullX/2, sn.Position.y + fullY/2);
+                    [self.containerView addSubview:imageView];
+                }
+                else {
+                    UIImageView *imageView = [[UIImageView alloc] initWithImage:[snImages objectAtIndex:0]];
+                    imageView.center = CGPointMake(sn.Position.x + fullX/2, sn.Position.y + fullY/2);
+                    [self.containerView addSubview:imageView];
+                }
+                
+            }
             //-- SKILLS LAYER            
 
             
@@ -247,12 +419,10 @@
             CGFloat scaleWidth = scrollViewFrame.size.width / self.scrollView.contentSize.width;
             CGFloat scaleHeight = scrollViewFrame.size.height / self.scrollView.contentSize.height;
             CGFloat minScale = MIN(scaleWidth, scaleHeight);
-            
-            //NSLog(@"%f", minScale);
-            
+                        
             self.scrollView.minimumZoomScale = minScale;
-            self.scrollView.maximumZoomScale = 0.3835f;//0.3f;
-            self.scrollView.zoomScale = 0.3835f;
+            self.scrollView.maximumZoomScale = 0.3835f;
+            self.scrollView.zoomScale = minScale;
             
             [self centerScrollViewContents];
             

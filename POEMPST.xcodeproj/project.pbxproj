@@ -40,6 +40,8 @@
 		CAA1EF72170A237C002BF206 /* Asset.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF71170A237C002BF206 /* Asset.m */; };
 		CAA1EF76170A4765002BF206 /* UIImage+WBImage.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF75170A4765002BF206 /* UIImage+WBImage.m */; };
 		CAA1EF79170A590A002BF206 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF78170A590A002BF206 /* NSData+Base64.m */; };
+		CAA1EF7C170A5F2B002BF206 /* base64.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF7B170A5F2B002BF206 /* base64.m */; };
+		CAA1EF80170A6568002BF206 /* DataString.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF7F170A6568002BF206 /* DataString.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -100,6 +102,10 @@
 		CAA1EF75170A4765002BF206 /* UIImage+WBImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+WBImage.m"; path = "vendor/UIImage+WBImage.m"; sourceTree = "<group>"; };
 		CAA1EF77170A590A002BF206 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Base64.h"; path = "vendor/NSData+Base64.h"; sourceTree = "<group>"; };
 		CAA1EF78170A590A002BF206 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Base64.m"; path = "vendor/NSData+Base64.m"; sourceTree = "<group>"; };
+		CAA1EF7A170A5F2A002BF206 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = base64.h; path = vendor/base64.h; sourceTree = "<group>"; };
+		CAA1EF7B170A5F2B002BF206 /* base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = base64.m; path = vendor/base64.m; sourceTree = "<group>"; };
+		CAA1EF7E170A6568002BF206 /* DataString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataString.h; path = Classes/Helper/DataString.h; sourceTree = "<group>"; };
+		CAA1EF7F170A6568002BF206 /* DataString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataString.m; path = Classes/Helper/DataString.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +164,7 @@
 				CAA1EF291707F81D002BF206 /* ViewController_iPad.xib */,
 				CAA1EF2A1707F81D002BF206 /* ViewController_iPhone.xib */,
 				CAA1EF651709F68C002BF206 /* Models */,
+				CAA1EF7D170A64FC002BF206 /* Helper */,
 				CAA1EEF81707EBA6002BF206 /* Vendor */,
 				CAA1EEF51707EAD6002BF206 /* Test Files */,
 				CAA1EED61707E5AF002BF206 /* Supporting Files */,
@@ -196,6 +203,8 @@
 				CAA1EEF91707EC5D002BF206 /* AFNetworking */,
 				CAA1EF74170A4765002BF206 /* UIImage+WBImage.h */,
 				CAA1EF75170A4765002BF206 /* UIImage+WBImage.m */,
+				CAA1EF7A170A5F2A002BF206 /* base64.h */,
+				CAA1EF7B170A5F2B002BF206 /* base64.m */,
 				CAA1EF77170A590A002BF206 /* NSData+Base64.h */,
 				CAA1EF78170A590A002BF206 /* NSData+Base64.m */,
 			);
@@ -262,6 +271,15 @@
 				CAA1EF71170A237C002BF206 /* Asset.m */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		CAA1EF7D170A64FC002BF206 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				CAA1EF7E170A6568002BF206 /* DataString.h */,
+				CAA1EF7F170A6568002BF206 /* DataString.m */,
+			);
+			name = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -354,6 +372,8 @@
 				CAA1EF72170A237C002BF206 /* Asset.m in Sources */,
 				CAA1EF76170A4765002BF206 /* UIImage+WBImage.m in Sources */,
 				CAA1EF79170A590A002BF206 /* NSData+Base64.m in Sources */,
+				CAA1EF7C170A5F2B002BF206 /* base64.m in Sources */,
+				CAA1EF80170A6568002BF206 /* DataString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

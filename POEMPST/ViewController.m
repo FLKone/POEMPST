@@ -46,6 +46,15 @@
         JSData = [JSData substringWithRange: r];
         NSDictionary* json = [JSData objectFromJSONString];
 
+        // URL
+        NSString *siteUrl = @"http://www.pathofexile.com/passive-skill-tree/";
+        NSString *loadUrl = @"http://www.pathofexile.com/passive-skill-tree/AAAAAgEAIQIhVTTyOQ5XDWoecD57jIk_qXO-rtIh2WHcPd6W6hg=";
+        
+        NSString *s = [[[loadUrl stringByReplacingOccurrencesOfString:siteUrl withString:@""] stringByReplacingOccurrencesOfString:@"-" withString:@"+"] stringByReplacingOccurrencesOfString:@"_" withString:@"/"];
+        NSLog(@"s %@", s);
+        //-- URL
+        
+        
         // Skill Sprites
         SkillIcons *iconActiveSkills = [[SkillIcons alloc] init];
         SkillIcons *iconInactiveSkills = [[SkillIcons alloc] init];
@@ -154,8 +163,8 @@
             CGSize containerSize = CGSizeMake(fullX, fullY);
             
             self.containerView = [[UIView alloc] initWithFrame:(CGRect){.origin=CGPointMake(0.0f, 0.0f), .size=containerSize}];
-            //UIColor *backgroundColor = [[UIColor alloc] initWithPatternImage:[((Asset *)[assets objectForKey:@"Background1"]) UIImage]];
-            //self.containerView.backgroundColor = backgroundColor;
+            UIColor *backgroundColor = [[UIColor alloc] initWithPatternImage:[((Asset *)[assets objectForKey:@"Background1"]) UIImage]];
+            self.containerView.backgroundColor = backgroundColor;
             
             [self.scrollView addSubview:self.containerView];
 
@@ -178,8 +187,6 @@
             int i;
             for (i = 0; i < [ngImages count]; i++) {
                 UIImage *object = [ngImages objectAtIndex:i];
-                
-                NSLog(@"%f %f", object.size.width, object.size.height);
                 
                 CGSize targetSize = CGSizeMake(object.size.width*2.65, object.size.height*2.65);
 

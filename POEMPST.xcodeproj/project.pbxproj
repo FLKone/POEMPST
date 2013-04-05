@@ -43,6 +43,7 @@
 		CAA1EF7C170A5F2B002BF206 /* base64.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF7B170A5F2B002BF206 /* base64.m */; };
 		CAA1EF80170A6568002BF206 /* DataString.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF7F170A6568002BF206 /* DataString.m */; };
 		CAA1EF8D170B9748002BF206 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA1EF8C170B9748002BF206 /* QuartzCore.framework */; };
+		CABC3A87170F8CC40073A015 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = CABC3A86170F8CC40073A015 /* Default-Landscape~ipad.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -108,6 +109,7 @@
 		CAA1EF7E170A6568002BF206 /* DataString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataString.h; path = Classes/Helper/DataString.h; sourceTree = "<group>"; };
 		CAA1EF7F170A6568002BF206 /* DataString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataString.m; path = Classes/Helper/DataString.m; sourceTree = "<group>"; };
 		CAA1EF8C170B9748002BF206 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		CABC3A86170F8CC40073A015 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +195,7 @@
 		CAA1EEF51707EAD6002BF206 /* Test Files */ = {
 			isa = PBXGroup;
 			children = (
+				CABC3A86170F8CC40073A015 /* Default-Landscape~ipad.png */,
 				CAA1EF6317082025002BF206 /* KeystoneFrameAllocated.png */,
 				CAA1EEF61707EAEA002BF206 /* passive-skill-tree.html */,
 			);
@@ -346,6 +349,7 @@
 				CAA1EF2B1707F81D002BF206 /* ViewController_iPad.xib in Resources */,
 				CAA1EF2C1707F81D002BF206 /* ViewController_iPhone.xib in Resources */,
 				CAA1EF6417082025002BF206 /* KeystoneFrameAllocated.png in Resources */,
+				CABC3A87170F8CC40073A015 /* Default-Landscape~ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

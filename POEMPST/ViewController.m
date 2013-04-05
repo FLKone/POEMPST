@@ -232,11 +232,11 @@
             CGSize containerSize = CGSizeMake(fullX, fullY);
             
             self.containerView = [[UIView alloc] initWithFrame:(CGRect){.origin=CGPointMake(0.0f, 0.0f), .size=containerSize}];
-            UIColor *backgroundColor = [[UIColor alloc] initWithPatternImage:[((Asset *)[assets objectForKey:@"Background1"]) UIImage]];
-            self.containerView.backgroundColor = backgroundColor;
-            
             [self.scrollView addSubview:self.containerView];
 
+            UIColor *backgroundColor = [[UIColor alloc] initWithPatternImage:[((Asset *)[assets objectForKey:@"Background1"]) UIImage]];
+            self.scrollView.backgroundColor = backgroundColor;
+            
             // BACKGROUNDS LAYER
             NSMutableArray *ngImages = [NSMutableArray arrayWithObjects:  [((Asset *)[assets objectForKey:@"PSGroupBackground1"]) UIImage],
                                                             [((Asset *)[assets objectForKey:@"PSGroupBackground2"]) UIImage],

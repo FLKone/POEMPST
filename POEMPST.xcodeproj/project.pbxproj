@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA41BE9D170FB7A500C0E1D2 /* SkillTreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA41BE9C170FB7A500C0E1D2 /* SkillTreeView.m */; };
 		CAA1EED01707E5AF002BF206 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA1EECF1707E5AF002BF206 /* UIKit.framework */; };
 		CAA1EED21707E5AF002BF206 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA1EED11707E5AF002BF206 /* Foundation.framework */; };
 		CAA1EED41707E5AF002BF206 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA1EED31707E5AF002BF206 /* CoreGraphics.framework */; };
@@ -47,6 +48,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CA41BE9B170FB7A500C0E1D2 /* SkillTreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkillTreeView.h; path = Classes/Views/SkillTreeView.h; sourceTree = "<group>"; };
+		CA41BE9C170FB7A500C0E1D2 /* SkillTreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SkillTreeView.m; path = Classes/Views/SkillTreeView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CAA1EECC1707E5AF002BF206 /* POEMPST.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = POEMPST.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAA1EECF1707E5AF002BF206 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CAA1EED11707E5AF002BF206 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -61,7 +64,7 @@
 		CAA1EEE31707E5AF002BF206 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		CAA1EEE51707E5AF002BF206 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		CAA1EEE71707E5AF002BF206 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		CAA1EEE81707E5AF002BF206 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		CAA1EEE81707E5AF002BF206 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CAA1EEF61707EAEA002BF206 /* passive-skill-tree.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "passive-skill-tree.html"; sourceTree = "<group>"; };
 		CAA1EEFA1707EC5D002BF206 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		CAA1EEFB1707EC5D002BF206 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
@@ -129,6 +132,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CA41BE9E170FB7AC00C0E1D2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CA41BE9B170FB7A500C0E1D2 /* SkillTreeView.h */,
+				CA41BE9C170FB7A500C0E1D2 /* SkillTreeView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		CAA1EEC31707E5AE002BF206 = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +181,7 @@
 				CAA1EEE81707E5AF002BF206 /* ViewController.m */,
 				CAA1EF291707F81D002BF206 /* ViewController_iPad.xib */,
 				CAA1EF2A1707F81D002BF206 /* ViewController_iPhone.xib */,
+				CA41BE9E170FB7AC00C0E1D2 /* Views */,
 				CAA1EF651709F68C002BF206 /* Models */,
 				CAA1EF7D170A64FC002BF206 /* Helper */,
 				CAA1EEF81707EBA6002BF206 /* Vendor */,
@@ -382,6 +395,7 @@
 				CAA1EF79170A590A002BF206 /* NSData+Base64.m in Sources */,
 				CAA1EF7C170A5F2B002BF206 /* base64.m in Sources */,
 				CAA1EF80170A6568002BF206 /* DataString.m in Sources */,
+				CA41BE9D170FB7A500C0E1D2 /* SkillTreeView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

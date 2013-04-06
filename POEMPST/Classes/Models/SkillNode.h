@@ -46,7 +46,7 @@ static float orbitRadii[] =     {0.0f   , 83.5f , 163.0f    , 336.0f    , 489.0f
 @property int sa; //sa
 @property int da; //da
 @property int ia; //ia
-//out -- TODO
+@property (nonatomic, strong) NSArray *linksID; //out
 
 @property (nonatomic, strong) NodeGroup *nodeGroup;
 

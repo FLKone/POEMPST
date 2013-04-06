@@ -31,6 +31,7 @@
         self.sa = [[dictionary objectForKey:@"sa"] integerValue]; //sa
         self.da = [[dictionary objectForKey:@"da"] integerValue]; //da
         self.ia = [[dictionary objectForKey:@"ia"] integerValue]; //ia
+        self.linksID = [dictionary objectForKey:@"out"];
         //out -- TODO
         
     }

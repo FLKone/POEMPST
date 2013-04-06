@@ -35,6 +35,16 @@
 												   attributes:nil
 														error:NULL];
 	}
+    
+	NSString *diskDataLayerCachePath = [diskDataCachePath stringByAppendingPathComponent:@"Layers"];
+	
+	if (![[NSFileManager defaultManager] fileExistsAtPath:diskDataLayerCachePath])
+	{
+		[[NSFileManager defaultManager] createDirectoryAtPath:diskDataLayerCachePath
+								  withIntermediateDirectories:YES
+												   attributes:nil
+														error:NULL];
+	}
     // DIRECTORIES
     
     

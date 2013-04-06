@@ -19,6 +19,8 @@ typedef enum {
 
 #define SkillSpriteID 10000000
 #define SkillOverlayID 1
+#define Zoom 2.61f
+#define MiniScale 2
 
 //Vendor
 #import "AFNetworking.h"
@@ -31,6 +33,7 @@ typedef enum {
 
 //Helper
 #import "DataString.h"
+#import "UIView+Image.h"
 
 //Models
 #import "SkillIcons.h"

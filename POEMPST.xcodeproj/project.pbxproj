@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA2FF91E170FCD3E003DA79B /* UIView+Image.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2FF91D170FCD3E003DA79B /* UIView+Image.m */; };
 		CA41BE9D170FB7A500C0E1D2 /* SkillTreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA41BE9C170FB7A500C0E1D2 /* SkillTreeView.m */; };
 		CAA1EED01707E5AF002BF206 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA1EECF1707E5AF002BF206 /* UIKit.framework */; };
 		CAA1EED21707E5AF002BF206 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA1EED11707E5AF002BF206 /* Foundation.framework */; };
@@ -48,6 +49,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CA2FF91C170FCD3E003DA79B /* UIView+Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Image.h"; path = "Classes/Helper/UIView+Image.h"; sourceTree = "<group>"; };
+		CA2FF91D170FCD3E003DA79B /* UIView+Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Image.m"; path = "Classes/Helper/UIView+Image.m"; sourceTree = "<group>"; };
 		CA41BE9B170FB7A500C0E1D2 /* SkillTreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkillTreeView.h; path = Classes/Views/SkillTreeView.h; sourceTree = "<group>"; };
 		CA41BE9C170FB7A500C0E1D2 /* SkillTreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SkillTreeView.m; path = Classes/Views/SkillTreeView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CAA1EECC1707E5AF002BF206 /* POEMPST.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = POEMPST.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -298,6 +301,8 @@
 			children = (
 				CAA1EF7E170A6568002BF206 /* DataString.h */,
 				CAA1EF7F170A6568002BF206 /* DataString.m */,
+				CA2FF91C170FCD3E003DA79B /* UIView+Image.h */,
+				CA2FF91D170FCD3E003DA79B /* UIView+Image.m */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -396,6 +401,7 @@
 				CAA1EF7C170A5F2B002BF206 /* base64.m in Sources */,
 				CAA1EF80170A6568002BF206 /* DataString.m in Sources */,
 				CA41BE9D170FB7A500C0E1D2 /* SkillTreeView.m in Sources */,
+				CA2FF91E170FCD3E003DA79B /* UIView+Image.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

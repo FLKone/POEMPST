@@ -52,8 +52,8 @@
         float max_y = [[json objectForKey:@"max_y"] floatValue];
 
         float fullX, fullY;
-        fullX = (float)(MAX(abs(min_x),abs(max_x))*2.1);
-        fullY = (float)(MAX(abs(min_y),abs(max_y))*2.1);
+        fullX = (float)(MAX(abs(min_x),abs(max_x))*2.1)/Zoom/MiniScale;
+        fullY = (float)(MAX(abs(min_y),abs(max_y))*2.1)/Zoom/MiniScale;
         
         NSLog(@"%f %f", fullX, fullY);
         
@@ -74,7 +74,7 @@
         self.scrollView.backgroundColor = [UIColor greenColor];
         
         self.scrollView.minimumZoomScale = minScale;
-        self.scrollView.maximumZoomScale = 0.3835f;
+        self.scrollView.maximumZoomScale = 1;//0.3835f;
         self.scrollView.zoomScale = minScale;
         
         [self centerScrollViewContents];

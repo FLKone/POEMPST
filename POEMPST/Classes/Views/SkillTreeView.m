@@ -239,78 +239,103 @@
         
         UIColor *backgroundColor = [[UIColor alloc] initWithPatternImage:[((Asset *)[assets objectForKey:@"Background1"]) UIImage]];
         self.backgroundColor = backgroundColor;
+
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+        NSString *diskDataLayerBackgroundCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data/Layers/background.png"];
+
+        UIImage *layerBackgroundIMAGE;
         
         // BACKGROUNDS LAYER
-        NSMutableArray *ngImages = [NSMutableArray arrayWithObjects:  [((Asset *)[assets objectForKey:@"PSGroupBackground1"]) UIImage],
-                                    [((Asset *)[assets objectForKey:@"PSGroupBackground2"]) UIImage],
-                                    [((Asset *)[assets objectForKey:@"PSGroupBackground3"]) UIImage], nil];
-        
-        // BACKGROUND 3 transformation
-        UIImage *PSG2 = [ngImages objectAtIndex:2];
-        UIImage *PSG2r = [PSG2 rotate:UIImageOrientationDownMirrored];
-        CGSize newSize = CGSizeMake(PSG2.size.width, PSG2.size.height*2);
-        UIGraphicsBeginImageContext( newSize );
-        [PSG2 drawInRect:CGRectMake(0,0,PSG2.size.width,PSG2.size.height)];
-        [PSG2r drawInRect:CGRectMake(0,PSG2.size.height,PSG2.size.width,PSG2.size.height)];
-        UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        [ngImages replaceObjectAtIndex:2 withObject:newImage];
-        
-        int i;
-        for (i = 0; i < [ngImages count]; i++) {
-            UIImage *object = [ngImages objectAtIndex:i];
+        if (![fileManager fileExistsAtPath:diskDataLayerBackgroundCachePath])
+        {
+            UIView *layerBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 0, fullX/Zoom/MiniScale, fullY/Zoom/MiniScale)];
+            layerBackground.backgroundColor = [UIColor clearColor];
             
-            CGSize targetSize = CGSizeMake(object.size.width*2.61f, object.size.height*2.61f); //2.65;
+            NSMutableArray *ngImages = [NSMutableArray arrayWithObjects:  [((Asset *)[assets objectForKey:@"PSGroupBackground1"]) UIImage],
+                                        [((Asset *)[assets objectForKey:@"PSGroupBackground2"]) UIImage],
+                                        [((Asset *)[assets objectForKey:@"PSGroupBackground3"]) UIImage], nil];
             
-            UIGraphicsBeginImageContext(targetSize); // this will crop
-            
-            CGRect newSize = CGRectZero;
-            //thumbnailRect.origin = thumbnailPoint;
-            newSize.size.width  = targetSize.width;
-            newSize.size.height = targetSize.height;
-            
-            [object drawInRect:newSize];
-            
-            newImage = UIGraphicsGetImageFromCurrentImageContext();
-            
-            //pop the context to get back to the default
+            // BACKGROUND 3 transformation
+            UIImage *PSG2 = [ngImages objectAtIndex:2];
+            UIImage *PSG2r = [PSG2 rotate:UIImageOrientationDownMirrored];
+            CGSize newSize = CGSizeMake(PSG2.size.width, PSG2.size.height*2);
+            UIGraphicsBeginImageContext( newSize );
+            [PSG2 drawInRect:CGRectMake(0,0,PSG2.size.width,PSG2.size.height)];
+            [PSG2r drawInRect:CGRectMake(0,PSG2.size.height,PSG2.size.width,PSG2.size.height)];
+            UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
+            [ngImages replaceObjectAtIndex:2 withObject:newImage];
             
-            [ngImages replaceObjectAtIndex:i withObject:newImage];
+            int i;
+            for (i = 0; i < [ngImages count]; i++) {
+                UIImage *object = [ngImages objectAtIndex:i];
+                
+                CGSize targetSize = CGSizeMake(object.size.width/MiniScale, object.size.height/MiniScale); //2.65;
+                
+                UIGraphicsBeginImageContext(targetSize); // this will crop
+                
+                CGRect newSize = CGRectZero;
+                //thumbnailRect.origin = thumbnailPoint;
+                newSize.size.width  = targetSize.width;
+                newSize.size.height = targetSize.height;
+                
+                [object drawInRect:newSize];
+                
+                newImage = UIGraphicsGetImageFromCurrentImageContext();
+                
+                //pop the context to get back to the default
+                UIGraphicsEndImageContext();
+                
+                [ngImages replaceObjectAtIndex:i withObject:newImage];
+                
+                
+            }
+            //-- BACKGROUND 3 transformation
             
-            
-        }
-        //-- BACKGROUND 3 transformation
-        
-        for (NSString *key in nodeGroups) {
-            
-            NodeGroup *ng = [nodeGroups objectForKey:key];
-            
-            // START NODES
-            if ([skillFaceGroups indexOfObject:[NSNumber numberWithInt:ng.id]] != NSNotFound) {
-                continue;
+            for (NSString *key in nodeGroups) {
+                
+                NodeGroup *ng = [nodeGroups objectForKey:key];
+                
+                // START NODES
+                if ([skillFaceGroups indexOfObject:[NSNumber numberWithInt:ng.id]] != NSNotFound) {
+                    continue;
+                }
+                
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.intValue <= 3"];
+                NSArray *filteredArray = [ng.occupiedOrbites.allKeys filteredArrayUsingPredicate:predicate];
+                int cgrp = filteredArray.count;
+                if (cgrp == 0) continue;
+                
+                NSNumber *maxr = [filteredArray valueForKeyPath:@"@max.intValue"];
+                int maxri = [maxr intValue];
+                if (maxri == 0) continue;
+                
+                maxri = maxri > 3 ? 2 : maxri - 1;
+                
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:[ngImages objectAtIndex:maxri]];
+                imageView.center = CGPointMake((ng.position.x + fullX/2)/Zoom/MiniScale, (ng.position.y + fullY/2)/Zoom/MiniScale);
+                [layerBackground addSubview:imageView];
+                
             }
             
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.intValue <= 3"];
-            NSArray *filteredArray = [ng.occupiedOrbites.allKeys filteredArrayUsingPredicate:predicate];
-            int cgrp = filteredArray.count;
-            if (cgrp == 0) continue;
-            
-            NSNumber *maxr = [filteredArray valueForKeyPath:@"@max.intValue"];
-            int maxri = [maxr intValue];
-            if (maxri == 0) continue;
-            
-            maxri = maxri > 3 ? 2 : maxri - 1;
-            
-            UIImageView *imageView = [[UIImageView alloc] initWithImage:[ngImages objectAtIndex:maxri]];
-            imageView.center = CGPointMake(ng.position.x + fullX/2, ng.position.y + fullY/2);
-            [self addSubview:imageView];
+            layerBackgroundIMAGE = [layerBackground capture];
+            //[UIImageJPEGRepresentation(layerBackgroundIMAGE, 0.8) writeToFile:diskDataLayerBackgroundCachePath atomically:YES];
+            [UIImagePNGRepresentation(layerBackgroundIMAGE) writeToFile:diskDataLayerBackgroundCachePath atomically:YES];
             
         }
+        else
+        {
+            layerBackgroundIMAGE = [UIImage imageWithContentsOfFile:diskDataLayerBackgroundCachePath];
+        }
+        
+        [self addSubview:[[UIImageView alloc] initWithImage:layerBackgroundIMAGE]];
         //-- BACKGROUNDS LAYER
-        
         NSDate *then2 = [NSDate date];
+
         
+        /*
         
         // SKILLS LAYER
         float icontype;
@@ -357,9 +382,6 @@
                 continue;
                 //[skillFaceGroups addObject:[node valueForKey:@"g"]];
             }
-            
-            
-            continue;
             
             if ([spritesUnited objectForKey:[[[iconInactiveSkills.skillPositions objectForKey:[sn icon]] allKeys] objectAtIndex:0]] && [[spritesUnited objectForKey:[[[iconInactiveSkills.skillPositions objectForKey:[sn icon]] allKeys] objectAtIndex:0]] objectForKey:[sn icon]]) {
                 
@@ -426,10 +448,10 @@
             //NSLog(@"%@ = %f %f %f %f", key, rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
             
         }
-        
+        */
         NSDate *then3 = [NSDate date];
 
-        
+        /*
         NSMutableArray *snImages = [NSMutableArray arrayWithObjects:
                                     [((Asset *)[assets objectForKey:[dicoNodeBackgrounds objectForKey:@"normal"]]) UIImage],
                                     [((Asset *)[assets objectForKey:[dicoNodeBackgroundsActive objectForKey:@"normal"]]) UIImage],
@@ -497,11 +519,13 @@
             }
             
         }
+         */
         //-- SKILLS LAYER
          NSDate *then3final = [NSDate date];
 
-        /*
+        
         // ACTIVE SKILLS
+        /*
         NSMutableDictionary *spritesUnitedActive = [NSMutableDictionary dictionary];
         
         for (NSString *key in self.skillNodes) {
@@ -562,7 +586,9 @@
             [skillView setImage:[[spritesUnitedActive objectForKey:[[[iconActiveSkills.skillPositions objectForKey:[sn icon]] allKeys] objectAtIndex:0]] objectForKey:[sn icon]]];
             
         }
-        // ACTIVE SKILLS
+        
+        
+       
         
         
         
@@ -594,10 +620,11 @@
             skillView.image = newImage;
             
         }
-        
-        
-        //-- CONNECTIONS
         */
+        //-- ACTIVE SKILLS
+        
+        
+        
         
         NSLog(@"FINISH INIT");
         NSDate *last = [NSDate date];
@@ -637,6 +664,8 @@
         [path strokeWithBlendMode:kCGBlendModeNormal alpha:1.0];
         
     }
+  
+  //-- CONNECTIONS
  
  // Drawing code
  //[myPath stroke];

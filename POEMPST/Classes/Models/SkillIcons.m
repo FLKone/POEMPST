@@ -48,4 +48,9 @@ static NSString *urlPath = @"http://www.pathofexile.com/image/build-gen/passive-
     
     //NSLog(@"self.images %@", self.images);
 }
+
+- (NSString *)description {
+    
+    return [NSString stringWithFormat:@"%@\r%@", self.skillPositions, self.images];
+}
 @end

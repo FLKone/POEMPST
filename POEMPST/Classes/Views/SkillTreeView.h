@@ -7,11 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
+@class SkillLinksView;
+@class SkillIcons;
 
 @interface SkillTreeView : UIView
 
+@property (strong, nonatomic) SkillLinksView *skillLinksView;
+
 @property (strong, nonatomic) NSMutableDictionary *skillNodes;
 @property (strong, nonatomic) NSMutableArray *skillLinks;
+@property (strong, nonatomic) NSMutableDictionary *assets;
+@property (strong, nonatomic) NSMutableDictionary *nodeGroups;
+@property (strong, nonatomic) NSMutableArray *skillFaceGroups;
+@property (strong, nonatomic) NSArray *arrayCharName;
+@property (strong, nonatomic) SkillIcons *iconActiveSkills;
+@property (strong, nonatomic) SkillIcons *iconInactiveSkills;
+
+@property int characterClassID;
+
 
 @property float fullX;
 @property float fullY;

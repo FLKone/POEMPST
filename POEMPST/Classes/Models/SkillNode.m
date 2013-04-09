@@ -52,6 +52,7 @@
 }
 
 -(double)Arc {
+    //NSLog(@"self.orbitIndex %d / skillsPerOrbit[self.orbit] %f - self.orbit %d", self.orbitIndex, skillsPerOrbit[self.orbit], self.orbit);
     return ( 2 * M_PI * self.orbitIndex / skillsPerOrbit[self.orbit]);
 }
 

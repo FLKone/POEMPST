@@ -9,9 +9,6 @@
 #import <Foundation/Foundation.h>
 @class NodeGroup;
 
-static float skillsPerOrbit[] = {1.0f   , 6.0f  , 12.0f     , 12.0f     , 12.0f};
-static float orbitRadii[] =     {0.0f   , 83.5f , 163.0f    , 336.0f    , 489.0f};
-
 @interface SkillNode : NSObject
 
 /*

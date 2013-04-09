@@ -28,7 +28,7 @@
     NSLog(@"viewDidLoad");
     [super viewDidLoad];
     
-    NSURL *clientURL = [[NSBundle mainBundle] URLForResource:@"passive-skill-tree" withExtension:@"html"];
+    NSURL *clientURL = [[NSBundle mainBundle] URLForResource:@"passive-skill-tree-v2" withExtension:@"html"];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:clientURL];
     
@@ -36,49 +36,52 @@
     
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        
-        NSString *regex = @"var passiveSkillTreeData(.*)";
-        
-        NSString *JSData = [[responseString stringByMatching:regex] stringByReplacingOccurrencesOfString:@"\\/" withString:@"/"];
-        
-        NSRange r = NSMakeRange(27, JSData.length - 27 - 1);
-        JSData = [JSData substringWithRange: r];
-        NSDictionary *json = [JSData objectFromJSONString];
-        
-        float min_x = [[json objectForKey:@"min_x"] floatValue];
-        float min_y = [[json objectForKey:@"min_y"] floatValue];
-        float max_x = [[json objectForKey:@"max_x"] floatValue];
-        float max_y = [[json objectForKey:@"max_y"] floatValue];
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^ {
+            
+            NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+            
+            NSString *regex = @"var passiveSkillTreeData(.*)";
+            
+            NSString *JSData = [[responseString stringByMatching:regex] stringByReplacingOccurrencesOfString:@"\\/" withString:@"/"];
+            
+            NSRange r = NSMakeRange(27, JSData.length - 27 - 1);
+            JSData = [JSData substringWithRange: r];
+            NSDictionary *json = [JSData objectFromJSONString];
+            
+            float min_x = [[json objectForKey:@"min_x"] floatValue];
+            float min_y = [[json objectForKey:@"min_y"] floatValue];
+            float max_x = [[json objectForKey:@"max_x"] floatValue];
+            float max_y = [[json objectForKey:@"max_y"] floatValue];
 
-        float fullX, fullY;
-        fullX = (float)(MAX(abs(min_x),abs(max_x))*2.1)/Zoom/MiniScale;
-        fullY = (float)(MAX(abs(min_y),abs(max_y))*2.1)/Zoom/MiniScale;
-        
-        NSLog(@"%f %f", fullX, fullY);
-        
-        // Set up the container view to hold your custom view hierarchy
-        CGSize containerSize = CGSizeMake(fullX, fullY);
-        self.containerView = [[SkillTreeView alloc] initWithFrame:(CGRect){.origin=CGPointMake(0.0f, 0.0f), .size=containerSize} andJSON:(NSDictionary *)json];
-        [self.scrollView addSubview:self.containerView];
-        
-        // Tell the scroll view the size of the contents
-        self.scrollView.contentSize = containerSize;
-        
-        // Set up the minimum & maximum zoom scales
-        CGRect scrollViewFrame = self.scrollView.frame;
-        CGFloat scaleWidth = scrollViewFrame.size.width / self.scrollView.contentSize.width;
-        CGFloat scaleHeight = scrollViewFrame.size.height / self.scrollView.contentSize.height;
-        CGFloat minScale = MIN(scaleWidth, scaleHeight);
-        
-        self.scrollView.backgroundColor = [UIColor greenColor];
-        
-        self.scrollView.minimumZoomScale = minScale;
-        self.scrollView.maximumZoomScale = 1;//0.3835f;
-        self.scrollView.zoomScale = minScale;
-        
-        [self centerScrollViewContents];
-        
+            float fullX, fullY;
+            fullX = (float)(MAX(abs(min_x),abs(max_x))*2.1)/Zoom/MiniScale;
+            fullY = (float)(MAX(abs(min_y),abs(max_y))*2.1)/Zoom/MiniScale;
+            
+            NSLog(@"%f %f", fullX, fullY);
+            
+            // Set up the container view to hold your custom view hierarchy
+            CGSize containerSize = CGSizeMake(fullX, fullY);
+            self.containerView = [[SkillTreeView alloc] initWithFrame:(CGRect){.origin=CGPointMake(0.0f, 0.0f), .size=containerSize} andJSON:(NSDictionary *)json];
+            [self.scrollView addSubview:self.containerView];
+            
+            // Tell the scroll view the size of the contents
+            self.scrollView.contentSize = containerSize;
+            
+            // Set up the minimum & maximum zoom scales
+            CGRect scrollViewFrame = self.scrollView.frame;
+            CGFloat scaleWidth = scrollViewFrame.size.width / self.scrollView.contentSize.width;
+            CGFloat scaleHeight = scrollViewFrame.size.height / self.scrollView.contentSize.height;
+            CGFloat minScale = MIN(scaleWidth, scaleHeight);
+            
+            UIColor *backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background1.png"]];
+            self.scrollView.backgroundColor = backgroundColor;
+            
+            self.scrollView.minimumZoomScale = minScale;
+            self.scrollView.maximumZoomScale = 2;//0.3835f;
+            self.scrollView.zoomScale = minScale;
+            
+            [self centerScrollViewContents];
+        }];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);

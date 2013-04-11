@@ -15,4 +15,8 @@
 
 - (id)initWithFrame:(CGRect)frame andLinks:(NSMutableArray *)links andSkills:(NSMutableDictionary *)nodes;
 - (void)load;
+-(void)disableLinks:(NSArray *)linkToDisable;
+- (void)activateLinks:(NSArray *)linkToActivate;
+- (void)highlightLinks:(NSArray *)linkToActivate;
+
 @end

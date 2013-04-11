@@ -50,6 +50,12 @@
 		CAA1EF80170A6568002BF206 /* DataString.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF7F170A6568002BF206 /* DataString.m */; };
 		CAA1EF8D170B9748002BF206 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA1EF8C170B9748002BF206 /* QuartzCore.framework */; };
 		CABC3A87170F8CC40073A015 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = CABC3A86170F8CC40073A015 /* Default-Landscape~ipad.png */; };
+		CAF636AF1716441900D91EB4 /* SkillTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF636AE1716441900D91EB4 /* SkillTouchView.m */; };
+		CAF636BC1716827600D91EB4 /* PESGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF636B31716827600D91EB4 /* PESGraph.m */; };
+		CAF636BD1716827600D91EB4 /* PESGraphEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF636B51716827600D91EB4 /* PESGraphEdge.m */; };
+		CAF636BE1716827600D91EB4 /* PESGraphNode.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF636B71716827600D91EB4 /* PESGraphNode.m */; };
+		CAF636BF1716827600D91EB4 /* PESGraphRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF636B91716827600D91EB4 /* PESGraphRoute.m */; };
+		CAF636C01716827600D91EB4 /* PESGraphRouteStep.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF636BB1716827600D91EB4 /* PESGraphRouteStep.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -126,6 +132,18 @@
 		CAA1EF7F170A6568002BF206 /* DataString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataString.m; path = Classes/Helper/DataString.m; sourceTree = "<group>"; };
 		CAA1EF8C170B9748002BF206 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CABC3A86170F8CC40073A015 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
+		CAF636AD1716441900D91EB4 /* SkillTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkillTouchView.h; path = Classes/Views/SkillTouchView.h; sourceTree = "<group>"; };
+		CAF636AE1716441900D91EB4 /* SkillTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SkillTouchView.m; path = Classes/Views/SkillTouchView.m; sourceTree = "<group>"; };
+		CAF636B21716827600D91EB4 /* PESGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PESGraph.h; sourceTree = "<group>"; };
+		CAF636B31716827600D91EB4 /* PESGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PESGraph.m; sourceTree = "<group>"; };
+		CAF636B41716827600D91EB4 /* PESGraphEdge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PESGraphEdge.h; sourceTree = "<group>"; };
+		CAF636B51716827600D91EB4 /* PESGraphEdge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PESGraphEdge.m; sourceTree = "<group>"; };
+		CAF636B61716827600D91EB4 /* PESGraphNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PESGraphNode.h; sourceTree = "<group>"; };
+		CAF636B71716827600D91EB4 /* PESGraphNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PESGraphNode.m; sourceTree = "<group>"; };
+		CAF636B81716827600D91EB4 /* PESGraphRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PESGraphRoute.h; sourceTree = "<group>"; };
+		CAF636B91716827600D91EB4 /* PESGraphRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PESGraphRoute.m; sourceTree = "<group>"; };
+		CAF636BA1716827600D91EB4 /* PESGraphRouteStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PESGraphRouteStep.h; sourceTree = "<group>"; };
+		CAF636BB1716827600D91EB4 /* PESGraphRouteStep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PESGraphRouteStep.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +172,8 @@
 				CA2FF920170FE7F3003DA79B /* SkillLinksView.m */,
 				CA2FF922170FF347003DA79B /* SkillLinkView.h */,
 				CA2FF923170FF347003DA79B /* SkillLinkView.m */,
+				CAF636AD1716441900D91EB4 /* SkillTouchView.h */,
+				CAF636AE1716441900D91EB4 /* SkillTouchView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -237,6 +257,7 @@
 		CAA1EEF81707EBA6002BF206 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				CAF636B01716827600D91EB4 /* PESGraph */,
 				CAA1EF5F17080080002BF206 /* JSONKit */,
 				CAA1EF251707F2FF002BF206 /* RegexKitLite */,
 				CAA1EEF91707EC5D002BF206 /* AFNetworking */,
@@ -321,6 +342,24 @@
 				CA2FF91D170FCD3E003DA79B /* UIView+Image.m */,
 			);
 			name = Helper;
+			sourceTree = "<group>";
+		};
+		CAF636B01716827600D91EB4 /* PESGraph */ = {
+			isa = PBXGroup;
+			children = (
+				CAF636B21716827600D91EB4 /* PESGraph.h */,
+				CAF636B31716827600D91EB4 /* PESGraph.m */,
+				CAF636B41716827600D91EB4 /* PESGraphEdge.h */,
+				CAF636B51716827600D91EB4 /* PESGraphEdge.m */,
+				CAF636B61716827600D91EB4 /* PESGraphNode.h */,
+				CAF636B71716827600D91EB4 /* PESGraphNode.m */,
+				CAF636B81716827600D91EB4 /* PESGraphRoute.h */,
+				CAF636B91716827600D91EB4 /* PESGraphRoute.m */,
+				CAF636BA1716827600D91EB4 /* PESGraphRouteStep.h */,
+				CAF636BB1716827600D91EB4 /* PESGraphRouteStep.m */,
+			);
+			name = PESGraph;
+			path = vendor/PESGraph;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -422,6 +461,12 @@
 				CA2FF91E170FCD3E003DA79B /* UIView+Image.m in Sources */,
 				CA2FF921170FE7F3003DA79B /* SkillLinksView.m in Sources */,
 				CA2FF924170FF347003DA79B /* SkillLinkView.m in Sources */,
+				CAF636AF1716441900D91EB4 /* SkillTouchView.m in Sources */,
+				CAF636BC1716827600D91EB4 /* PESGraph.m in Sources */,
+				CAF636BD1716827600D91EB4 /* PESGraphEdge.m in Sources */,
+				CAF636BE1716827600D91EB4 /* PESGraphNode.m in Sources */,
+				CAF636BF1716827600D91EB4 /* PESGraphRoute.m in Sources */,
+				CAF636C01716827600D91EB4 /* PESGraphRouteStep.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -54,10 +54,10 @@
             float max_y = [[json objectForKey:@"max_y"] floatValue];
 
             float fullX, fullY;
-            fullX = (float)(MAX(abs(min_x),abs(max_x))*2.1)/Zoom/MiniScale;
-            fullY = (float)(MAX(abs(min_y),abs(max_y))*2.1)/Zoom/MiniScale;
+            fullX = (float)(MAX(abs(min_x),abs(max_x))*2.15)/Zoom/MiniScale;
+            fullY = (float)(MAX(abs(min_y),abs(max_y))*2.15)/Zoom/MiniScale;
             
-            NSLog(@"%f %f", fullX, fullY);
+            //NSLog(@"%f %f", fullX, fullY);
             
             // Set up the container view to hold your custom view hierarchy
             CGSize containerSize = CGSizeMake(fullX, fullY);
@@ -77,7 +77,7 @@
             self.scrollView.backgroundColor = backgroundColor;
             
             self.scrollView.minimumZoomScale = minScale;
-            self.scrollView.maximumZoomScale = 2;//0.3835f;
+            self.scrollView.maximumZoomScale = 1;//0.3835f;
             self.scrollView.zoomScale = minScale;
             
             [self centerScrollViewContents];

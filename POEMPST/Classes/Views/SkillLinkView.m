@@ -20,7 +20,7 @@ CGFloat RadiansToDegrees(CGFloat radians)
 
 @implementation SkillLinkView
 
-@synthesize startPoint, endPoint;
+@synthesize startPoint, endPoint, isActivated, isHighlighted;
 
 - (id)initWithFrame:(CGRect)frame andStartNode:(SkillNode *)n1 andEndNode:(SkillNode *)n2 andFullSize:(CGSize)gSize
 {
@@ -28,6 +28,8 @@ CGFloat RadiansToDegrees(CGFloat radians)
     if (self) {
         // Initialization code
         
+        self.isActivated = NO;
+        self.isHighlighted = NO;
         CGPoint startP = CGPointMake(([n1 Position].x + gSize.width*Zoom*MiniScale/2)/Zoom/MiniScale,
                              ([n1 Position].y + gSize.height*Zoom*MiniScale/2)/Zoom/MiniScale);
         
@@ -82,29 +84,9 @@ CGFloat RadiansToDegrees(CGFloat radians)
         self.clipsToBounds = NO;
         self.backgroundColor=[UIColor clearColor];
         myPath=[[UIBezierPath alloc]init];
-        //myPath.lineCapStyle=kCGLineCapRound;
-        //myPath.miterLimit=0;
         myPath.lineWidth=2;
-        
-        float radius;
-        /*
-        if (n1.id == 50636) {
-            brushPattern=[UIColor redColor];
-            radius = 15;
-        }
-        else if (n1.id == 1338) {
-            brushPattern=[UIColor blueColor];
-            radius = 10;
-        }
-        else
-         )*/
-        
-        //NSLog(@"skill %d - %d | %@ - %@", n1.id, n2.id, n1.name, n2.name);
-        
-        brushPattern=[UIColor brownColor];
-        
-        //self.layer.borderColor = [UIColor whiteColor].CGColor;
-        //self.layer.borderWidth = 1.0f;
+                
+        brushPattern=[UIColor colorWithRed:66/255.f green:58/255.f blue:32/255.f alpha:1.00];
         
         if (n1.nodeGroup == n2.nodeGroup && n1.orbit == n2.orbit) {
             CGPoint tmpP = CGPointMake((n1.nodeGroup.position.x + gSize.width*Zoom*MiniScale/2)/Zoom/MiniScale, (n1.nodeGroup.position.y + gSize.height*Zoom*MiniScale/2)/Zoom/MiniScale);
@@ -142,7 +124,7 @@ CGFloat RadiansToDegrees(CGFloat radians)
                     //self.layer.borderWidth = 1.0f;
                                               
                     if (clockwise) {
-                        NSLog(@"cw");
+                        //NSLog(@"cw");
                         
                         okP.y += offsetH;
                         r.origin.y -= offsetH;
@@ -151,7 +133,7 @@ CGFloat RadiansToDegrees(CGFloat radians)
                     }
                     else
                     {
-                        NSLog(@"!cw");
+                       // NSLog(@"!cw");
                         r.size.height += (offsetH + 5);
                     }
                 }
@@ -172,7 +154,7 @@ CGFloat RadiansToDegrees(CGFloat radians)
                 else if (startPoint.x == okP.x)
                 {
                     //ras
-                    NSLog(@"gid2 %d", n1.nodeGroup.id);                    
+                   // NSLog(@"gid2 %d", n1.nodeGroup.id);
                 }
                 else
                 {
@@ -264,6 +246,35 @@ CGFloat RadiansToDegrees(CGFloat radians)
         self.frame = r;
     }
     return self;
+}
+
+- (void)disable {
+    //NSLog(@"disable %d > %d", self.node1.id, self.node2.id);
+    self.isActivated = NO;
+    self.isHighlighted = NO;
+    
+    myPath.lineWidth=2;
+    brushPattern=[UIColor colorWithRed:66/255.f green:58/255.f blue:32/255.f alpha:1.00];
+    [self setNeedsDisplay];
+}
+
+- (void)activate {
+    self.isHighlighted = NO;
+    self.isActivated = YES;
+    
+    brushPattern=[UIColor colorWithRed:173/255.f green:151/255.f blue:107/255.f alpha:1.00];
+    myPath.lineWidth=4;
+    [self setNeedsDisplay];
+}
+
+- (void)highlight {
+    //brushPattern=[UIColor colorWithRed:173/255.f green:151/255.f blue:107/255.f alpha:1.00];
+
+    self.isActivated = NO;
+    self.isHighlighted = YES;
+    
+    brushPattern=[UIColor colorWithRed:135/255.f green:108/255.f blue:63/255.f alpha:1.00];
+    [self setNeedsDisplay];
 }
 
 // Only override drawRect: if you perform custom drawing.

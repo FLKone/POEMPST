@@ -22,6 +22,13 @@
 @property CGPoint endPoint;
 @property CGPoint centerPoint;
 
+@property BOOL isActivated;
+@property BOOL isHighlighted;
+
 - (id)initWithFrame:(CGRect)frame andStartNode:(SkillNode *)n1 andEndNode:(SkillNode *)n2 andFullSize:(CGSize)gSize;
+
+- (void)disable;
+- (void)activate;
+- (void)highlight;
 
 @end

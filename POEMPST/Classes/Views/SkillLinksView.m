@@ -14,7 +14,7 @@
 
 - (id)initWithFrame:(CGRect)frame andLinks:(NSMutableArray *)links andSkills:(NSMutableDictionary *)nodes
 {
-    NSLog(@"initWithFrameandLinksandSkills");
+    //NSLog(@"initWithFrameandLinksandSkills");
 
     self = [super initWithFrame:frame];
     if (self) {
@@ -35,8 +35,8 @@
                                                          andStartNode:[self.skillNodes objectForKey:[link objectAtIndex:0]]
                                                            andEndNode:[self.skillNodes objectForKey:[link objectAtIndex:1]]
                                                           andFullSize:self.frame.size];
-        
-        tmpView.clipsToBounds = NO;
+        tmpView.tag = [self.skillLinks indexOfObject:link]*SkillLinkID;
+        //tmpView.clipsToBounds = NO;
         
         //SkillLinkView *tmpView = [[SkillLinkView alloc] initWithFrame:CGRectZero
         //                                               andStartPoint:CGPointMake(([[self.skillNodes objectForKey:[link objectAtIndex:0]] Position].x + self.frame.size.width*Zoom*MiniScale/2)/Zoom/MiniScale,
@@ -75,6 +75,30 @@
 
     }
      */
+}
+
+-(void)disableLinks:(NSArray *)linkToDisable {
+    for (NSNumber *linkIDX in linkToDisable) {
+        //NSLog(@"linkIDX %@", linkIDX);
+        SkillLinkView *linkView = (SkillLinkView *)[self viewWithTag:([linkIDX intValue] * SkillLinkID)];
+        [linkView disable];
+    }
+}
+
+-(void)activateLinks:(NSArray *)linkToActivate {
+    for (NSNumber *linkIDX in linkToActivate) {
+        //NSLog(@"linkIDX %@", linkIDX);
+        SkillLinkView *linkView = (SkillLinkView *)[self viewWithTag:([linkIDX intValue] * SkillLinkID)];
+        [linkView activate];
+    }
+}
+
+-(void)highlightLinks:(NSArray *)linkToHighlight{
+    for (NSNumber *linkIDX in linkToHighlight) {
+        //NSLog(@"linkIDX %@", linkIDX);
+        SkillLinkView *linkView = (SkillLinkView *)[self viewWithTag:([linkIDX intValue] * SkillLinkID)];
+        [linkView highlight];
+    }
 }
 /*
 // Only override drawRect: if you perform custom drawing.

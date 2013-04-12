@@ -27,7 +27,14 @@
 
 @synthesize  loadFromURLBtn, urlField;
 
--(IBAction) loadURL:(id) sender {
+-(void)selectClass:(id)sender {
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"loadClass" object:sender userInfo:nil];
+    [_menuView setHidden:YES];
+
+}
+
+-(IBAction)loadURL:(id) sender {
     
     NSLog(@"sds");
     if ([self.urlField.text rangeOfString:@"http://www.pathofexile.com/passive-skill-tree/AAAAA"].location == NSNotFound) {
@@ -56,7 +63,8 @@
     [marauderBtn setTitleColor:[UIColor colorWithRed:163/255.f green:141/255.f blue:109/255.f alpha:1.00] forState:UIControlStateNormal];
     [marauderBtn setTitleColor:[UIColor colorWithRed:107/255.f green:93/255.f blue:72/255.f alpha:1.00] forState:UIControlStateHighlighted];
     [marauderBtn setTitleEdgeInsets:UIEdgeInsetsMake(108, -110, 0, 0)];
-
+    [marauderBtn addTarget:self action:@selector(selectClass:) forControlEvents:UIControlEventTouchUpInside];
+    
     UIButton *rangerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     rangerBtn.frame = baseFrame;
     rangerBtn.tag = RANGERBTNID;
@@ -67,7 +75,8 @@
     [rangerBtn setTitleColor:[UIColor colorWithRed:163/255.f green:141/255.f blue:109/255.f alpha:1.00] forState:UIControlStateNormal];
     [rangerBtn setTitleColor:[UIColor colorWithRed:107/255.f green:93/255.f blue:72/255.f alpha:1.00] forState:UIControlStateHighlighted];
     [rangerBtn setTitleEdgeInsets:UIEdgeInsetsMake(108, -110, 0, 0)];
-    
+    [rangerBtn addTarget:self action:@selector(selectClass:) forControlEvents:UIControlEventTouchUpInside];
+
     UIButton *witchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     witchBtn.frame = baseFrame;
     witchBtn.tag = WITCHBTNID;
@@ -78,7 +87,8 @@
     [witchBtn setTitleColor:[UIColor colorWithRed:163/255.f green:141/255.f blue:109/255.f alpha:1.00] forState:UIControlStateNormal];
     [witchBtn setTitleColor:[UIColor colorWithRed:107/255.f green:93/255.f blue:72/255.f alpha:1.00] forState:UIControlStateHighlighted];
     [witchBtn setTitleEdgeInsets:UIEdgeInsetsMake(108, -110, 0, 0)];
-    
+    [witchBtn addTarget:self action:@selector(selectClass:) forControlEvents:UIControlEventTouchUpInside];
+
     UIButton *duelistBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     duelistBtn.frame = baseFrame;
     duelistBtn.tag = DUELISTBTNID;
@@ -89,7 +99,8 @@
     [duelistBtn setTitleColor:[UIColor colorWithRed:163/255.f green:141/255.f blue:109/255.f alpha:1.00] forState:UIControlStateNormal];
     [duelistBtn setTitleColor:[UIColor colorWithRed:107/255.f green:93/255.f blue:72/255.f alpha:1.00] forState:UIControlStateHighlighted];
     [duelistBtn setTitleEdgeInsets:UIEdgeInsetsMake(108, -110, 0, 0)];
-    
+    [duelistBtn addTarget:self action:@selector(selectClass:) forControlEvents:UIControlEventTouchUpInside];
+
     UIButton *templarBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     templarBtn.frame = baseFrame;
     templarBtn.tag = TEMPLARBTNID;
@@ -100,7 +111,8 @@
     [templarBtn setTitleColor:[UIColor colorWithRed:163/255.f green:141/255.f blue:109/255.f alpha:1.00] forState:UIControlStateNormal];
     [templarBtn setTitleColor:[UIColor colorWithRed:107/255.f green:93/255.f blue:72/255.f alpha:1.00] forState:UIControlStateHighlighted];
     [templarBtn setTitleEdgeInsets:UIEdgeInsetsMake(108, -110, 0, 0)];
-    
+    [templarBtn addTarget:self action:@selector(selectClass:) forControlEvents:UIControlEventTouchUpInside];
+
     UIButton *sixBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     sixBtn.frame = baseFrame;
     sixBtn.tag = SIXBTNID;
@@ -111,6 +123,7 @@
     [sixBtn setTitleColor:[UIColor colorWithRed:163/255.f green:141/255.f blue:109/255.f alpha:1.00] forState:UIControlStateNormal];
     [sixBtn setTitleColor:[UIColor colorWithRed:107/255.f green:93/255.f blue:72/255.f alpha:1.00] forState:UIControlStateHighlighted];
     [sixBtn setTitleEdgeInsets:UIEdgeInsetsMake(108, -110, 0, 0)];
+    [sixBtn addTarget:self action:@selector(selectClass:) forControlEvents:UIControlEventTouchUpInside];
 
     [self.menuView addSubview:marauderBtn];
     [self.menuView addSubview:rangerBtn];

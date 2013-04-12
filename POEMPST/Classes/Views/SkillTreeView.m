@@ -45,6 +45,25 @@
     
 }
 
+
+- (void)loadClass:(NSNotification *)sender {
+    NSLog(@"loadClass %@", sender);
+    self.characterClassID = ((UIButton*)sender.object).tag/BTNID;
+    self.activeSkills = [NSMutableArray array];
+    
+    for (NSNumber *skillID in self.skillNodes) {
+        
+        SkillNode *sn = [self.skillNodes objectForKey:skillID];
+        
+        if ([arrayCharName indexOfObject:sn.name] == (self.characterClassID - 1)) {
+            [self.activeSkills addObject:[NSNumber numberWithInt:sn.id]];
+            break;
+        }
+        
+    }
+    [self drawActiveLayer:self.skillLinks];
+}
+
 - (void)loadUrl:(NSNotification *)sender {
     
     NSLog(@"loadUrl %@", sender);
@@ -54,8 +73,6 @@
     }
     else
     {
-
-
         
         // LOAD URL
         NSString *siteUrl = @"http://www.pathofexile.com/passive-skill-tree/";
@@ -136,7 +153,8 @@
         //-- iVAR
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadUrl:) name:@"loadUrl" object:nil];
-                
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadClass:) name:@"loadClass" object:nil];
+        
         NSDate *thenLOADURL = [NSDate date];
         
         // Skill Sprites

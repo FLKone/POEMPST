@@ -25,6 +25,7 @@ typedef enum {
 #define StrokeWidth 10
 #define TouchLayerScale 0.85
 
+#define BTNID           100000000
 #define MARAUDERBTNID   100000000
 #define RANGERBTNID     200000000
 #define WITCHBTNID      300000000

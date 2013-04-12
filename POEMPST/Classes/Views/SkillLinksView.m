@@ -100,6 +100,11 @@
         [linkView highlight];
     }
 }
+
+-(void) setNeedsDisplay {
+    [self.subviews makeObjectsPerformSelector:@selector(setNeedsDisplay)];
+    [super setNeedsDisplay];
+}
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

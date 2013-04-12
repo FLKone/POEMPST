@@ -24,6 +24,13 @@
 	<string>0.0.2</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Fontin-Bold.ttf</string>
+		<string>Fontin-Italic.ttf</string>
+		<string>Fontin-Regular.ttf</string>
+		<string>Fontin-SmallCaps.ttf</string>
+	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

@@ -25,6 +25,13 @@ typedef enum {
 #define StrokeWidth 10
 #define TouchLayerScale 0.85
 
+#define MARAUDERBTNID   100000000
+#define RANGERBTNID     200000000
+#define WITCHBTNID      300000000
+#define DUELISTBTNID    400000000
+#define TEMPLARBTNID    500000000
+#define SIXBTNID        600000000
+
 static float skillsPerOrbit[] = {1.0f   , 6.0f  , 12.0f     , 12.0f     , 12.0f};
 static float orbitRadii[] =     {0.0f   , 83.5f , 163.0f    , 336.0f    , 489.0f};
 
@@ -46,6 +53,7 @@ static float orbitRadii[] =     {0.0f   , 83.5f , 163.0f    , 336.0f    , 489.0f
 //Helper
 #import "DataString.h"
 #import "UIView+Image.h"
+#import "URLTextField.h"
 
 //Models
 #import "SkillIcons.h"

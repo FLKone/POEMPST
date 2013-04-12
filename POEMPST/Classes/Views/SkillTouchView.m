@@ -43,7 +43,7 @@
     
     if (!self.isActivated) {
         
-        NSLog(@"1 Add %d isFirstLoad %d", self.tag, isFirstLoad);
+        //NSLog(@"1 Add %d isFirstLoad %d", self.tag, isFirstLoad);
 
         if (self.isActivable) {
             

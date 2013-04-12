@@ -20,13 +20,135 @@
 
 @implementation ViewController
 
+@synthesize menuImageView = _menuImageView;
+@synthesize menuView = _menuView;
 @synthesize scrollView = _scrollView;
 @synthesize containerView = _containerView;
+
+@synthesize  loadFromURLBtn, urlField;
+
+-(IBAction) loadURL:(id) sender {
+    
+    NSLog(@"sds");
+    if ([self.urlField.text rangeOfString:@"http://www.pathofexile.com/passive-skill-tree/AAAAA"].location == NSNotFound) {
+    }
+    else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"loadUrl" object:self.urlField.text userInfo:nil];
+        [_menuView setHidden:YES];
+    }
+
+}
 
 - (void)viewDidLoad
 {
     NSLog(@"viewDidLoad");
     [super viewDidLoad];
+    
+    // MAIN MENU
+    CGRect baseFrame = CGRectMake(0, 0, 110, 135); //base img = 105
+    UIButton *marauderBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    marauderBtn.frame = baseFrame;
+    marauderBtn.tag = MARAUDERBTNID;
+    [marauderBtn setImage:[UIImage imageNamed:@"marauder-large.png"] forState:UIControlStateNormal];
+    [marauderBtn setTitle:@"Marauder" forState:UIControlStateNormal];
+    marauderBtn.titleLabel.font = [UIFont fontWithName:@"Fontin-SmallCaps" size:15.0];
+    [marauderBtn setContentVerticalAlignment:UIControlContentVerticalAlignmentTop];
+    [marauderBtn setTitleColor:[UIColor colorWithRed:163/255.f green:141/255.f blue:109/255.f alpha:1.00] forState:UIControlStateNormal];
+    [marauderBtn setTitleColor:[UIColor colorWithRed:107/255.f green:93/255.f blue:72/255.f alpha:1.00] forState:UIControlStateHighlighted];
+    [marauderBtn setTitleEdgeInsets:UIEdgeInsetsMake(108, -110, 0, 0)];
+
+    UIButton *rangerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    rangerBtn.frame = baseFrame;
+    rangerBtn.tag = RANGERBTNID;
+    [rangerBtn setImage:[UIImage imageNamed:@"ranger-large.png"] forState:UIControlStateNormal];
+    [rangerBtn setTitle:@"Ranger" forState:UIControlStateNormal];
+    rangerBtn.titleLabel.font = [UIFont fontWithName:@"Fontin-SmallCaps" size:15.0];
+    [rangerBtn setContentVerticalAlignment:UIControlContentVerticalAlignmentTop];
+    [rangerBtn setTitleColor:[UIColor colorWithRed:163/255.f green:141/255.f blue:109/255.f alpha:1.00] forState:UIControlStateNormal];
+    [rangerBtn setTitleColor:[UIColor colorWithRed:107/255.f green:93/255.f blue:72/255.f alpha:1.00] forState:UIControlStateHighlighted];
+    [rangerBtn setTitleEdgeInsets:UIEdgeInsetsMake(108, -110, 0, 0)];
+    
+    UIButton *witchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    witchBtn.frame = baseFrame;
+    witchBtn.tag = WITCHBTNID;
+    [witchBtn setImage:[UIImage imageNamed:@"witch-large.png"] forState:UIControlStateNormal];
+    [witchBtn setTitle:@"Witch" forState:UIControlStateNormal];
+    witchBtn.titleLabel.font = [UIFont fontWithName:@"Fontin-SmallCaps" size:15.0];
+    [witchBtn setContentVerticalAlignment:UIControlContentVerticalAlignmentTop];
+    [witchBtn setTitleColor:[UIColor colorWithRed:163/255.f green:141/255.f blue:109/255.f alpha:1.00] forState:UIControlStateNormal];
+    [witchBtn setTitleColor:[UIColor colorWithRed:107/255.f green:93/255.f blue:72/255.f alpha:1.00] forState:UIControlStateHighlighted];
+    [witchBtn setTitleEdgeInsets:UIEdgeInsetsMake(108, -110, 0, 0)];
+    
+    UIButton *duelistBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    duelistBtn.frame = baseFrame;
+    duelistBtn.tag = DUELISTBTNID;
+    [duelistBtn setImage:[UIImage imageNamed:@"duelist-large.png"] forState:UIControlStateNormal];
+    [duelistBtn setTitle:@"Duelist" forState:UIControlStateNormal];
+    duelistBtn.titleLabel.font = [UIFont fontWithName:@"Fontin-SmallCaps" size:15.0];
+    [duelistBtn setContentVerticalAlignment:UIControlContentVerticalAlignmentTop];
+    [duelistBtn setTitleColor:[UIColor colorWithRed:163/255.f green:141/255.f blue:109/255.f alpha:1.00] forState:UIControlStateNormal];
+    [duelistBtn setTitleColor:[UIColor colorWithRed:107/255.f green:93/255.f blue:72/255.f alpha:1.00] forState:UIControlStateHighlighted];
+    [duelistBtn setTitleEdgeInsets:UIEdgeInsetsMake(108, -110, 0, 0)];
+    
+    UIButton *templarBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    templarBtn.frame = baseFrame;
+    templarBtn.tag = TEMPLARBTNID;
+    [templarBtn setImage:[UIImage imageNamed:@"templar-large.png"] forState:UIControlStateNormal];
+    [templarBtn setTitle:@"Templar" forState:UIControlStateNormal];
+    templarBtn.titleLabel.font = [UIFont fontWithName:@"Fontin-SmallCaps" size:15.0];
+    [templarBtn setContentVerticalAlignment:UIControlContentVerticalAlignmentTop];
+    [templarBtn setTitleColor:[UIColor colorWithRed:163/255.f green:141/255.f blue:109/255.f alpha:1.00] forState:UIControlStateNormal];
+    [templarBtn setTitleColor:[UIColor colorWithRed:107/255.f green:93/255.f blue:72/255.f alpha:1.00] forState:UIControlStateHighlighted];
+    [templarBtn setTitleEdgeInsets:UIEdgeInsetsMake(108, -110, 0, 0)];
+    
+    UIButton *sixBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    sixBtn.frame = baseFrame;
+    sixBtn.tag = SIXBTNID;
+    [sixBtn setImage:[UIImage imageNamed:@"shadow-large.png"] forState:UIControlStateNormal];
+    [sixBtn setTitle:@"Shadow" forState:UIControlStateNormal];
+    sixBtn.titleLabel.font = [UIFont fontWithName:@"Fontin-SmallCaps" size:15.0];
+    [sixBtn setContentVerticalAlignment:UIControlContentVerticalAlignmentTop];
+    [sixBtn setTitleColor:[UIColor colorWithRed:163/255.f green:141/255.f blue:109/255.f alpha:1.00] forState:UIControlStateNormal];
+    [sixBtn setTitleColor:[UIColor colorWithRed:107/255.f green:93/255.f blue:72/255.f alpha:1.00] forState:UIControlStateHighlighted];
+    [sixBtn setTitleEdgeInsets:UIEdgeInsetsMake(108, -110, 0, 0)];
+
+    [self.menuView addSubview:marauderBtn];
+    [self.menuView addSubview:rangerBtn];
+    [self.menuView addSubview:witchBtn];
+    [self.menuView addSubview:duelistBtn];
+    [self.menuView addSubview:templarBtn];
+    [self.menuView addSubview:sixBtn];
+
+    //UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
+    //urlField.leftView = paddingView;
+    //urlField.leftViewMode = UITextFieldViewModeAlways;
+    
+    urlField.layer.cornerRadius=2.0f;
+    urlField.layer.masksToBounds=YES;
+    urlField.layer.borderColor=[[UIColor colorWithRed:129/255.f green:102/255.f blue:59/255.f alpha:1.00] CGColor];
+    urlField.font = [UIFont fontWithName:@"Fontin-Regular" size:13.0];
+    //   urlField.layer.borderColor=[[UIColor colorWithRed:223/255.f green:207/255.f blue:59/255.f alpha:1.00] CGColor];
+    urlField.layer.borderWidth= 1.0f;
+    
+    [loadFromURLBtn setTitleColor:[UIColor colorWithRed:163/255.f green:141/255.f blue:109/255.f alpha:1.00] forState:UIControlStateNormal];
+    [loadFromURLBtn setTitleColor:[UIColor colorWithRed:107/255.f green:93/255.f blue:72/255.f alpha:1.00] forState:UIControlStateHighlighted];
+    [loadFromURLBtn.titleLabel setFont:[UIFont fontWithName:@"Fontin-Regular" size:18.0]];
+
+    if ([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait || [[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
+
+        [self setupMenuPortrait];
+
+        
+        
+    } else {
+        
+        [self setupMenuLandscape];
+
+        
+    }
+    
+    //-- MAIN MENU
+    
     
     NSURL *clientURL = [[NSBundle mainBundle] URLForResource:@"passive-skill-tree-v2" withExtension:@"html"];
     
@@ -61,26 +183,37 @@
             
             // Set up the container view to hold your custom view hierarchy
             CGSize containerSize = CGSizeMake(fullX, fullY);
-            self.containerView = [[SkillTreeView alloc] initWithFrame:(CGRect){.origin=CGPointMake(0.0f, 0.0f), .size=containerSize} andJSON:(NSDictionary *)json];
-            [self.scrollView addSubview:self.containerView];
-            
-            // Tell the scroll view the size of the contents
-            self.scrollView.contentSize = containerSize;
-            
-            // Set up the minimum & maximum zoom scales
-            CGRect scrollViewFrame = self.scrollView.frame;
-            CGFloat scaleWidth = scrollViewFrame.size.width / self.scrollView.contentSize.width;
-            CGFloat scaleHeight = scrollViewFrame.size.height / self.scrollView.contentSize.height;
-            CGFloat minScale = MIN(scaleWidth, scaleHeight);
-            
-            UIColor *backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background1.png"]];
-            self.scrollView.backgroundColor = backgroundColor;
-            
-            self.scrollView.minimumZoomScale = minScale;
-            self.scrollView.maximumZoomScale = 1;//0.3835f;
-            self.scrollView.zoomScale = minScale;
-            
-            [self centerScrollViewContents];
+            //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                
+                self.containerView = [[SkillTreeView alloc] initWithFrame:(CGRect){.origin=CGPointMake(0.0f, 0.0f), .size=containerSize} andJSON:(NSDictionary *)json];
+                
+                
+                //dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    [self.scrollView addSubview:self.containerView];
+                    
+                    // Tell the scroll view the size of the contents
+                    self.scrollView.contentSize = containerSize;
+                    
+                    // Set up the minimum & maximum zoom scales
+                    CGRect scrollViewFrame = self.scrollView.frame;
+                    CGFloat scaleWidth = scrollViewFrame.size.width / self.scrollView.contentSize.width;
+                    CGFloat scaleHeight = scrollViewFrame.size.height / self.scrollView.contentSize.height;
+                    CGFloat minScale = MIN(scaleWidth, scaleHeight);
+                    
+                    UIColor *backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background1.png"]];
+                    self.scrollView.backgroundColor = backgroundColor;
+                    
+                    self.scrollView.minimumZoomScale = minScale;
+                    self.scrollView.maximumZoomScale = 1;//0.3835f;
+                    self.scrollView.zoomScale = minScale;
+                    
+                    [self centerScrollViewContents];
+              //  });
+
+                
+           // });
+
         }];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -98,7 +231,81 @@
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
+    NSLog(@"sdsd");
+
     return true;
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
+
+    NSLog(@"dd");
+        if((interfaceOrientation == UIDeviceOrientationLandscapeLeft) || (interfaceOrientation == UIDeviceOrientationLandscapeRight)){
+            
+            
+            [self setupMenuLandscape];
+
+            
+            
+        } else  if((interfaceOrientation == UIDeviceOrientationPortrait) || (interfaceOrientation == UIDeviceOrientationPortraitUpsideDown)){
+
+            [self setupMenuPortrait];
+
+        }
+}
+
+-(void)setupMenuLandscape {
+    float offsetY = 520;
+    float offsetX = 155;
+    
+    UIButton *marauderBtn = (UIButton*)[self.menuView viewWithTag:MARAUDERBTNID];
+    marauderBtn.frame = CGRectMake(0 + offsetX, offsetY, marauderBtn.frame.size.width, marauderBtn.frame.size.height);
+    
+    UIButton *rangerBtn = (UIButton*)[self.menuView viewWithTag:RANGERBTNID];
+    rangerBtn.frame = CGRectMake(120 + offsetX, offsetY, rangerBtn.frame.size.width, rangerBtn.frame.size.height);
+    
+    UIButton *witchBtn = (UIButton*)[self.menuView viewWithTag:WITCHBTNID];
+    witchBtn.frame = CGRectMake(240 + offsetX, offsetY, witchBtn.frame.size.width, witchBtn.frame.size.height);
+    
+    UIButton *duelistBtn = (UIButton*)[self.menuView viewWithTag:DUELISTBTNID];
+    duelistBtn.frame = CGRectMake(360 + offsetX, offsetY, duelistBtn.frame.size.width, duelistBtn.frame.size.height);
+    
+    UIButton *templarBtn = (UIButton*)[self.menuView viewWithTag:TEMPLARBTNID];
+    templarBtn.frame = CGRectMake(480 + offsetX, offsetY, templarBtn.frame.size.width, templarBtn.frame.size.height);
+    
+    UIButton *sixBtn = (UIButton*)[self.menuView viewWithTag:SIXBTNID];
+    sixBtn.frame = CGRectMake(600 + offsetX, offsetY, sixBtn.frame.size.width, sixBtn.frame.size.height);
+    
+    self.urlField.frame =  CGRectMake(157, 670, self.urlField.frame.size.width, self.urlField.frame.size.height);
+    self.loadFromURLBtn.frame =  CGRectMake(783, 670, 70, self.loadFromURLBtn.frame.size.height);
+}
+
+-(void)setupMenuPortrait {
+    float offsetY = 520;
+    float offsetX = 209;
+    
+    UIButton *marauderBtn = (UIButton*)[self.menuView viewWithTag:MARAUDERBTNID];
+    marauderBtn.frame = CGRectMake(0 + offsetX, offsetY, marauderBtn.frame.size.width, marauderBtn.frame.size.height);
+    
+    UIButton *rangerBtn = (UIButton*)[self.menuView viewWithTag:RANGERBTNID];
+    rangerBtn.frame = CGRectMake(120 + offsetX, offsetY, rangerBtn.frame.size.width, rangerBtn.frame.size.height);
+    
+    UIButton *witchBtn = (UIButton*)[self.menuView viewWithTag:WITCHBTNID];
+    witchBtn.frame = CGRectMake(240 + offsetX, offsetY, witchBtn.frame.size.width, witchBtn.frame.size.height);
+    
+    offsetY += 130;
+    
+    UIButton *duelistBtn = (UIButton*)[self.menuView viewWithTag:DUELISTBTNID];
+    duelistBtn.frame = CGRectMake(0 + offsetX, offsetY, duelistBtn.frame.size.width, duelistBtn.frame.size.height);
+    
+    UIButton *templarBtn = (UIButton*)[self.menuView viewWithTag:TEMPLARBTNID];
+    templarBtn.frame = CGRectMake(120 + offsetX, offsetY, templarBtn.frame.size.width, templarBtn.frame.size.height);
+    
+    UIButton *sixBtn = (UIButton*)[self.menuView viewWithTag:SIXBTNID];
+    sixBtn.frame = CGRectMake(240 + offsetX, offsetY, sixBtn.frame.size.width, sixBtn.frame.size.height);
+    
+    
+    self.urlField.frame =  CGRectMake(75, 850, 618, self.urlField.frame.size.height);
+    self.loadFromURLBtn.frame =  CGRectMake(75, 890, 618, self.loadFromURLBtn.frame.size.height);
 }
 
 - (void)centerScrollViewContents {

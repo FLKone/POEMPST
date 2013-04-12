@@ -783,7 +783,7 @@
     NSMutableArray *skillLinkToActivate = [NSMutableArray array];
     NSMutableArray *skillLinkToHighlight = [NSMutableArray array];
     
-    //NSLog(@"activeSkills %@", self.activeSkills);
+    NSLog(@"forLinks %@", forLinks);
     
     for (NSArray *link in forLinks) {
      
@@ -868,8 +868,8 @@
 
     }
     
-    //NSLog(@"skillLinkToActivate %@", skillLinkToActivate);
-    //NSLog(@"skillLinkToHighlight %@", skillLinkToHighlight);
+    NSLog(@"skillLinkToActivate %@", skillLinkToActivate);
+    NSLog(@"skillLinkToHighlight %@", skillLinkToHighlight);
     
     
     
@@ -878,6 +878,8 @@
 
     //-- LINKS
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"changeSkillCount" object:[NSNumber numberWithInt:self.activeSkills.count] userInfo:nil];
+
     //DEBUG
     //PESGraphRoute *route = [graph shortestRouteFromNode:[graph.nodes valueForKey:54447] toNode:tNode];
     

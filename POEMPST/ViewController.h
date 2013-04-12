@@ -15,6 +15,7 @@
 @property (nonatomic, strong) IBOutlet UIImageView *menuImageView;
 @property (nonatomic, strong) IBOutlet UIButton *loadFromURLBtn;
 @property (nonatomic, strong) IBOutlet URLTextField *urlField;
+@property (nonatomic, strong) IBOutlet UIButton *skillPointsView;
 
 -(IBAction) loadURL:(id) sender;
 

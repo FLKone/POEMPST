@@ -18,7 +18,7 @@ typedef enum {
 } IconType;
 
 #define SkillOverlayID 1
-#define SkillLinkID 1000000
+#define SkillLinkID 1
 
 #define Zoom 2.61f
 #define MiniScale 2

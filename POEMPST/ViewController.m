@@ -25,7 +25,19 @@
 @synthesize scrollView = _scrollView;
 @synthesize containerView = _containerView;
 
-@synthesize  loadFromURLBtn, urlField;
+@synthesize  loadFromURLBtn, urlField, skillPointsView;
+
+
+-(void)changeSkillCount:(NSNotification *)notif {
+    
+    int i = (120 - [notif.object intValue] + 1);
+    if (i <= 1) {
+        [skillPointsView.titleLabel setText:[NSString stringWithFormat:@"%d Point Left", i]];
+
+    }
+    else
+        [skillPointsView.titleLabel setText:[NSString stringWithFormat:@"%d Points Left", i]];
+}
 
 -(void)selectClass:(id)sender {
 
@@ -147,6 +159,10 @@
     [loadFromURLBtn setTitleColor:[UIColor colorWithRed:107/255.f green:93/255.f blue:72/255.f alpha:1.00] forState:UIControlStateHighlighted];
     [loadFromURLBtn.titleLabel setFont:[UIFont fontWithName:@"Fontin-Regular" size:18.0]];
 
+    // skill points
+    [skillPointsView.titleLabel setFont:[UIFont fontWithName:@"Fontin-Bold" size:12.0]];
+    
+    
     if ([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait || [[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
 
         [self setupMenuPortrait];
@@ -159,10 +175,10 @@
 
         
     }
-    
     //-- MAIN MENU
     
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSkillCount:) name:@"changeSkillCount" object:nil];
+
     NSURL *clientURL = [[NSBundle mainBundle] URLForResource:@"passive-skill-tree-v2" withExtension:@"html"];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:clientURL];
@@ -198,7 +214,7 @@
             CGSize containerSize = CGSizeMake(fullX, fullY);
             //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                 
-                self.containerView = [[SkillTreeView alloc] initWithFrame:(CGRect){.origin=CGPointMake(0.0f, 0.0f), .size=containerSize} andJSON:(NSDictionary *)json];
+                self.containerView = [[SkillTreeView alloc] initWithFrame:(CGRect){.origin=CGPointMake(0.0f, 30.0f), .size=containerSize} andJSON:(NSDictionary *)json];
                 
                 
                 //dispatch_async(dispatch_get_main_queue(), ^{

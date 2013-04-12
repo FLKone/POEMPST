@@ -68,6 +68,7 @@
 		CAF636EF1718398500D91EB4 /* templar-large.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF636E31718398500D91EB4 /* templar-large.png */; };
 		CAF636F01718398500D91EB4 /* witch-large.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF636E41718398500D91EB4 /* witch-large.png */; };
 		CAF636F31718421900D91EB4 /* URLTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF636F21718421900D91EB4 /* URLTextField.m */; };
+		CAF636F5171881AE00D91EB4 /* PSPointsFrame.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF636F4171881AE00D91EB4 /* PSPointsFrame.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -169,6 +170,7 @@
 		CAF636E41718398500D91EB4 /* witch-large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "witch-large.png"; sourceTree = "<group>"; };
 		CAF636F11718421900D91EB4 /* URLTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = URLTextField.h; path = Classes/Helper/URLTextField.h; sourceTree = "<group>"; };
 		CAF636F21718421900D91EB4 /* URLTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = URLTextField.m; path = Classes/Helper/URLTextField.m; sourceTree = "<group>"; };
+		CAF636F4171881AE00D91EB4 /* PSPointsFrame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PSPointsFrame.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -392,6 +394,7 @@
 		CAF636D81718398500D91EB4 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				CAF636F4171881AE00D91EB4 /* PSPointsFrame.png */,
 				CAF636D91718398500D91EB4 /* duelist-large.png */,
 				CAF636DA1718398500D91EB4 /* Fontin-Bold.ttf */,
 				CAF636DB1718398500D91EB4 /* Fontin-Italic.ttf */,
@@ -482,6 +485,7 @@
 				CAF636EE1718398500D91EB4 /* shadow-large.png in Resources */,
 				CAF636EF1718398500D91EB4 /* templar-large.png in Resources */,
 				CAF636F01718398500D91EB4 /* witch-large.png in Resources */,
+				CAF636F5171881AE00D91EB4 /* PSPointsFrame.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

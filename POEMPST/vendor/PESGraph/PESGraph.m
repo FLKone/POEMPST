@@ -198,7 +198,7 @@
     // Set every node to be infinitely far from the origin (ie no path back has been found yet).
     for (NSString *nodeIdentifier in unexaminedNodes) {
         
-        NSLog(@"nodeIdentifier %@ - %d", nodeIdentifier, [nodeIdentifier length]);
+        //NSLog(@"nodeIdentifier %@ - %d", nodeIdentifier, [nodeIdentifier length]);
         
         [distancesFromSource setValue:infinity
                                forKey:nodeIdentifier];

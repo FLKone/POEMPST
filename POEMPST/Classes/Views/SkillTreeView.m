@@ -106,7 +106,7 @@
             }
             
         }
-        [self drawActiveLayer:YES];
+        [self drawActiveLayer:self.skillLinks];
 
         //[self drawActiveLayer:YES];
         //[self drawBackgroundLayer];
@@ -709,9 +709,9 @@
 
 }
 
--(void)drawActiveLayer:(BOOL)isFirstLoad {
-    
-    NSLog(@"drawActiveLayer isFirstLoad %d", isFirstLoad);
+-(void)drawActiveLayer:(NSArray *)forLinks {
+    BOOL isFirstLoad = NO;
+   // NSLog(@"drawActiveLayer isFirstLoad %d", isFirstLoad);
 
     
     //ACTIVATE START NODE
@@ -765,9 +765,9 @@
     NSMutableArray *skillLinkToActivate = [NSMutableArray array];
     NSMutableArray *skillLinkToHighlight = [NSMutableArray array];
     
-    NSLog(@"activeSkills %@", self.activeSkills);
+    //NSLog(@"activeSkills %@", self.activeSkills);
     
-    for (NSArray *link in self.skillLinks) {
+    for (NSArray *link in forLinks) {
      
         
         if ([self.activeSkills indexOfObject:[link objectAtIndex:0]] == NSNotFound && [self.activeSkills indexOfObject:[link objectAtIndex:1]] == NSNotFound) {
@@ -871,12 +871,22 @@
 
 - (void)addActiveSkill:(NSNumber *)skillID {
     
-   // NSLog(@"addActiveSkill %@", skillID);
+    NSLog(@"addActiveSkill %@", skillID);
     
     if ([self.activeSkills indexOfObject:skillID] == NSNotFound) {
         [self.activeSkills addObject:skillID];
         
-        [self drawActiveLayer:NO];
+        NSMutableArray *skillLinksToDisable = [NSMutableArray array];
+
+        for (NSArray *link in self.skillLinks) {
+            if ([[link objectAtIndex:0] integerValue] == [skillID integerValue] || [[link objectAtIndex:1] integerValue] == [skillID integerValue]) {
+                NSLog(@"found");
+                [skillLinksToDisable addObject:link];
+                
+            }
+        }
+        NSLog(@"draw");
+        [self drawActiveLayer:skillLinksToDisable];
     }
 }
 
@@ -989,7 +999,8 @@
     [self.activeSkills removeObject:skillID];
     
     //DISABLE LINKS
-    NSMutableArray *skillLinkToDisable = [NSMutableArray array];
+    NSMutableArray *skillLinkIDXToDisable = [NSMutableArray array];
+    NSMutableArray *skillLinksToDisable = [NSMutableArray array];
 
     //NSLog(@"removeActiveSkill skillID %@", skillID);
     
@@ -999,7 +1010,8 @@
         
         if ([[link objectAtIndex:0] integerValue] == [skillID integerValue] || [[link objectAtIndex:1] integerValue] == [skillID integerValue]) {
             //NSLog(@"found");
-            [skillLinkToDisable addObject:[NSNumber numberWithInt:[self.skillLinks indexOfObject:link]]];
+            [skillLinkIDXToDisable addObject:[NSNumber numberWithInt:[self.skillLinks indexOfObject:link]]];
+            [skillLinksToDisable addObject:link];
             SkillTouchView *tmpView2 = (SkillTouchView *)[self.touchLayer viewWithTag:[skillID intValue]];
             [tmpView2 desactivate];
             
@@ -1027,11 +1039,11 @@
     }
     //NSLog(@"skillLinkToDisable %@", skillLinkToDisable);
 
-    [self.skillLinksView disableLinks:skillLinkToDisable];
+    [self.skillLinksView disableLinks:skillLinkIDXToDisable];
     //-- DISABLE LINKS
     
     
-    [self drawActiveLayer:NO];
+    [self drawActiveLayer:skillLinksToDisable];
 }
 
 @end

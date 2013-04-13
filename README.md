@@ -18,7 +18,7 @@ Roadmap
   </tr>
 <tr>
     <td>
-    0.0.2
+    0.0.3
     </td>
     <td>
     	Alpha (internal)
@@ -29,7 +29,7 @@ Roadmap
   </tr>  
 <tr>
     <td>
-    0.x
+    <a href="https://github.com/FLKone/POEMPST/issues?milestone=2&state=open">0.1</a>
     </td>
     <td>
     	Beta
@@ -40,7 +40,7 @@ Roadmap
 </tr>
 <tr>
     <td>
-    1.0
+    <a href="https://github.com/FLKone/POEMPST/issues?milestone=3&state=open">1.0</a>
     </td>
     <td>
     	Store Release
@@ -51,7 +51,7 @@ Roadmap
 </tr>
 <tr>
     <td>
-    1.1
+    <a href="https://github.com/FLKone/POEMPST/issues?milestone=4&state=open">1.1</a>
     </td>
     <td>
     	Advanced Features

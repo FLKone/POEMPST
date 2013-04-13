@@ -16,6 +16,11 @@
 @property (nonatomic, strong) IBOutlet URLTextField *urlField;
 @property (nonatomic, strong) IBOutlet UIButton *skillPointsView;
 
+@property (nonatomic, strong) IBOutlet UIView *loadingView;
+
+@property (nonatomic, strong) IBOutlet UIProgressView *progressView;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *activityView;
+
 -(IBAction) loadURL:(id) sender;
 
 @end

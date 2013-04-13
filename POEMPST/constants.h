@@ -34,6 +34,14 @@ typedef enum {
 
 #define MAXSKILLS       120
 
+#define LOADSTEP1       0.00f    //base
+#define LOADSTEP2       0.15f   //after sprites
+#define LOADSTEP3       0.30f   //after assets
+#define LOADSTEP4       0.45f   //endparsing assets
+#define LOADSTEP5       0.60f   //after drawBG
+#define LOADSTEP6       0.75f   //after skill
+#define LOADSTEP7       0.90f   //after links
+#define LOADSTEP8       1.00f    //after touch
 
 static float skillsPerOrbit[] = {1.0f   , 6.0f  , 12.0f     , 12.0f     , 12.0f};
 static float orbitRadii[] =     {0.0f   , 83.5f , 163.0f    , 336.0f    , 489.0f};

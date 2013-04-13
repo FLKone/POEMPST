@@ -103,15 +103,17 @@
 }
 
 -(void)activateLinks:(NSArray *)linkToActivate {
-    NSLog(@"activateLinks");
+    //NSLog(@"activateLinks");
 
     for (NSNumber *linkIDX in linkToActivate) {
         //NSLog(@"linkIDX %@", linkIDX);
         SkillLinkView *linkView = (SkillLinkView *)[self viewWithTag:([linkIDX intValue] + SkillLinkID)];
         if ([linkView respondsToSelector:@selector(activate)]) {
             //NSLog(@"linkView OK ac %d %@", [linkIDX intValue] + SkillLinkID, [self viewWithTag:([linkIDX intValue] + SkillLinkID)]);
-            
-            [linkView activate];
+            runOnMainQueueWithoutDeadlocking(^{
+
+                [linkView activate];
+            });
         }
         else
         {
@@ -120,9 +122,12 @@
                                                                andEndNode:[self.skillNodes objectForKey:[[self.skillLinks objectAtIndex:[linkIDX intValue]] objectAtIndex:1]]
                                                               andFullSize:self.frame.size];
             tmpView.tag = ([linkIDX intValue] + SkillLinkID);
-            [self addSubview:tmpView];
-            [tmpView activate];
+            runOnMainQueueWithoutDeadlocking(^{
 
+                [self addSubview:tmpView];
+            
+                [tmpView activate];
+            });
             //NSLog(@"linkView ac %d %@", [linkIDX intValue] + SkillLinkID, [self viewWithTag:([linkIDX intValue] + SkillLinkID)]);
         }
     
@@ -137,8 +142,9 @@
         SkillLinkView *linkView = (SkillLinkView *)[self viewWithTag:([linkIDX intValue] + SkillLinkID)];
         if ([linkView respondsToSelector:@selector(highlight)]) {
             //NSLog(@"linkView OK hl %d %@", [linkIDX intValue] + SkillLinkID, [self viewWithTag:([linkIDX intValue] + SkillLinkID)]);
-            
-            [linkView highlight];
+            runOnMainQueueWithoutDeadlocking(^{
+                [linkView highlight];
+            });
         }
         else
         {
@@ -148,8 +154,11 @@
                                                                andEndNode:[self.skillNodes objectForKey:[[self.skillLinks objectAtIndex:[linkIDX intValue]] objectAtIndex:1]]
                                                               andFullSize:self.frame.size];
             tmpView.tag = ([linkIDX intValue] + SkillLinkID);
-            [self addSubview:tmpView];
-            [tmpView highlight];
+            runOnMainQueueWithoutDeadlocking(^{                
+                [self addSubview:tmpView];
+                [tmpView highlight];
+            });
+            
             //NSLog(@"linkView hl %d %@", [linkIDX intValue] + SkillLinkID, [self viewWithTag:([linkIDX intValue] + SkillLinkID)]);
         }
     }
@@ -169,4 +178,15 @@
 }
 */
 
+void runOnMainQueueWithoutDeadlocking(void (^block)(void))
+{
+    if ([NSThread isMainThread])
+    {
+        block();
+    }
+    else
+    {
+        dispatch_sync(dispatch_get_main_queue(), block);
+    }
+}
 @end

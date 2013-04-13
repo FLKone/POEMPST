@@ -35,7 +35,7 @@
 }
 
 - (void)loadClass:(NSNotification *)sender {
-    NSLog(@"loadClass %@", sender);
+    //NSLog(@"loadClass %@", sender);
     self.characterClassID = ((UIButton*)sender.object).tag/BTNID;
     self.activeSkills = [NSMutableArray array];
     
@@ -54,64 +54,66 @@
 
 - (void)loadUrl:(NSNotification *)sender {
     
-    NSLog(@"loadUrl %@", sender);
+    //NSLog(@"loadUrl %@", sender);
     
     if ([sender.object rangeOfString:@"http://www.pathofexile.com/passive-skill-tree/AAAAA"].location == NSNotFound) {
         
     }
     else
     {
-        
-        // LOAD URL
-        NSString *siteUrl = @"http://www.pathofexile.com/passive-skill-tree/";
-        //NSString *loadUrl = @"http://www.pathofexile.com/passive-skill-tree/AAAAAgMADY0c3CL0VK5XK2sXbAttGX3Sf8aio8Hz";
-        NSString *loadUrl = sender.object;//@"http://www.pathofexile.com/passive-skill-tree/AAAAAgUABVsWQClPPAVG12aeeuZ9U4KbgziFfYuMnYCf39R83QXhc-dq7SDvfPfB-tI=";
-        
-        NSString *s = [[[loadUrl stringByReplacingOccurrencesOfString:siteUrl withString:@""] stringByReplacingOccurrencesOfString:@"-" withString:@"+"] stringByReplacingOccurrencesOfString:@"_" withString:@"/"];
-        
-        NSString *stringValue = s;
-        Byte inputData[[stringValue lengthOfBytesUsingEncoding:NSUTF8StringEncoding]];//prepare a Byte[]
-        [[stringValue dataUsingEncoding:NSUTF8StringEncoding] getBytes:inputData];//get the pointer of the data
-        size_t inputDataSize = (size_t)[stringValue length];
-        size_t outputDataSize = EstimateBas64DecodedDataSize(inputDataSize);//calculate the decoded data size
-        Byte outputData[outputDataSize];//prepare a Byte[] for the decoded data
-        Base64DecodeData(inputData, inputDataSize, outputData, &outputDataSize);//decode the data
-        NSData *theData = [[NSData alloc] initWithBytes:outputData length:outputDataSize];//create a NSData object from the decoded data
-        
-        DataString *ss = [[DataString alloc] init];
-        [ss setDataString:theData];
-        int o = [ss readInt:0]; //ver
-        int u = [ss readInt8];  //char
-        int a = 0;
-        o > 0 && (a = [ss readInt8]);
-        
-        NSLog(@"u %d | o %d", u, o);
-        self.characterClassID = u;
-        
-        
-        NSMutableArray *f = [NSMutableArray array]; //skills
-        while ([ss hasData]) {
-            [f addObject:[NSNumber numberWithInteger:[ss readInt16]]];
-        }
-        
-        self.activeSkills = f;
-        //NSLog(@"%@", f);
-        //-- LOAD URL
-        
-        
-        //[self.skillLinksView setNeedsDisplay];
-        
-        for (NSNumber *skillID in self.skillNodes) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            // LOAD URL
+            //NSLog(@"dispatch_async loadURL");
             
-            SkillNode *sn = [self.skillNodes objectForKey:skillID];
+            NSString *siteUrl = @"http://www.pathofexile.com/passive-skill-tree/";
+            //NSString *loadUrl = @"http://www.pathofexile.com/passive-skill-tree/AAAAAgMADY0c3CL0VK5XK2sXbAttGX3Sf8aio8Hz";
+            NSString *loadUrl = sender.object;//@"http://www.pathofexile.com/passive-skill-tree/AAAAAgUABVsWQClPPAVG12aeeuZ9U4KbgziFfYuMnYCf39R83QXhc-dq7SDvfPfB-tI=";
             
-            if ([arrayCharName indexOfObject:sn.name] == (self.characterClassID - 1)) {
-                [self.activeSkills addObject:[NSNumber numberWithInt:sn.id]];
-                break;
+            NSString *s = [[[loadUrl stringByReplacingOccurrencesOfString:siteUrl withString:@""] stringByReplacingOccurrencesOfString:@"-" withString:@"+"] stringByReplacingOccurrencesOfString:@"_" withString:@"/"];
+            
+            NSString *stringValue = s;
+            Byte inputData[[stringValue lengthOfBytesUsingEncoding:NSUTF8StringEncoding]];//prepare a Byte[]
+            [[stringValue dataUsingEncoding:NSUTF8StringEncoding] getBytes:inputData];//get the pointer of the data
+            size_t inputDataSize = (size_t)[stringValue length];
+            size_t outputDataSize = EstimateBas64DecodedDataSize(inputDataSize);//calculate the decoded data size
+            Byte outputData[outputDataSize];//prepare a Byte[] for the decoded data
+            Base64DecodeData(inputData, inputDataSize, outputData, &outputDataSize);//decode the data
+            NSData *theData = [[NSData alloc] initWithBytes:outputData length:outputDataSize];//create a NSData object from the decoded data
+            
+            DataString *ss = [[DataString alloc] init];
+            [ss setDataString:theData];
+            int o = [ss readInt:0]; //ver
+            int u = [ss readInt8];  //char
+            int a = 0;
+            o > 0 && (a = [ss readInt8]);
+            
+            NSLog(@"u %d | o %d", u, o);
+            self.characterClassID = u;
+
+            NSMutableArray *f = [NSMutableArray array]; //skills
+            while ([ss hasData]) {
+                [f addObject:[NSNumber numberWithInteger:[ss readInt16]]];
             }
             
-        }
-        [self drawActiveLayer:self.skillLinks];
+            self.activeSkills = f;
+            //NSLog(@"%@", f);
+            //-- LOAD URL
+            
+            
+            //[self.skillLinksView setNeedsDisplay];
+            
+            for (NSNumber *skillID in self.skillNodes) {
+                
+                SkillNode *sn = [self.skillNodes objectForKey:skillID];
+                
+                if ([arrayCharName indexOfObject:sn.name] == (self.characterClassID - 1)) {
+                    [self.activeSkills addObject:[NSNumber numberWithInt:sn.id]];
+                    break;
+                }
+                
+            }
+            [self drawActiveLayer:self.skillLinks];
+        });
 
         //[self drawActiveLayer:YES];
         //[self drawBackgroundLayer];
@@ -120,13 +122,15 @@
 
 - (id)initWithFrame:(CGRect)frame andJSON:(NSDictionary *)json
 {
-    NSLog(@"initWithFrameandJSON");
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP1] userInfo:nil];
+
+    //NSLog(@"initWithFrameandJSON");
     
     self = [super initWithFrame:frame];
     if (self) {
         NSDate *then = [NSDate date]; 
 
-        NSLog(@"self %@", self);
+        //NSLog(@"self %@", self);
         
         // iVAR
         self.characterClassID = 0;
@@ -207,6 +211,8 @@
         [iconInactiveSkills OpenOrDownloadImages];
         //-- Skill Sprites
         
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP2] userInfo:nil];
+
         // Assets
         assets = [NSMutableDictionary dictionary];
         
@@ -259,6 +265,8 @@
         }
         //-- Assets
         
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP3] userInfo:nil];
+
         // Nodes
         self.skillNodes = [NSMutableDictionary dictionary];
         skillFaceGroups = [NSMutableArray array];
@@ -369,13 +377,14 @@
         fullY = (float)(MAX(abs(min_y),abs(max_y))*2.15);
         
         
-        NSLog(@"FINISH INIT");
+        //NSLog(@"FINISH INIT");
         NSDate *last = [NSDate date];
         NSLog(@"Time elapsed thenLOADURL        : %f", [thenLOADURL timeIntervalSinceDate:then]);
         NSLog(@"Time elapsed thenPARSE          : %f", [thenPARSE timeIntervalSinceDate:thenLOADURL]);
         NSLog(@"Time elapsed TOTAL              : %f", [last timeIntervalSinceDate:then]);
         
-        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP4] userInfo:nil];
+
     }
     
     [self drawBackgroundLayer];
@@ -475,7 +484,11 @@
 
     [self insertSubview:[[UIImageView alloc] initWithImage:layerBackgroundIMAGE] atIndex:10];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP5] userInfo:nil];
+
     [self drawLinksLayer];
+    
+
 }
 
 -(void)drawLinksLayer {
@@ -505,6 +518,8 @@
     self.skillLinksView = [[SkillLinksView alloc] initWithFrame:CGRectMake(0, 0, fullX/Zoom/MiniScale, fullY/Zoom/MiniScale) andLinks:skillLinks andSkills:skillNodes];
     [self insertSubview:self.skillLinksView atIndex:10];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP6] userInfo:nil];
+
     [self drawSkillsLayer];
 }
 
@@ -676,6 +691,8 @@
     
     [self insertSubview:[[UIImageView alloc] initWithImage:layerSkillsIMAGE] atIndex:10];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP7] userInfo:nil];
+
     [self drawTouchLayer];
 }
 
@@ -725,7 +742,8 @@
     
     [self insertSubview:self.touchLayer atIndex:10];
     
-    NSLog(@"graph end links");
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP8] userInfo:nil];
+
 
 }
 
@@ -740,11 +758,12 @@
 
         if ([arrayCharName indexOfObject:sn.name] != NSNotFound) {
             
+
             UIImage *faceImg;
             UIImage *newImage;
             
             if ([arrayCharName indexOfObject:sn.name] == (self.characterClassID - 1)) {
-                
+
                 self.rootID = [NSString stringWithFormat:@"%d", sn.id];
                 
                 //[self.activeSkills addObject:[NSNumber numberWithInt:sn.id]];
@@ -768,14 +787,20 @@
                 
                 UIImageView *imageView = [[UIImageView alloc] initWithImage:newImage];
                 imageView.center = CGPointMake((sn.Position.x + fullX/2)/Zoom/MiniScale, (sn.Position.y + fullY/2)/Zoom/MiniScale);
-                [self.touchLayer insertSubview:imageView atIndex:0];
+
                 
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        
+                        [self.touchLayer insertSubview:imageView atIndex:0];
+                    });
+                
+
                 break;
             }
         }
     }
     //-- ACTIVATE START NODE
-    
+
     //LINKS
     NSMutableArray *skillLinkToActivate = [NSMutableArray array];
     NSMutableArray *skillLinkToHighlight = [NSMutableArray array];
@@ -790,7 +815,7 @@
         }
         
         if ([self.activeSkills indexOfObject:[link objectAtIndex:0]] != NSNotFound && [self.activeSkills indexOfObject:[link objectAtIndex:1]] != NSNotFound) {
-            NSLog(@"IDX AC: %@", [NSNumber numberWithInt:[self.skillLinks indexOfObject:link]]);
+            //NSLog(@"IDX AC: %@", [NSNumber numberWithInt:[self.skillLinks indexOfObject:link]]);
             [skillLinkToActivate addObject:[NSNumber numberWithInt:[self.skillLinks indexOfObject:link]]];
             [graph addBiDirectionalEdge:[PESGraphEdge edgeWithName:[NSString stringWithFormat:@"%@", [NSNumber numberWithInt:[self.skillLinks indexOfObject:link]]] andWeight:[NSNumber numberWithInt:1]]
                                fromNode:[PESGraphNode nodeWithIdentifier:[NSString stringWithFormat:@"%@", [link objectAtIndex:0]]]
@@ -799,12 +824,15 @@
             //NSLog(@"tags to AC = %d | %d", [[link objectAtIndex:0] intValue], [[link objectAtIndex:1] intValue]);
             
             SkillTouchView *tmpView = (SkillTouchView *)[self.touchLayer viewWithTag:[[link objectAtIndex:0] intValue]];
-            [tmpView highlight:isFirstLoad];            
-            [tmpView activate:isFirstLoad];
-            
             SkillTouchView *tmpView2 = (SkillTouchView *)[self.touchLayer viewWithTag:[[link objectAtIndex:1] intValue]];
-            [tmpView2 highlight:isFirstLoad];
-            [tmpView2 activate:isFirstLoad];
+
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [tmpView2 highlight:isFirstLoad];
+                [tmpView2 activate:isFirstLoad];
+                
+                [tmpView highlight:isFirstLoad];
+                [tmpView activate:isFirstLoad];
+            });
             
             if([tmpView.linksIDs indexOfObject:[NSNumber numberWithInt:[self.skillLinks indexOfObject:link]]] == NSNotFound)
                 [tmpView.linksIDs addObject:[NSNumber numberWithInt:[self.skillLinks indexOfObject:link]]];
@@ -819,7 +847,7 @@
         
         if ([self.activeSkills indexOfObject:[link objectAtIndex:0]] != NSNotFound ^ [self.activeSkills indexOfObject:[link objectAtIndex:1]] != NSNotFound) {
             [skillLinkToHighlight addObject:[NSNumber numberWithInt:[self.skillLinks indexOfObject:link]]];
-            NSLog(@"IDX HL: %@", [NSNumber numberWithInt:[self.skillLinks indexOfObject:link]]);
+            //NSLog(@"IDX HL: %@", [NSNumber numberWithInt:[self.skillLinks indexOfObject:link]]);
             
             //[graph addBiDirectionalEdge:[PESGraphEdge edgeWithName:[NSString stringWithFormat:@"%@", [NSNumber numberWithInt:[self.skillLinks indexOfObject:link]]]
             //                                             andWeight:[NSNumber numberWithInt:1]]
@@ -827,12 +855,21 @@
             //                     toNode:[PESGraphNode nodeWithIdentifier:[NSString stringWithFormat:@"%@", [link objectAtIndex:1]]]];
 
             if ([self.activeSkills indexOfObject:[link objectAtIndex:0]] != NSNotFound) {
+                
                 SkillTouchView *tmpView = (SkillTouchView *)[self.touchLayer viewWithTag:[[link objectAtIndex:0] intValue]];
-                [tmpView highlight:isFirstLoad];
-                [tmpView activate:isFirstLoad];
+
 
                 SkillTouchView *tmpView2 = (SkillTouchView *)[self.touchLayer viewWithTag:[[link objectAtIndex:1] intValue]];
-                [tmpView2 highlight:isFirstLoad];
+
+
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [tmpView2 highlight:isFirstLoad];
+                    
+                    [tmpView highlight:isFirstLoad];
+                    [tmpView activate:isFirstLoad];
+                });
+
+                
                 
                 if([tmpView.linksHighIDs indexOfObject:[NSNumber numberWithInt:[self.skillLinks indexOfObject:link]]] == NSNotFound)
                     [tmpView.linksHighIDs addObject:[NSNumber numberWithInt:[self.skillLinks indexOfObject:link]]];
@@ -847,11 +884,17 @@
 
             if ([self.activeSkills indexOfObject:[link objectAtIndex:1]] != NSNotFound) {
                 SkillTouchView *tmpView = (SkillTouchView *)[self.touchLayer viewWithTag:[[link objectAtIndex:1] intValue]];
-                [tmpView highlight:isFirstLoad];
-                [tmpView activate:isFirstLoad];
+
                 
                 SkillTouchView *tmpView2 = (SkillTouchView *)[self.touchLayer viewWithTag:[[link objectAtIndex:0] intValue]];
-                [tmpView2 highlight:isFirstLoad];
+
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [tmpView2 highlight:isFirstLoad];
+                    
+                    [tmpView highlight:isFirstLoad];
+                    [tmpView activate:isFirstLoad];
+                });
                 
                 if([tmpView.linksHighIDs indexOfObject:[NSNumber numberWithInt:[self.skillLinks indexOfObject:link]]] == NSNotFound)
                     [tmpView.linksHighIDs addObject:[NSNumber numberWithInt:[self.skillLinks indexOfObject:link]]];
@@ -870,7 +913,6 @@
 
     [self.skillLinksView activateLinks:skillLinkToActivate];
     [self.skillLinksView highlightLinks:skillLinkToHighlight];
-
     //-- LINKS
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"changeSkillCount" object:[NSNumber numberWithInt:self.activeSkills.count] userInfo:nil];

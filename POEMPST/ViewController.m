@@ -24,18 +24,27 @@
 @synthesize scrollView = _scrollView;
 @synthesize containerView = _containerView;
 
-@synthesize  loadFromURLBtn, urlField, skillPointsView;
+@synthesize  loadFromURLBtn, urlField, skillPointsView, progressView, loadingView, activityView;
 
 
 -(void)changeSkillCount:(NSNotification *)notif {
     
-    int i = (MAXSKILLS - [notif.object intValue] + 1);
-    
-    if (i <= 1) {
-        [skillPointsView setTitle:[NSString stringWithFormat:@"%d Point Left", i] forState:UIControlStateNormal];
-    }
-    else
-        [skillPointsView setTitle:[NSString stringWithFormat:@"%d Points Left", i] forState:UIControlStateNormal];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //NSLog(@"changeSkillCount");
+
+        int i = (MAXSKILLS - [notif.object intValue] + 1);
+        
+        if (i <= 1) {
+            [skillPointsView setTitle:[NSString stringWithFormat:@"%d Point Left", i] forState:UIControlStateNormal];
+        }
+        else
+            [skillPointsView setTitle:[NSString stringWithFormat:@"%d Points Left", i] forState:UIControlStateNormal];
+        
+        
+        if (![_menuView isHidden]) {
+            [_menuView setHidden:YES];
+        }
+    });
 }
 
 -(void)selectClass:(id)sender {
@@ -50,10 +59,21 @@
     if ([self.urlField.text rangeOfString:@"http://www.pathofexile.com/passive-skill-tree/AAAAA"].location == NSNotFound) {
     }
     else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"loadUrl" object:self.urlField.text userInfo:nil];
-        [_menuView setHidden:YES];
+            [self.loadFromURLBtn setHidden:YES];
+            [self.activityView setHidden:NO];
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"loadUrl" object:self.urlField.text userInfo:nil];
+        //[_menuView setHidden:YES];
     }
 
+}
+
+-(void)changeProgress:(NSNotification *)notif {
+    NSLog(@"Progress %f", [notif.object floatValue]);
+    dispatch_async(dispatch_get_main_queue(), ^{
+
+        self.progressView.progress = [notif.object floatValue];
+    });
 }
 
 - (void)viewDidLoad
@@ -160,7 +180,8 @@
     // skill points
     [skillPointsView.titleLabel setFont:[UIFont fontWithName:@"Fontin-Bold" size:12.0]];
     
-    
+    [self.activityView setHidden:YES];
+
     if ([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait || [[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
         [self setupMenuPortrait];
     } else {
@@ -169,6 +190,7 @@
     //-- MAIN MENU
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSkillCount:) name:@"changeSkillCount" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeProgress:) name:@"changeProgress" object:nil];
 
     NSURL *clientURL = [[NSBundle mainBundle] URLForResource:@"passive-skill-tree-v2" withExtension:@"html"];
     
@@ -203,13 +225,15 @@
             
             // Set up the container view to hold your custom view hierarchy
             CGSize containerSize = CGSizeMake(fullX, fullY);
-            //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                
+            NSLog(@"before async");
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                            NSLog(@"in async");
                 self.containerView = [[SkillTreeView alloc] initWithFrame:(CGRect){.origin=CGPointMake(0.0f, 30.0f), .size=containerSize} andJSON:(NSDictionary *)json];
                 
                 
-                //dispatch_async(dispatch_get_main_queue(), ^{
-                    
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    NSLog(@"in async MAIN");
+
                     [self.scrollView addSubview:self.containerView];
                     
                     // Tell the scroll view the size of the contents
@@ -242,10 +266,36 @@
             
 
                     [self centerScrollViewContents];
-              //  });
+                    
+                    NSLog(@"END in async MAIN");
+                    
+                    BOOL hide = YES;
+                    
+                    [UIView animateWithDuration:0.5
+                                          delay:0.0
+                                        options:UIViewAnimationOptionCurveEaseOut
+                                     animations:^
+                     {
+                         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+                         if (hide)
+                             self.loadingView.alpha=0;
+                         else
+                         {
+                             self.loadingView.hidden= NO;
+                             self.loadingView.alpha=1;
+                         }
+                     }
+                                     completion:^(BOOL b)
+                     {
+                         if (hide)
+                             self.loadingView.hidden= YES;
+                     }
+                     ];
+                    
+                });
 
                 
-           // });
+           });
 
         }];
         
@@ -300,6 +350,7 @@
     
     self.urlField.frame =  CGRectMake(157, 670, self.urlField.frame.size.width, self.urlField.frame.size.height);
     self.loadFromURLBtn.frame =  CGRectMake(783, 670, 70, self.loadFromURLBtn.frame.size.height);
+    self.activityView.frame  =  CGRectMake(808, 675, self.activityView.frame.size.width, self.activityView.frame.size.height);
 }
 
 -(void)setupMenuPortrait {
@@ -329,6 +380,8 @@
     
     self.urlField.frame =  CGRectMake(75, 850, 618, self.urlField.frame.size.height);
     self.loadFromURLBtn.frame =  CGRectMake(75, 890, 618, self.loadFromURLBtn.frame.size.height);
+    self.activityView.frame  =  CGRectMake(75, 890, self.activityView.frame.size.width, self.activityView.frame.size.height);
+
 }
 
 - (void)centerScrollViewContents {

@@ -117,6 +117,7 @@
                 UIImageView *imageView = [[UIImageView alloc] initWithImage:[localTreeView.snImages objectAtIndex:5]];
                 imageView.center = CGPointMake(rect.size.width*TouchLayerScale/2, rect.size.height*TouchLayerScale/2);
                 self.overlayImage = imageView;
+                
                 [self addSubview:self.overlayImage];
             }
             else if (sn.isKeystone) {

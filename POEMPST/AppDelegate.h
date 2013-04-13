@@ -2,8 +2,7 @@
 //  AppDelegate.h
 //  POEMPST
 //
-//  Created by Shasta on 31/03/13.
-//  Copyright (c) 2013 FLKone. All rights reserved.
+//  Created by FLK on 31/03/13.
 //
 
 #import <UIKit/UIKit.h>

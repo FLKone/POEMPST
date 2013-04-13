@@ -2,8 +2,7 @@
 //  URLTextField.m
 //  POEMPST
 //
-//  Created by Shasta on 12/04/13.
-//  Copyright (c) 2013 FLKone. All rights reserved.
+//  Created by FLK on 12/04/13.
 //
 
 #import "URLTextField.h"

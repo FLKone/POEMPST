@@ -35,7 +35,7 @@
                                                          andStartNode:[self.skillNodes objectForKey:[link objectAtIndex:0]]
                                                            andEndNode:[self.skillNodes objectForKey:[link objectAtIndex:1]]
                                                           andFullSize:self.frame.size];
-        tmpView.tag = [self.skillLinks indexOfObject:link]*SkillLinkID;
+        tmpView.tag = [self.skillLinks indexOfObject:link] + SkillLinkID;
         //tmpView.clipsToBounds = NO;
         
         //SkillLinkView *tmpView = [[SkillLinkView alloc] initWithFrame:CGRectZero
@@ -80,15 +80,15 @@
 -(void)disableLinks:(NSArray *)linkToDisable {
     for (NSNumber *linkIDX in linkToDisable) {
         //NSLog(@"linkIDX %@", linkIDX);
-        SkillLinkView *linkView = (SkillLinkView *)[self viewWithTag:([linkIDX intValue] * SkillLinkID)];
+        SkillLinkView *linkView = (SkillLinkView *)[self viewWithTag:([linkIDX intValue] + SkillLinkID)];
         if ([linkView respondsToSelector:@selector(disable)]) {
-            NSLog(@"linkView OK db %d %@", [linkIDX intValue] * SkillLinkID, [self viewWithTag:([linkIDX intValue] * SkillLinkID)]);
+            NSLog(@"linkView OK db %d %@", [linkIDX intValue] + SkillLinkID, [self viewWithTag:([linkIDX intValue] + SkillLinkID)]);
 
             [linkView disable];
         }
         else
         {
-            NSLog(@"linkView db %d %@", [linkIDX intValue] * SkillLinkID, [self viewWithTag:([linkIDX intValue] * SkillLinkID)]);
+            NSLog(@"linkView db %d %@", [linkIDX intValue] + SkillLinkID, [self viewWithTag:([linkIDX intValue] + SkillLinkID)]);
         }
     }
 }
@@ -96,15 +96,15 @@
 -(void)activateLinks:(NSArray *)linkToActivate {
     for (NSNumber *linkIDX in linkToActivate) {
         //NSLog(@"linkIDX %@", linkIDX);
-        SkillLinkView *linkView = (SkillLinkView *)[self viewWithTag:([linkIDX intValue] * SkillLinkID)];
+        SkillLinkView *linkView = (SkillLinkView *)[self viewWithTag:([linkIDX intValue] + SkillLinkID)];
         if ([linkView respondsToSelector:@selector(activate)]) {
-            NSLog(@"linkView OK ac %d %@", [linkIDX intValue] * SkillLinkID, [self viewWithTag:([linkIDX intValue] * SkillLinkID)]);
+            NSLog(@"linkView OK ac %d %@", [linkIDX intValue] + SkillLinkID, [self viewWithTag:([linkIDX intValue] + SkillLinkID)]);
             
             [linkView activate];
         }
         else
         {
-            NSLog(@"linkView ac %d %@", [linkIDX intValue] * SkillLinkID, [self viewWithTag:([linkIDX intValue] * SkillLinkID)]);
+            NSLog(@"linkView ac %d %@", [linkIDX intValue] + SkillLinkID, [self viewWithTag:([linkIDX intValue] + SkillLinkID)]);
         }
     
     }
@@ -113,15 +113,15 @@
 -(void)highlightLinks:(NSArray *)linkToHighlight{
     for (NSNumber *linkIDX in linkToHighlight) {
 
-        SkillLinkView *linkView = (SkillLinkView *)[self viewWithTag:([linkIDX intValue] * SkillLinkID)];
+        SkillLinkView *linkView = (SkillLinkView *)[self viewWithTag:([linkIDX intValue] + SkillLinkID)];
         if ([linkView respondsToSelector:@selector(highlight)]) {
-            NSLog(@"linkView OK hl %d %@", [linkIDX intValue] * SkillLinkID, [self viewWithTag:([linkIDX intValue] * SkillLinkID)]);
+            NSLog(@"linkView OK hl %d %@", [linkIDX intValue] + SkillLinkID, [self viewWithTag:([linkIDX intValue] + SkillLinkID)]);
             
             [linkView highlight];
         }
         else
         {
-            NSLog(@"linkView hl %d %@", [linkIDX intValue] * SkillLinkID, [self viewWithTag:([linkIDX intValue] * SkillLinkID)]);
+            NSLog(@"linkView hl %d %@", [linkIDX intValue] + SkillLinkID, [self viewWithTag:([linkIDX intValue] + SkillLinkID)]);
         }
     }
 }

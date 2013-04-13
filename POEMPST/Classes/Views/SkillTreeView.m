@@ -793,6 +793,7 @@
         }
         
         if ([self.activeSkills indexOfObject:[link objectAtIndex:0]] != NSNotFound && [self.activeSkills indexOfObject:[link objectAtIndex:1]] != NSNotFound) {
+            NSLog(@"IDX AC: %@", [NSNumber numberWithInt:[self.skillLinks indexOfObject:link]]);
             [skillLinkToActivate addObject:[NSNumber numberWithInt:[self.skillLinks indexOfObject:link]]];
             [graph addBiDirectionalEdge:[PESGraphEdge edgeWithName:[NSString stringWithFormat:@"%@", [NSNumber numberWithInt:[self.skillLinks indexOfObject:link]]] andWeight:[NSNumber numberWithInt:1]]
                                fromNode:[PESGraphNode nodeWithIdentifier:[NSString stringWithFormat:@"%@", [link objectAtIndex:0]]]
@@ -821,6 +822,8 @@
         
         if ([self.activeSkills indexOfObject:[link objectAtIndex:0]] != NSNotFound ^ [self.activeSkills indexOfObject:[link objectAtIndex:1]] != NSNotFound) {
             [skillLinkToHighlight addObject:[NSNumber numberWithInt:[self.skillLinks indexOfObject:link]]];
+            NSLog(@"IDX HL: %@", [NSNumber numberWithInt:[self.skillLinks indexOfObject:link]]);
+            
             //[graph addBiDirectionalEdge:[PESGraphEdge edgeWithName:[NSString stringWithFormat:@"%@", [NSNumber numberWithInt:[self.skillLinks indexOfObject:link]]]
             //                                             andWeight:[NSNumber numberWithInt:1]]
             //                   fromNode:[PESGraphNode nodeWithIdentifier:[NSString stringWithFormat:@"%@", [link objectAtIndex:0]]]

@@ -48,7 +48,6 @@
 
 -(IBAction)loadURL:(id) sender {
     
-    NSLog(@"sds");
     if ([self.urlField.text rangeOfString:@"http://www.pathofexile.com/passive-skill-tree/AAAAA"].location == NSNotFound) {
     }
     else {
@@ -260,26 +259,23 @@
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    NSLog(@"sdsd");
-
     return true;
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
 
-    NSLog(@"dd");
-        if((interfaceOrientation == UIDeviceOrientationLandscapeLeft) || (interfaceOrientation == UIDeviceOrientationLandscapeRight)){
-            
-            
-            [self setupMenuLandscape];
+    if((interfaceOrientation == UIDeviceOrientationLandscapeLeft) || (interfaceOrientation == UIDeviceOrientationLandscapeRight)){
+        
+        
+        [self setupMenuLandscape];
 
-            
-            
-        } else  if((interfaceOrientation == UIDeviceOrientationPortrait) || (interfaceOrientation == UIDeviceOrientationPortraitUpsideDown)){
+        
+        
+    } else  if((interfaceOrientation == UIDeviceOrientationPortrait) || (interfaceOrientation == UIDeviceOrientationPortraitUpsideDown)){
 
-            [self setupMenuPortrait];
+        [self setupMenuPortrait];
 
-        }
+    }
 }
 
 -(void)setupMenuLandscape {

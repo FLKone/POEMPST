@@ -60,6 +60,7 @@
 		CAA1EF80170A6568002BF206 /* DataString.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF7F170A6568002BF206 /* DataString.m */; };
 		CAA1EF8D170B9748002BF206 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA1EF8C170B9748002BF206 /* QuartzCore.framework */; };
 		CAF3A40417189A0000014FCE /* PointsBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF3A40317189A0000014FCE /* PointsBackground.png */; };
+		CAF3A4061719763800014FCE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CAF3A4051719763800014FCE /* README.md */; };
 		CAF636AF1716441900D91EB4 /* SkillTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF636AE1716441900D91EB4 /* SkillTouchView.m */; };
 		CAF636BC1716827600D91EB4 /* PESGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF636B31716827600D91EB4 /* PESGraph.m */; };
 		CAF636BD1716827600D91EB4 /* PESGraphEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF636B51716827600D91EB4 /* PESGraphEdge.m */; };
@@ -165,6 +166,7 @@
 		CAA1EF7F170A6568002BF206 /* DataString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataString.m; path = Classes/Helper/DataString.m; sourceTree = "<group>"; };
 		CAA1EF8C170B9748002BF206 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CAF3A40317189A0000014FCE /* PointsBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PointsBackground.png; sourceTree = "<group>"; };
+		CAF3A4051719763800014FCE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		CAF636AD1716441900D91EB4 /* SkillTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkillTouchView.h; path = Classes/Views/SkillTouchView.h; sourceTree = "<group>"; };
 		CAF636AE1716441900D91EB4 /* SkillTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SkillTouchView.m; path = Classes/Views/SkillTouchView.m; sourceTree = "<group>"; };
 		CAF636B21716827600D91EB4 /* PESGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PESGraph.h; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 		CAA1EEC31707E5AE002BF206 = {
 			isa = PBXGroup;
 			children = (
+				CAF3A4051719763800014FCE /* README.md */,
 				CAA1EED51707E5AF002BF206 /* POEMPST */,
 				CAA1EECE1707E5AF002BF206 /* Frameworks */,
 				CAA1EECD1707E5AF002BF206 /* Products */,
@@ -526,6 +529,7 @@
 				CA2609D8171893A0008F7249 /* iTunesArtwork.png in Resources */,
 				CA2609D9171893A0008F7249 /* iTunesArtwork@2x.png in Resources */,
 				CAF3A40417189A0000014FCE /* PointsBackground.png in Resources */,
+				CAF3A4061719763800014FCE /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

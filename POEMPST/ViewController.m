@@ -31,12 +31,12 @@
 -(void)changeSkillCount:(NSNotification *)notif {
     
     int i = (120 - [notif.object intValue] + 1);
+    
     if (i <= 1) {
-        [skillPointsView.titleLabel setText:[NSString stringWithFormat:@"%d Point Left", i]];
-
+        [skillPointsView setTitle:[NSString stringWithFormat:@"%d Point Left", i] forState:UIControlStateNormal];
     }
     else
-        [skillPointsView.titleLabel setText:[NSString stringWithFormat:@"%d Points Left", i]];
+        [skillPointsView setTitle:[NSString stringWithFormat:@"%d Points Left", i] forState:UIControlStateNormal];
 }
 
 -(void)selectClass:(id)sender {
@@ -61,7 +61,7 @@
 {
     NSLog(@"viewDidLoad");
     [super viewDidLoad];
-    
+
     // MAIN MENU
     CGRect baseFrame = CGRectMake(0, 0, 110, 135); //base img = 105
     UIButton *marauderBtn = [UIButton buttonWithType:UIButtonTypeCustom];

@@ -35,7 +35,6 @@
     
 }
 
-
 - (void)loadClass:(NSNotification *)sender {
     NSLog(@"loadClass %@", sender);
     self.characterClassID = ((UIButton*)sender.object).tag/BTNID;

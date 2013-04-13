@@ -477,8 +477,6 @@
         }
         
         layerBackgroundIMAGE = [layerBackground capture];
-        //[UIImageJPEGRepresentation(layerBackgroundIMAGE, 0.8) writeToFile:diskDataLayerBackgroundCachePath atomically:YES];
-        
         [UIImagePNGRepresentation(layerBackgroundIMAGE) writeToFile:diskDataLayerBackgroundCachePath atomically:YES];
         
     }
@@ -486,20 +484,38 @@
     {
         layerBackgroundIMAGE = [UIImage imageWithContentsOfFile:diskDataLayerBackgroundCachePath];
     }
-    
-    
+
     [self insertSubview:[[UIImageView alloc] initWithImage:layerBackgroundIMAGE] atIndex:10];
-    //[self addSubview:[[UIImageView alloc] initWithImage:layerBackgroundIMAGE]];
     
     [self drawLinksLayer];
 }
 
 -(void)drawLinksLayer {
+
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *diskDataLinksCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data/Layers/links.png"];
+    
+    UIImage *layerLinksIMAGE;
+
+    if (![fileManager fileExistsAtPath:diskDataLinksCachePath]) {
+        SkillLinksView *localskillLinksView = [[SkillLinksView alloc] initWithFrame:CGRectMake(0, 0, fullX/Zoom/MiniScale, fullY/Zoom/MiniScale) andLinks:skillLinks andSkills:skillNodes];
+        [localskillLinksView load];
+        
+        layerLinksIMAGE = [localskillLinksView capture];
+        [UIImagePNGRepresentation(layerLinksIMAGE) writeToFile:diskDataLinksCachePath atomically:YES];
+    }
+    else
+    {
+        layerLinksIMAGE = [UIImage imageWithContentsOfFile:diskDataLinksCachePath];
+    }
+     
+    [self insertSubview:[[UIImageView alloc] initWithImage:layerLinksIMAGE] atIndex:10];
+    
+    
     self.skillLinksView = [[SkillLinksView alloc] initWithFrame:CGRectMake(0, 0, fullX/Zoom/MiniScale, fullY/Zoom/MiniScale) andLinks:skillLinks andSkills:skillNodes];
     [self insertSubview:self.skillLinksView atIndex:10];
-
-    //[self addSubview:self.skillLinksView];
-    [self.skillLinksView load];
     
     [self drawSkillsLayer];
 }
@@ -508,7 +524,6 @@
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-
     
     // SKILLS LAYER
     float icontype;
@@ -623,9 +638,7 @@
             imageView.center = CGPointMake((sn.Position.x + fullX/2)/Zoom/MiniScale, (sn.Position.y + fullY/2)/Zoom/MiniScale);
             
             [layerSkills addSubview:imageView];
-            
-            //NSLog(@"%@ = %f %f %f %f", key, rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
-            
+
         }
     
             
@@ -678,7 +691,6 @@
     [self drawTouchLayer];
 }
 
-
 -(void)drawTouchLayer {
     
     self.touchLayer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, fullX/Zoom/MiniScale, fullY/Zoom/MiniScale)];
@@ -721,6 +733,8 @@
         
     }
     
+
+    
     [self insertSubview:self.touchLayer atIndex:10];
     
     NSLog(@"graph end links");
@@ -728,6 +742,7 @@
 }
 
 -(void)drawActiveLayer:(NSArray *)forLinks {
+    NSLog(@"drawActiveLayer");
     BOOL isFirstLoad = NO;
    // NSLog(@"drawActiveLayer isFirstLoad %d", isFirstLoad);
 
@@ -778,12 +793,12 @@
     }
     //-- ACTIVATE START NODE
     
-    
+        NSLog(@"drawActiveLayer 2");
     //LINKS
     NSMutableArray *skillLinkToActivate = [NSMutableArray array];
     NSMutableArray *skillLinkToHighlight = [NSMutableArray array];
     
-    NSLog(@"forLinks %@", forLinks);
+    //NSLog(@"forLinks %@", forLinks);
     
     for (NSArray *link in forLinks) {
      
@@ -871,25 +886,15 @@
 
     }
     
-    NSLog(@"skillLinkToActivate %@", skillLinkToActivate);
-    NSLog(@"skillLinkToHighlight %@", skillLinkToHighlight);
-    
-    
-    
+    NSLog(@"drawActiveLayer 3");
+
     [self.skillLinksView activateLinks:skillLinkToActivate];
     [self.skillLinksView highlightLinks:skillLinkToHighlight];
 
     //-- LINKS
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"changeSkillCount" object:[NSNumber numberWithInt:self.activeSkills.count] userInfo:nil];
-
-    //DEBUG
-    //PESGraphRoute *route = [graph shortestRouteFromNode:[graph.nodes valueForKey:54447] toNode:tNode];
-    
-    //SkillTouchView *tmpView = (SkillTouchView *)[self.touchLayer viewWithTag:22315];
-    //NSLog(@"tmpView linksHighIDs %@", tmpView.linksHighIDs);
-    //NSLog(@"tmpView linksIDs %@", tmpView.linksIDs);
-    //DEBUG
+       NSLog(@"drawActiveLayer 4"); 
 }
 
 - (void)addActiveSkill:(NSNumber *)skillID {

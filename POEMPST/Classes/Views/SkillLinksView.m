@@ -78,6 +78,8 @@
 }
 
 -(void)disableLinks:(NSArray *)linkToDisable {
+    NSLog(@"disableLinks");
+
     for (NSNumber *linkIDX in linkToDisable) {
         //NSLog(@"linkIDX %@", linkIDX);
         SkillLinkView *linkView = (SkillLinkView *)[self viewWithTag:([linkIDX intValue] + SkillLinkID)];
@@ -88,12 +90,22 @@
         }
         else
         {
+            SkillLinkView *tmpView = [[SkillLinkView alloc] initWithFrame:CGRectZero
+                                                             andStartNode:[self.skillNodes objectForKey:[[self.skillLinks objectAtIndex:[linkIDX intValue]] objectAtIndex:0]]
+                                                               andEndNode:[self.skillNodes objectForKey:[[self.skillLinks objectAtIndex:[linkIDX intValue]] objectAtIndex:1]]
+                                                              andFullSize:self.frame.size];
+            tmpView.tag = ([linkIDX intValue] + SkillLinkID);
+            [self addSubview:tmpView];
+            [tmpView disable];
+            
             NSLog(@"linkView db %d %@", [linkIDX intValue] + SkillLinkID, [self viewWithTag:([linkIDX intValue] + SkillLinkID)]);
         }
     }
 }
 
 -(void)activateLinks:(NSArray *)linkToActivate {
+    NSLog(@"activateLinks");
+
     for (NSNumber *linkIDX in linkToActivate) {
         //NSLog(@"linkIDX %@", linkIDX);
         SkillLinkView *linkView = (SkillLinkView *)[self viewWithTag:([linkIDX intValue] + SkillLinkID)];
@@ -104,6 +116,14 @@
         }
         else
         {
+            SkillLinkView *tmpView = [[SkillLinkView alloc] initWithFrame:CGRectZero
+                                                             andStartNode:[self.skillNodes objectForKey:[[self.skillLinks objectAtIndex:[linkIDX intValue]] objectAtIndex:0]]
+                                                               andEndNode:[self.skillNodes objectForKey:[[self.skillLinks objectAtIndex:[linkIDX intValue]] objectAtIndex:1]]
+                                                              andFullSize:self.frame.size];
+            tmpView.tag = ([linkIDX intValue] + SkillLinkID);
+            [self addSubview:tmpView];
+            [tmpView activate];
+
             NSLog(@"linkView ac %d %@", [linkIDX intValue] + SkillLinkID, [self viewWithTag:([linkIDX intValue] + SkillLinkID)]);
         }
     
@@ -111,6 +131,8 @@
 }
 
 -(void)highlightLinks:(NSArray *)linkToHighlight{
+    NSLog(@"highlightLinks");
+
     for (NSNumber *linkIDX in linkToHighlight) {
 
         SkillLinkView *linkView = (SkillLinkView *)[self viewWithTag:([linkIDX intValue] + SkillLinkID)];
@@ -121,15 +143,24 @@
         }
         else
         {
+            
+            SkillLinkView *tmpView = [[SkillLinkView alloc] initWithFrame:CGRectZero
+                                                             andStartNode:[self.skillNodes objectForKey:[[self.skillLinks objectAtIndex:[linkIDX intValue]] objectAtIndex:0]]
+                                                               andEndNode:[self.skillNodes objectForKey:[[self.skillLinks objectAtIndex:[linkIDX intValue]] objectAtIndex:1]]
+                                                              andFullSize:self.frame.size];
+            tmpView.tag = ([linkIDX intValue] + SkillLinkID);
+            [self addSubview:tmpView];
+            [tmpView highlight];
             NSLog(@"linkView hl %d %@", [linkIDX intValue] + SkillLinkID, [self viewWithTag:([linkIDX intValue] + SkillLinkID)]);
         }
     }
 }
-
+/*
 -(void) setNeedsDisplay {
     [self.subviews makeObjectsPerformSelector:@selector(setNeedsDisplay)];
     [super setNeedsDisplay];
 }
+ */
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

@@ -16,32 +16,22 @@
 @synthesize iconActiveSkills, iconInactiveSkills, activeSkills;
 @synthesize dicoNodeBackgrounds, dicoNodeBackgroundsActive, snImages, touchLayer, spritesUnitedActive, arrayFaceNames, graph, rootID;
 
-- (void)bannerTapped:(UIGestureRecognizer *)gestureRecognizer {
-    //NSLog(@"%@ - nb %d", [gestureRecognizer view], ((SkillTouchView *)[self.touchLayer viewWithTag:[gestureRecognizer view].tag]).linksHighIDs.count);
-    
+- (void)bannerTapped:(UIGestureRecognizer *)gestureRecognizer {    
     int nbLinks = ((SkillTouchView *)[self.touchLayer viewWithTag:[gestureRecognizer view].tag]).linksHighIDs.count + ((SkillTouchView *)[self.touchLayer viewWithTag:[gestureRecognizer view].tag]).linksIDs.count;
     
-    //NSLog(@"%@ - nb %d", [gestureRecognizer view], ((SkillTouchView *)[self.touchLayer viewWithTag:[gestureRecognizer view].tag]).linksHighIDs.count);
-
-    if (nbLinks) {
+    if (nbLinks && self.activeSkills.count - 1 < MAXSKILLS) {        
         if ([self.activeSkills indexOfObject:[NSNumber numberWithInt:[gestureRecognizer view].tag]] == NSNotFound) {
-            //NSLog(@"J'add %d", [gestureRecognizer view].tag);
             [self addActiveSkill:[NSNumber numberWithInt:[gestureRecognizer view].tag]];
             return;
         }
     }
-    
-    NSLog(@"OTHER %d", [gestureRecognizer view].tag);
-//    NSLog(@"activeSkills %@", self.activeSkills);
-    if (self.activeSkills && [self.activeSkills indexOfObject:[NSNumber numberWithInt:[gestureRecognizer view].tag]] != NSNotFound) {
-        NSLog(@"FOUND");
-        
+
+    if (self.activeSkills && [self.activeSkills indexOfObject:[NSNumber numberWithInt:[gestureRecognizer view].tag]] != NSNotFound) {        
         [self removeActiveSkill:[NSNumber numberWithInt:[gestureRecognizer view].tag]];
     }
 }
 
 - (void)button1:(id)sender {
-    NSLog(@"button1");
     
 }
 

@@ -30,7 +30,7 @@
 
 -(void)changeSkillCount:(NSNotification *)notif {
     
-    int i = (120 - [notif.object intValue] + 1);
+    int i = (MAXSKILLS - [notif.object intValue] + 1);
     
     if (i <= 1) {
         [skillPointsView setTitle:[NSString stringWithFormat:@"%d Point Left", i] forState:UIControlStateNormal];

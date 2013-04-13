@@ -23,7 +23,7 @@
     NSString *__unsafe_unretained name;
 }
 
-@property (nonatomic) NSNumber *weight;
+@property (nonatomic, strong) NSNumber *weight;
 @property (nonatomic, unsafe_unretained) NSString *name;
 
 /**

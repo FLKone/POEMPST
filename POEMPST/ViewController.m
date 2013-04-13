@@ -163,16 +163,9 @@
     
     
     if ([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait || [[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
-
         [self setupMenuPortrait];
-
-        
-        
     } else {
-        
         [self setupMenuLandscape];
-
-        
     }
     //-- MAIN MENU
     

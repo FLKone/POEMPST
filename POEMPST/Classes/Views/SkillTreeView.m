@@ -730,11 +730,9 @@
 }
 
 -(void)drawActiveLayer:(NSArray *)forLinks {
-    NSLog(@"drawActiveLayer");
     BOOL isFirstLoad = NO;
-   // NSLog(@"drawActiveLayer isFirstLoad %d", isFirstLoad);
+    //NSLog(@"drawActiveLayer isFirstLoad %d", isFirstLoad);
 
-    
     //ACTIVATE START NODE
     for (NSString *key in self.skillNodes) {
 
@@ -744,9 +742,6 @@
             
             UIImage *faceImg;
             UIImage *newImage;
-            
-            
-            
             
             if ([arrayCharName indexOfObject:sn.name] == (self.characterClassID - 1)) {
                 
@@ -781,7 +776,6 @@
     }
     //-- ACTIVATE START NODE
     
-        NSLog(@"drawActiveLayer 2");
     //LINKS
     NSMutableArray *skillLinkToActivate = [NSMutableArray array];
     NSMutableArray *skillLinkToHighlight = [NSMutableArray array];
@@ -873,8 +867,6 @@
         }
 
     }
-    
-    NSLog(@"drawActiveLayer 3");
 
     [self.skillLinksView activateLinks:skillLinkToActivate];
     [self.skillLinksView highlightLinks:skillLinkToHighlight];
@@ -882,12 +874,9 @@
     //-- LINKS
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"changeSkillCount" object:[NSNumber numberWithInt:self.activeSkills.count] userInfo:nil];
-       NSLog(@"drawActiveLayer 4"); 
 }
 
 - (void)addActiveSkill:(NSNumber *)skillID {
-    
-    NSLog(@"addActiveSkill %@", skillID);
     
     if ([self.activeSkills indexOfObject:skillID] == NSNotFound) {
         [self.activeSkills addObject:skillID];
@@ -896,12 +885,10 @@
 
         for (NSArray *link in self.skillLinks) {
             if ([[link objectAtIndex:0] integerValue] == [skillID integerValue] || [[link objectAtIndex:1] integerValue] == [skillID integerValue]) {
-                NSLog(@"found");
                 [skillLinksToDisable addObject:link];
                 
             }
         }
-        NSLog(@"draw");
         [self drawActiveLayer:skillLinksToDisable];
     }
 }
@@ -931,7 +918,7 @@
     for (NSNumber *linkIDX in connectedLinks) {
         NSArray *tmpLink = [self.skillLinks objectAtIndex:[linkIDX intValue]];
         
-        if ([[tmpLink objectAtIndex:0] intValue] != [skillID intValue]) {
+        if ([[tmpLink objectAtIndex:0] intValue] != [skillID intValue] && [[tmpLink objectAtIndex:0] intValue] != [self.rootID intValue]) {
             PESGraphRoute *route = [graph shortestRouteFromNode:[graph.nodes valueForKey:self.rootID]
                                                           toNode:[graph.nodes valueForKey:[NSString stringWithFormat:@"%@", [tmpLink objectAtIndex:0]]]];
             
@@ -943,7 +930,7 @@
             }
         }
 
-        if ([[tmpLink objectAtIndex:1] intValue] != [skillID intValue]) {
+        if ([[tmpLink objectAtIndex:1] intValue] != [skillID intValue] && [[tmpLink objectAtIndex:1] intValue] != [self.rootID intValue]) {
             PESGraphRoute *route2 = [graph shortestRouteFromNode:[graph.nodes valueForKey:self.rootID]
                                                           toNode:[graph.nodes valueForKey:[NSString stringWithFormat:@"%@", [tmpLink objectAtIndex:1]]]];
             

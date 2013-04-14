@@ -59,6 +59,7 @@
 						<string key="NSFrame">{{437, 0}, {150, 25}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -123,7 +124,7 @@
 								<string key="NSFrame">{{783, 670}, {70, 30}}</string>
 								<reference key="NSSuperview" ref="553387508"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="195568829"/>
+								<reference key="NSNextKeyView" ref="228079206"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -156,7 +157,7 @@
 								<string key="NSFrame">{{808, 675}, {20, 20}}</string>
 								<reference key="NSSuperview" ref="553387508"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="654590224"/>
+								<reference key="NSNextKeyView" ref="195568829"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -206,7 +207,7 @@
 						<string key="NSFrameSize">{1024, 768}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="228079206"/>
+						<reference key="NSNextKeyView" ref="654590224"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor" id="1037821830">
 							<int key="NSColorSpace">3</int>
@@ -231,7 +232,7 @@
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-								<string key="IBUIText">please wait while loading</string>
+								<string key="IBUIText">Loading...</string>
 								<reference key="IBUITextColor" ref="542558552"/>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">0</int>
@@ -393,6 +394,14 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">loadingLabel</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="789693729"/>
+					</object>
+					<int key="connectionID">60</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="742649510"/>
 						<reference key="destination" ref="841351856"/>
@@ -433,8 +442,8 @@
 						<reference key="object" ref="766721923"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="742649510"/>
-							<reference ref="553387508"/>
 							<reference ref="536422737"/>
+							<reference ref="553387508"/>
 							<reference ref="195568829"/>
 						</array>
 						<reference key="parent" ref="0"/>
@@ -527,7 +536,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">51</int>
+			<int key="maxID">60</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -556,6 +565,7 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="activityView">UIActivityIndicatorView</string>
 						<string key="loadFromURLBtn">UIButton</string>
+						<string key="loadingLabel">UILabel</string>
 						<string key="loadingView">UIView</string>
 						<string key="menuImageView">UIImageView</string>
 						<string key="menuView">UIView</string>
@@ -572,6 +582,10 @@
 						<object class="IBToOneOutletInfo" key="loadFromURLBtn">
 							<string key="name">loadFromURLBtn</string>
 							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="loadingLabel">
+							<string key="name">loadingLabel</string>
+							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="loadingView">
 							<string key="name">loadingView</string>

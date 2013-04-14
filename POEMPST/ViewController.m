@@ -24,7 +24,7 @@
 @synthesize scrollView = _scrollView;
 @synthesize containerView = _containerView;
 
-@synthesize  loadFromURLBtn, urlField, skillPointsView, progressView, loadingView, activityView;
+@synthesize  loadFromURLBtn, urlField, skillPointsView, progressView, loadingView, activityView, loadingLabel;
 
 
 -(void)changeSkillCount:(NSNotification *)notif {
@@ -172,6 +172,7 @@
     //   urlField.layer.borderColor=[[UIColor colorWithRed:223/255.f green:207/255.f blue:59/255.f alpha:1.00] CGColor];
     urlField.layer.borderWidth= 1.0f;
     
+    loadingLabel.font = [UIFont fontWithName:@"Fontin-SmallCaps" size:18.0];
     
     [loadFromURLBtn setTitleColor:[UIColor colorWithRed:163/255.f green:141/255.f blue:109/255.f alpha:1.00] forState:UIControlStateNormal];
     [loadFromURLBtn setTitleColor:[UIColor colorWithRed:107/255.f green:93/255.f blue:72/255.f alpha:1.00] forState:UIControlStateHighlighted];
@@ -182,11 +183,14 @@
     
     [self.activityView setHidden:YES];
 
+    
     if ([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait || [[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
         [self setupMenuPortrait];
     } else {
         [self setupMenuLandscape];
     }
+    
+    
     //-- MAIN MENU
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSkillCount:) name:@"changeSkillCount" object:nil];

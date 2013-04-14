@@ -17,6 +17,7 @@
 @property (nonatomic, strong) IBOutlet UIButton *skillPointsView;
 
 @property (nonatomic, strong) IBOutlet UIView *loadingView;
+@property (nonatomic, strong) IBOutlet UILabel *loadingLabel;
 
 @property (nonatomic, strong) IBOutlet UIProgressView *progressView;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *activityView;

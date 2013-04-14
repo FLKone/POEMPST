@@ -55,7 +55,7 @@
 }
 
 -(IBAction)loadURL:(id) sender {
-    
+
     if ([self.urlField.text rangeOfString:@"http://www.pathofexile.com/passive-skill-tree/AAAAA"].location == NSNotFound) {
     }
     else {
@@ -63,7 +63,6 @@
             [self.activityView setHidden:NO];
 
             [[NSNotificationCenter defaultCenter] postNotificationName:@"loadUrl" object:self.urlField.text userInfo:nil];
-        //[_menuView setHidden:YES];
     }
 
 }
@@ -381,7 +380,7 @@
     
     self.urlField.frame =  CGRectMake(75, 850, 618, self.urlField.frame.size.height);
     self.loadFromURLBtn.frame =  CGRectMake(75, 890, 618, self.loadFromURLBtn.frame.size.height);
-    self.activityView.frame  =  CGRectMake(75, 890, self.activityView.frame.size.width, self.activityView.frame.size.height);
+    self.activityView.frame  =  CGRectMake(376, 895, self.activityView.frame.size.width, self.activityView.frame.size.height);
 
 }
 

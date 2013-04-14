@@ -24,7 +24,7 @@
 @synthesize scrollView = _scrollView;
 @synthesize containerView = _containerView;
 
-@synthesize  loadFromURLBtn, urlField, skillPointsView, progressView, loadingView, activityView, loadingLabel;
+@synthesize  loadFromURLBtn, urlField, skillPointsView, progressView, loadingView, activityView, loadingLabel, finalUrlField;
 
 
 -(void)changeSkillCount:(NSNotification *)notif {
@@ -40,6 +40,73 @@
         else
             [skillPointsView setTitle:[NSString stringWithFormat:@"%d Points Left", i] forState:UIControlStateNormal];
         
+        
+        NSArray *f = self.containerView.activeSkills;
+        int characterClassID = self.containerView.characterClassID;
+        NSString *rootID = self.containerView.rootID;
+
+        //ENCODE TEST
+        int val = 2;
+        char* b2 = (char*) &val;
+        
+        NSMutableString *hex = [NSMutableString string];
+        
+        [hex appendFormat:@"%02x", b2[3]];                                      //0
+        [hex appendFormat:@"%02x", b2[2]];                                      //1
+        [hex appendFormat:@"%02x", b2[1]];                                      //2
+        [hex appendFormat:@"%02x", b2[0]];                                      //3
+        [hex appendFormat:@"%02x", (unsigned char)(characterClassID)];     //4
+        [hex appendFormat:@"%02x", (unsigned char)0];                           //5
+        int kk;
+        for (kk=0; kk < [f count]; kk++) {
+            if ([[f objectAtIndex:kk] intValue] == [rootID intValue]) {
+                //NSLog(@"ROOT");
+            }
+            else
+            {
+                //                    NSLog(@"==");
+                int val2 = (int)[[f objectAtIndex:kk] intValue];
+                char* b3 = (char*) &val2;
+                //                    NSLog(@"%02x", b3[1]);
+                //                    NSLog(@"%02x", b3[0]);
+                NSString *tmp1 = [NSString stringWithFormat:@"%02x", b3[1]];
+                tmp1 = [tmp1 stringByReplacingOccurrencesOfString:@"ffffff" withString:@""];
+                [hex appendString:tmp1];
+                
+                NSString *tmp = [NSString stringWithFormat:@"%02x", b3[0]];
+                tmp = [tmp stringByReplacingOccurrencesOfString:@"ffffff" withString:@""];
+                [hex appendString:tmp];
+            }
+        }
+        
+        //TO DATA
+        NSString *command = [NSString stringWithString:hex];
+        
+        command = [command stringByReplacingOccurrencesOfString:@" " withString:@""];
+        NSMutableData *commandToSend= [[NSMutableData alloc] init];
+        unsigned char whole_byte;
+        char byte_chars[3] = {'\0','\0','\0'};
+        int zz;
+        for (zz=0; zz < [command length]/2; zz++) {
+            byte_chars[0] = [command characterAtIndex:zz*2];
+            byte_chars[1] = [command characterAtIndex:zz*2+1];
+            whole_byte = strtol(byte_chars, NULL, 16);
+            [commandToSend appendBytes:&whole_byte length:1];
+        }
+        NSLog(@"commandToSend %@", commandToSend);
+        
+        
+        NSLog(@"rebuildstring %@", [commandToSend base64EncodedString]);
+
+        NSString *s = [commandToSend base64EncodedString];
+        //[[[[commandToSend base64EncodedString] stringByReplacingOccurrencesOfString:siteUrl withString:@""] stringByReplacingOccurrencesOfString:@"-" withString:@"+"] stringByReplacingOccurrencesOfString:@"_" withString:@"/"];
+
+        s = [s stringByReplacingOccurrencesOfString:@"+" withString:@"-"];
+        s = [s stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+        
+        [self.finalUrlField setText:[NSString stringWithFormat:@"http://www.pathofexile.com/passive-skill-tree/%@", s]];
+        
+        //ENCODE TEST
         
         if (![_menuView isHidden]) {
             [_menuView setHidden:YES];
@@ -61,7 +128,7 @@
     else {
             [self.loadFromURLBtn setHidden:YES];
             [self.activityView setHidden:NO];
-
+                
             [[NSNotificationCenter defaultCenter] postNotificationName:@"loadUrl" object:self.urlField.text userInfo:nil];
     }
 
@@ -171,6 +238,7 @@
     urlField.font = [UIFont fontWithName:@"Fontin-Regular" size:13.0];
     //   urlField.layer.borderColor=[[UIColor colorWithRed:223/255.f green:207/255.f blue:59/255.f alpha:1.00] CGColor];
     urlField.layer.borderWidth= 1.0f;
+    urlField.canPaste = YES;
     
     loadingLabel.font = [UIFont fontWithName:@"Fontin-SmallCaps" size:18.0];
     
@@ -183,6 +251,11 @@
     
     [self.activityView setHidden:YES];
 
+    UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:@"Copy with BBCode" action:@selector(copyBBCode:)];
+    [[UIMenuController sharedMenuController] setMenuItems:[NSArray arrayWithObject:menuItem]];
+    
+    finalUrlField.font = [UIFont fontWithName:@"Fontin-Regular" size:13.0];
+    finalUrlField.canCopyBBcode = YES;
     
     if ([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait || [[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
         [self setupMenuPortrait];

@@ -9,15 +9,19 @@
 
 @implementation URLTextField
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
+@synthesize canPaste;
+@synthesize canCopyBBcode, insets;
+
+- (id)initWithCoder:(NSCoder *)coder {
+    self = [super initWithCoder:coder];
     if (self) {
-        // Initialization code
-        
+        NSLog(@"dsds iwc %@", self);
+        self.canCopyBBcode = NO;
+        self.canPaste = NO;
     }
     return self;
 }
+
 
 - (void)drawTextInRect:(CGRect)rect
 {
@@ -33,15 +37,31 @@
 }
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
-    if(action == @selector(paste:)) {
+    NSLog(@"action %@", NSStringFromSelector(action));
+
+    if(action == @selector(paste:) && self.canPaste) {
+        NSLog(@"canPaste");
+        return YES;
+    }
+    else if(action == @selector(copyBBCode:) && self.canCopyBBcode) {
+        NSLog(@"canCopy");
+        
         return YES;
     }
     else if(action == @selector(copy:)) {
+        NSLog(@"canCopy");
+        
         return YES;
     }
+    else
+        return NO;
+    /*
     else {
+    //    NSLog(@"Other");
+
         return [super canPerformAction:action withSender:sender];
     }
+     */
 }
 
 
@@ -60,6 +80,13 @@
 }
 
 
+- (void)copyBBCode:(id)sender {
+    UIPasteboard *board = [UIPasteboard generalPasteboard];
+    [board setString:[NSString stringWithFormat:@"[url=\%@\"]Passive skill tree build[/url]", self.text]];
+    self.highlighted = NO;
+    [self resignFirstResponder];
+}
+
 - (void)copy:(id)sender {
     UIPasteboard *board = [UIPasteboard generalPasteboard];
     [board setString:self.text];
@@ -67,7 +94,7 @@
     [self resignFirstResponder];
 }
 
-
+//
 - (void)paste:(id)sender {
     UIPasteboard *board = [UIPasteboard generalPasteboard];
     

@@ -22,6 +22,7 @@
 		CA2FF924170FF347003DA79B /* SkillLinkView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2FF923170FF347003DA79B /* SkillLinkView.m */; };
 		CA2FF9261712804D003DA79B /* passive-skill-tree-v2.html in Resources */ = {isa = PBXBuildFile; fileRef = CA2FF9251712804D003DA79B /* passive-skill-tree-v2.html */; };
 		CA2FF9281713C944003DA79B /* Background1.png in Resources */ = {isa = PBXBuildFile; fileRef = CA2FF9271713C944003DA79B /* Background1.png */; };
+		CA3B5056171AF70600C29D4C /* charactersheet.png in Resources */ = {isa = PBXBuildFile; fileRef = CA3B5055171AF70600C29D4C /* charactersheet.png */; };
 		CA41BE9D170FB7A500C0E1D2 /* SkillTreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA41BE9C170FB7A500C0E1D2 /* SkillTreeView.m */; };
 		CA6DA26F171A794C00483E5E /* SkillSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA6DA26D171A794C00483E5E /* SkillSelectionViewController.m */; };
 		CA6DA270171A794C00483E5E /* SkillSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA6DA26E171A794C00483E5E /* SkillSelectionViewController.xib */; };
@@ -108,6 +109,7 @@
 		CA2FF923170FF347003DA79B /* SkillLinkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SkillLinkView.m; path = Classes/Views/SkillLinkView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CA2FF9251712804D003DA79B /* passive-skill-tree-v2.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "passive-skill-tree-v2.html"; sourceTree = "<group>"; };
 		CA2FF9271713C944003DA79B /* Background1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background1.png; sourceTree = "<group>"; };
+		CA3B5055171AF70600C29D4C /* charactersheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = charactersheet.png; sourceTree = "<group>"; };
 		CA41BE9B170FB7A500C0E1D2 /* SkillTreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SkillTreeView.h; path = Classes/Views/SkillTreeView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CA41BE9C170FB7A500C0E1D2 /* SkillTreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SkillTreeView.m; path = Classes/Views/SkillTreeView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CA6DA26C171A794C00483E5E /* SkillSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkillSelectionViewController.h; path = Classes/Controllers/SkillSelectionViewController.h; sourceTree = "<group>"; };
@@ -456,6 +458,7 @@
 		CAF636D81718398500D91EB4 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				CA3B5055171AF70600C29D4C /* charactersheet.png */,
 				CA6DA278171AECA700483E5E /* btnOFF.png */,
 				CA6DA279171AECA700483E5E /* btnON.png */,
 				CA6DA271171A89C700483E5E /* arrow.png */,
@@ -568,6 +571,7 @@
 				CA6DA274171A89C700483E5E /* popoverBG.png in Resources */,
 				CA6DA27A171AECA700483E5E /* btnOFF.png in Resources */,
 				CA6DA27B171AECA700483E5E /* btnON.png in Resources */,
+				CA3B5056171AF70600C29D4C /* charactersheet.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

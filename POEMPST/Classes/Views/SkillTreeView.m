@@ -47,11 +47,13 @@
         SkillNode *sn = [self.skillNodes objectForKey:skillID];
         
         if ([arrayCharName indexOfObject:sn.name] == (self.characterClassID - 1)) {
+            self.rootID = [NSString stringWithFormat:@"%d", sn.id];            
             [self.activeSkills addObject:[NSNumber numberWithInt:sn.id]];
             break;
         }
         
     }
+    
     [self drawActiveLayer:self.skillLinks];
 }
 
@@ -74,15 +76,17 @@
             
             NSString *s = [[[loadUrl stringByReplacingOccurrencesOfString:siteUrl withString:@""] stringByReplacingOccurrencesOfString:@"-" withString:@"+"] stringByReplacingOccurrencesOfString:@"_" withString:@"/"];
             
+            /*
             NSString *stringValue = s;
-            Byte inputData[[stringValue lengthOfBytesUsingEncoding:NSUTF8StringEncoding]];//prepare a Byte[]
+             Byte inputData[[stringValue lengthOfBytesUsingEncoding:NSUTF8StringEncoding]];//prepare a Byte[]
             [[stringValue dataUsingEncoding:NSUTF8StringEncoding] getBytes:inputData];//get the pointer of the data
             size_t inputDataSize = (size_t)[stringValue length];
             size_t outputDataSize = EstimateBas64DecodedDataSize(inputDataSize);//calculate the decoded data size
             Byte outputData[outputDataSize];//prepare a Byte[] for the decoded data
             Base64DecodeData(inputData, inputDataSize, outputData, &outputDataSize);//decode the data
-            NSData *theData = [[NSData alloc] initWithBytes:outputData length:outputDataSize];//create a NSData object from the decoded data
-            
+            */
+            NSData *theData = [NSData dataFromBase64String:s];//[[NSData alloc] initWithBytes:outputData length:outputDataSize];//create a NSData object from the decoded data
+
             DataString *ss = [[DataString alloc] init];
             [ss setDataString:theData];
             int o = [ss readInt:0]; //ver
@@ -99,7 +103,7 @@
             }
             
             self.activeSkills = f;
-            //NSLog(@"%@", f);
+            //NSLog(@"f %@", f);
             //-- LOAD URL
             
             
@@ -110,11 +114,17 @@
                 SkillNode *sn = [self.skillNodes objectForKey:skillID];
                 
                 if ([arrayCharName indexOfObject:sn.name] == (self.characterClassID - 1)) {
+                    self.rootID = [NSString stringWithFormat:@"%d", sn.id];
                     [self.activeSkills addObject:[NSNumber numberWithInt:sn.id]];
                     break;
                 }
                 
             }
+            
+                       
+            
+            
+            
             [self drawActiveLayer:self.skillLinks];
         });
 
@@ -767,7 +777,6 @@
             
             if ([arrayCharName indexOfObject:sn.name] == (self.characterClassID - 1)) {
 
-                self.rootID = [NSString stringWithFormat:@"%d", sn.id];
                 
                 //[self.activeSkills addObject:[NSNumber numberWithInt:sn.id]];
                 //NSLog(@"ID START %d", sn.id);

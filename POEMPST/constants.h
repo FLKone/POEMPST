@@ -65,6 +65,7 @@ static float orbitRadii[] =     {0.0f   , 83.5f , 163.0f    , 336.0f    , 489.0f
 #import "DataString.h"
 #import "UIView+Image.h"
 #import "URLTextField.h"
+#import "CustomPopoverBackgroundView.h"
 
 //Models
 #import "SkillIcons.h"
@@ -77,3 +78,6 @@ static float orbitRadii[] =     {0.0f   , 83.5f , 163.0f    , 336.0f    , 489.0f
 #import "SkillLinksView.h"
 #import "SkillLinkView.h"
 #import "SkillTouchView.h"
+
+//Controllers
+#import "SkillSelectionViewController.h"

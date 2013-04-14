@@ -35,7 +35,7 @@
 @property (nonatomic, strong) NSString *name; //dn
 @property BOOL isMastery; //m
 //spc -- NOT USED
-@property (nonatomic, strong) NSMutableDictionary *attributes; //sd
+@property (nonatomic, strong) NSArray *attributes; //sd
 @property int g; //g
 @property int orbit; //o
 @property int orbitIndex; //oidx

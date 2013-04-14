@@ -6,11 +6,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SkillSelectionViewController.h"
+
 @class SkillLinksView;
 @class SkillIcons;
 @class PESGraph;
+@class SkillSelectionViewController;
 
-@interface SkillTreeView : UIView
+@interface SkillTreeView : UIView <SkillSelectionDelegate, UIPopoverControllerDelegate>
 
 @property (strong, nonatomic) SkillLinksView *skillLinksView;
 @property (strong, nonatomic) UIView *touchLayer;
@@ -41,5 +44,14 @@
 
 - (void)addActiveSkill:(NSNumber *)skillID;
 - (void)removeActiveSkill:(NSNumber *)skillID;
+
+@property (nonatomic, strong) SkillSelectionViewController *skillPicker;
+@property (nonatomic, strong) UIPopoverController *skillPickerPopover;
+
+-(IBAction)chooseSkillButtonTapped:(id)sender;
+-(void)selectedSkill:(SkillNode *)node;
+-(void)cancelSkill;
+
+
 
 @end

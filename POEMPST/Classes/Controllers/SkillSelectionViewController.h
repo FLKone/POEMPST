@@ -1,0 +1,34 @@
+//
+//  SkillSelectionViewController.h
+//  POEMPST
+//
+//  Created by Shasta on 14/04/13.
+//  Copyright (c) 2013 FLKone. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@class SkillNode;
+
+@protocol SkillSelectionDelegate <NSObject>
+@required
+-(void)selectedSkill:(SkillNode *)node;
+-(void)cancelSkill;
+@end
+
+@interface SkillSelectionViewController : UIViewController
+
+@property (nonatomic, weak) id<SkillSelectionDelegate> delegate;
+
+@property (nonatomic, strong) IBOutlet SkillNode *node;
+
+@property (nonatomic, strong) IBOutlet UILabel *titleLabel;
+@property (nonatomic, strong) IBOutlet UILabel *descriptionLabel;
+@property (nonatomic, strong) IBOutlet UIButton *validateBtn;
+@property (nonatomic, strong) IBOutlet UIButton *cancelBtn;
+
+-(IBAction)selectSkill;
+-(IBAction)cancelSkill;
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andNode:(SkillNode *)aNode;
+@end

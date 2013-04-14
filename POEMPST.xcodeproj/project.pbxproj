@@ -23,6 +23,11 @@
 		CA2FF9261712804D003DA79B /* passive-skill-tree-v2.html in Resources */ = {isa = PBXBuildFile; fileRef = CA2FF9251712804D003DA79B /* passive-skill-tree-v2.html */; };
 		CA2FF9281713C944003DA79B /* Background1.png in Resources */ = {isa = PBXBuildFile; fileRef = CA2FF9271713C944003DA79B /* Background1.png */; };
 		CA41BE9D170FB7A500C0E1D2 /* SkillTreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA41BE9C170FB7A500C0E1D2 /* SkillTreeView.m */; };
+		CA6DA26F171A794C00483E5E /* SkillSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA6DA26D171A794C00483E5E /* SkillSelectionViewController.m */; };
+		CA6DA270171A794C00483E5E /* SkillSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA6DA26E171A794C00483E5E /* SkillSelectionViewController.xib */; };
+		CA6DA273171A89C700483E5E /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = CA6DA271171A89C700483E5E /* arrow.png */; };
+		CA6DA274171A89C700483E5E /* popoverBG.png in Resources */ = {isa = PBXBuildFile; fileRef = CA6DA272171A89C700483E5E /* popoverBG.png */; };
+		CA6DA277171AA72800483E5E /* CustomPopoverBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA6DA276171AA72800483E5E /* CustomPopoverBackgroundView.m */; };
 		CAA1EED01707E5AF002BF206 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA1EECF1707E5AF002BF206 /* UIKit.framework */; };
 		CAA1EED21707E5AF002BF206 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA1EED11707E5AF002BF206 /* Foundation.framework */; };
 		CAA1EED41707E5AF002BF206 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA1EED31707E5AF002BF206 /* CoreGraphics.framework */; };
@@ -103,6 +108,13 @@
 		CA2FF9271713C944003DA79B /* Background1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background1.png; sourceTree = "<group>"; };
 		CA41BE9B170FB7A500C0E1D2 /* SkillTreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SkillTreeView.h; path = Classes/Views/SkillTreeView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CA41BE9C170FB7A500C0E1D2 /* SkillTreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SkillTreeView.m; path = Classes/Views/SkillTreeView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		CA6DA26C171A794C00483E5E /* SkillSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkillSelectionViewController.h; path = Classes/Controllers/SkillSelectionViewController.h; sourceTree = "<group>"; };
+		CA6DA26D171A794C00483E5E /* SkillSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SkillSelectionViewController.m; path = Classes/Controllers/SkillSelectionViewController.m; sourceTree = "<group>"; };
+		CA6DA26E171A794C00483E5E /* SkillSelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SkillSelectionViewController.xib; path = Classes/Controllers/SkillSelectionViewController.xib; sourceTree = "<group>"; };
+		CA6DA271171A89C700483E5E /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
+		CA6DA272171A89C700483E5E /* popoverBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popoverBG.png; sourceTree = "<group>"; };
+		CA6DA275171AA72800483E5E /* CustomPopoverBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomPopoverBackgroundView.h; path = Classes/Helper/CustomPopoverBackgroundView.h; sourceTree = "<group>"; };
+		CA6DA276171AA72800483E5E /* CustomPopoverBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomPopoverBackgroundView.m; path = Classes/Helper/CustomPopoverBackgroundView.m; sourceTree = "<group>"; };
 		CAA1EECC1707E5AF002BF206 /* POEMPST.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = POEMPST.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAA1EECF1707E5AF002BF206 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CAA1EED11707E5AF002BF206 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -227,6 +239,16 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		CA6DA26B171A78CA00483E5E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CA6DA26C171A794C00483E5E /* SkillSelectionViewController.h */,
+				CA6DA26D171A794C00483E5E /* SkillSelectionViewController.m */,
+				CA6DA26E171A794C00483E5E /* SkillSelectionViewController.xib */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
 		CAA1EEC31707E5AE002BF206 = {
 			isa = PBXGroup;
 			children = (
@@ -268,6 +290,7 @@
 				CAA1EEE81707E5AF002BF206 /* ViewController.m */,
 				CAA1EF291707F81D002BF206 /* ViewController_iPad.xib */,
 				CAA1EF2A1707F81D002BF206 /* ViewController_iPhone.xib */,
+				CA6DA26B171A78CA00483E5E /* Controllers */,
 				CA41BE9E170FB7AC00C0E1D2 /* Views */,
 				CAA1EF651709F68C002BF206 /* Models */,
 				CAA1EF7D170A64FC002BF206 /* Helper */,
@@ -402,6 +425,8 @@
 				CA2FF91D170FCD3E003DA79B /* UIView+Image.m */,
 				CAF636F11718421900D91EB4 /* URLTextField.h */,
 				CAF636F21718421900D91EB4 /* URLTextField.m */,
+				CA6DA275171AA72800483E5E /* CustomPopoverBackgroundView.h */,
+				CA6DA276171AA72800483E5E /* CustomPopoverBackgroundView.m */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -427,6 +452,8 @@
 		CAF636D81718398500D91EB4 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				CA6DA271171A89C700483E5E /* arrow.png */,
+				CA6DA272171A89C700483E5E /* popoverBG.png */,
 				CAF3A40317189A0000014FCE /* PointsBackground.png */,
 				CAF636D91718398500D91EB4 /* duelist-large.png */,
 				CAF636DA1718398500D91EB4 /* Fontin-Bold.ttf */,
@@ -530,6 +557,9 @@
 				CA2609D9171893A0008F7249 /* iTunesArtwork@2x.png in Resources */,
 				CAF3A40417189A0000014FCE /* PointsBackground.png in Resources */,
 				CAF3A4061719763800014FCE /* README.md in Resources */,
+				CA6DA270171A794C00483E5E /* SkillSelectionViewController.xib in Resources */,
+				CA6DA273171A89C700483E5E /* arrow.png in Resources */,
+				CA6DA274171A89C700483E5E /* popoverBG.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -573,6 +603,8 @@
 				CAF636BF1716827600D91EB4 /* PESGraphRoute.m in Sources */,
 				CAF636C01716827600D91EB4 /* PESGraphRouteStep.m in Sources */,
 				CAF636F31718421900D91EB4 /* URLTextField.m in Sources */,
+				CA6DA26F171A794C00483E5E /* SkillSelectionViewController.m in Sources */,
+				CA6DA277171AA72800483E5E /* CustomPopoverBackgroundView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

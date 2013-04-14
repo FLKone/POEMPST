@@ -14,8 +14,11 @@
 @synthesize fullY, fullX, characterClassID, arrayCharName;
 @synthesize iconActiveSkills, iconInactiveSkills, activeSkills;
 @synthesize dicoNodeBackgrounds, dicoNodeBackgroundsActive, snImages, touchLayer, spritesUnitedActive, arrayFaceNames, graph, rootID;
+@synthesize skillPicker = _skillPicker;
+@synthesize skillPickerPopover = _skillPickerPopover;
 
-- (void)bannerTapped:(UIGestureRecognizer *)gestureRecognizer {    
+- (void)bannerTapped:(UIGestureRecognizer *)gestureRecognizer {
+    
     int nbLinks = ((SkillTouchView *)[self.touchLayer viewWithTag:[gestureRecognizer view].tag]).linksHighIDs.count + ((SkillTouchView *)[self.touchLayer viewWithTag:[gestureRecognizer view].tag]).linksIDs.count;
     
     if (nbLinks && self.activeSkills.count - 1 < MAXSKILLS) {        
@@ -727,7 +730,7 @@
         //touchView.layer.borderWidth = 1.0f;
         
         if (!sn.isMastery) {
-            UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bannerTapped:)];
+            UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseSkillButtonTapped:)];
             singleTap.numberOfTapsRequired = 1;
             singleTap.numberOfTouchesRequired = 1;
             [touchView setUserInteractionEnabled:YES];
@@ -1089,6 +1092,79 @@
     
     
     [self drawActiveLayer:skillLinksToDisable];
+}
+
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
+    if (_skillPickerPopover != nil) {
+        _skillPickerPopover = nil;
+    }
+}
+
+#pragma mark - IBActions
+-(IBAction)chooseSkillButtonTapped:(UIGestureRecognizer *)gestureRecognizer
+{
+/*
+
+  */  
+    
+    SkillNode *node = [self.skillNodes objectForKey:[NSNumber numberWithInt:[gestureRecognizer view].tag]];
+
+   // NSLog(@"node tapped %@", node);
+    
+    //Create the ColorPickerViewController.
+    _skillPicker = [[SkillSelectionViewController alloc] initWithNibName:@"SkillSelectionViewController" bundle:nil andNode:node];
+    
+    //Set this VC as the delegate.
+    _skillPicker.delegate = self;
+    
+    if (_skillPickerPopover == nil) {
+        NSLog(@"_skillPickerPopover == nil");
+        //The color picker popover is not showing. Show it.
+        _skillPickerPopover = [[UIPopoverController alloc] initWithContentViewController:_skillPicker];
+        _skillPickerPopover.popoverBackgroundViewClass = [CustomPopoverBackgroundView class];
+        _skillPickerPopover.delegate = self;
+        [_skillPickerPopover presentPopoverFromRect:CGRectMake((node.Position.x + fullX/2)/Zoom/MiniScale - 13, (node.Position.y + fullY/2)/Zoom/MiniScale - 13, 26, 26)
+                                             inView:self.touchLayer
+                           permittedArrowDirections:UIPopoverArrowDirectionAny
+                                           animated:YES];
+        
+//        [_skillPickerPopover presentPopoverFromBarButtonItem:(UIBarButtonItem *)sender
+//                                    permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+    } else {
+        NSLog(@"_skillPickerPopover == nil ELSE");
+
+        //The color picker popover is showing. Hide it.
+        [_skillPickerPopover dismissPopoverAnimated:YES];
+        _skillPickerPopover = nil;
+    }
+}
+
+#pragma mark - SkillSelectionViewController method
+-(void)selectedSkill:(SkillNode *)node {
+    //NSLog(@"node %@", node);
+    
+    int nbLinks = ((SkillTouchView *)[self.touchLayer viewWithTag:node.id]).linksHighIDs.count + ((SkillTouchView *)[self.touchLayer viewWithTag:node.id]).linksIDs.count;
+    
+    if (nbLinks && self.activeSkills.count - 1 < MAXSKILLS) {
+        if ([self.activeSkills indexOfObject:[NSNumber numberWithInt:node.id]] == NSNotFound) {
+            [self addActiveSkill:[NSNumber numberWithInt:node.id]];
+            [self cancelSkill];
+            return;
+        }
+    }
+    
+    if (self.activeSkills && [self.activeSkills indexOfObject:[NSNumber numberWithInt:node.id]] != NSNotFound) {
+        [self removeActiveSkill:[NSNumber numberWithInt:node.id]];
+    }
+    
+    [self cancelSkill];
+}
+
+-(void)cancelSkill {
+    if (_skillPickerPopover) {
+        [_skillPickerPopover dismissPopoverAnimated:YES];
+        _skillPickerPopover = nil;
+    }
 }
 
 @end

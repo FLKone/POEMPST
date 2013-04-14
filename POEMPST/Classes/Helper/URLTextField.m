@@ -14,8 +14,22 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        
     }
     return self;
+}
+
+- (void)drawTextInRect:(CGRect)rect
+{
+    self.insets = UIEdgeInsetsMake(0, 10, 0, 10);
+    return [super drawTextInRect:UIEdgeInsetsInsetRect(rect, self.insets)];
+}
+
+- (void)resizeHeightToFitText
+{
+    CGRect frame = [self bounds];
+
+    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, frame.size.width, frame.size.height);
 }
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
@@ -58,10 +72,13 @@
     UIPasteboard *board = [UIPasteboard generalPasteboard];
     
     if ([board.string rangeOfString:@"http://www.pathofexile.com/passive-skill-tree/AAAAA"].location == NSNotFound) {
-        NSLog(@"pwet");
+
     }
     else
+    {
         [self setText:board.string];
+        [self resizeHeightToFitText];
+    }
     
     [self resignFirstResponder];
 }

@@ -9,4 +9,7 @@
 
 @interface URLTextField : UILabel
 
+@property (nonatomic, assign) UIEdgeInsets insets;
+- (void)resizeHeightToFitText;
+
 @end

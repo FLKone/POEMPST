@@ -173,6 +173,7 @@
     //   urlField.layer.borderColor=[[UIColor colorWithRed:223/255.f green:207/255.f blue:59/255.f alpha:1.00] CGColor];
     urlField.layer.borderWidth= 1.0f;
     
+    
     [loadFromURLBtn setTitleColor:[UIColor colorWithRed:163/255.f green:141/255.f blue:109/255.f alpha:1.00] forState:UIControlStateNormal];
     [loadFromURLBtn setTitleColor:[UIColor colorWithRed:107/255.f green:93/255.f blue:72/255.f alpha:1.00] forState:UIControlStateHighlighted];
     [loadFromURLBtn.titleLabel setFont:[UIFont fontWithName:@"Fontin-Regular" size:18.0]];

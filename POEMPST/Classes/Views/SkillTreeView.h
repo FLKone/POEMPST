@@ -28,6 +28,9 @@
 @property (strong, nonatomic) SkillIcons *iconInactiveSkills;
 @property (strong, nonatomic) NSMutableArray *activeSkills;
 
+@property (strong, nonatomic) NSMutableDictionary *characterData;
+
+
 @property int characterClassID;
 @property (strong, nonatomic) NSString *rootID;
 @property (strong, nonatomic) NSDictionary *dicoNodeBackgrounds;

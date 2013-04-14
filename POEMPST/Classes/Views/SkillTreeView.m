@@ -13,7 +13,7 @@
 @synthesize skillNodes, skillLinks, assets, nodeGroups, skillFaceGroups;
 @synthesize fullY, fullX, characterClassID, arrayCharName;
 @synthesize iconActiveSkills, iconInactiveSkills, activeSkills;
-@synthesize dicoNodeBackgrounds, dicoNodeBackgroundsActive, snImages, touchLayer, spritesUnitedActive, arrayFaceNames, graph, rootID;
+@synthesize dicoNodeBackgrounds, dicoNodeBackgroundsActive, snImages, touchLayer, spritesUnitedActive, arrayFaceNames, graph, rootID, characterData;
 @synthesize skillPicker = _skillPicker;
 @synthesize skillPickerPopover = _skillPickerPopover;
 
@@ -86,6 +86,9 @@
             Base64DecodeData(inputData, inputDataSize, outputData, &outputDataSize);//decode the data
             */
             NSData *theData = [NSData dataFromBase64String:s];//[[NSData alloc] initWithBytes:outputData length:outputDataSize];//create a NSData object from the decoded data
+
+           // NSLog(@"theData   %@", theData);
+          //  NSLog(@"theString %@", s);
 
             DataString *ss = [[DataString alloc] init];
             [ss setDataString:theData];
@@ -161,6 +164,11 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadClass:) name:@"loadClass" object:nil];
         
         NSDate *thenLOADURL = [NSDate date];
+        
+        //characterData
+        self.characterData = [json objectForKey:@"characterData"];
+        //-- characterData
+        
         
         // Skill Sprites
         iconActiveSkills = [[SkillIcons alloc] init];

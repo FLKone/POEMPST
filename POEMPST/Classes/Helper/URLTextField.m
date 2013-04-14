@@ -37,19 +37,19 @@
 }
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
-    NSLog(@"action %@", NSStringFromSelector(action));
+   // NSLog(@"action %@", NSStringFromSelector(action));
 
     if(action == @selector(paste:) && self.canPaste) {
-        NSLog(@"canPaste");
+       // NSLog(@"canPaste");
         return YES;
     }
     else if(action == @selector(copyBBCode:) && self.canCopyBBcode) {
-        NSLog(@"canCopy");
+       // NSLog(@"canCopy");
         
         return YES;
     }
     else if(action == @selector(copy:)) {
-        NSLog(@"canCopy");
+        //NSLog(@"canCopy");
         
         return YES;
     }

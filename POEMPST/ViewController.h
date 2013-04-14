@@ -17,6 +17,10 @@
 @property (nonatomic, strong) IBOutlet UIButton *skillPointsView;
 @property (nonatomic, strong) IBOutlet URLTextField *finalUrlField;
 
+@property (nonatomic, strong) IBOutlet UIImageView *activeClassImageView;
+@property (nonatomic, strong) IBOutlet UILabel *currentDextLabel;
+@property (nonatomic, strong) IBOutlet UILabel *currentStrLabel;
+@property (nonatomic, strong) IBOutlet UILabel *currentIntelLabel;
 
 @property (nonatomic, strong) IBOutlet UIView *loadingView;
 @property (nonatomic, strong) IBOutlet UILabel *loadingLabel;

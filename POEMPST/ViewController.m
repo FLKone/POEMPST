@@ -24,8 +24,7 @@
 @synthesize scrollView = _scrollView;
 @synthesize containerView = _containerView;
 
-@synthesize  loadFromURLBtn, urlField, skillPointsView, progressView, loadingView, activityView, loadingLabel, finalUrlField;
-
+@synthesize  loadFromURLBtn, urlField, skillPointsView, progressView, loadingView, activityView, loadingLabel, finalUrlField, activeClassImageView, currentDextLabel, currentStrLabel, currentIntelLabel;
 
 -(void)changeSkillCount:(NSNotification *)notif {
     
@@ -93,20 +92,72 @@
             whole_byte = strtol(byte_chars, NULL, 16);
             [commandToSend appendBytes:&whole_byte length:1];
         }
-        NSLog(@"commandToSend %@", commandToSend);
+        //NSLog(@"commandToSend %@", commandToSend);
         
         
-        NSLog(@"rebuildstring %@", [commandToSend base64EncodedString]);
+        //NSLog(@"rebuildstring %@", [commandToSend base64EncodedString]);
 
         NSString *s = [commandToSend base64EncodedString];
         //[[[[commandToSend base64EncodedString] stringByReplacingOccurrencesOfString:siteUrl withString:@""] stringByReplacingOccurrencesOfString:@"-" withString:@"+"] stringByReplacingOccurrencesOfString:@"_" withString:@"/"];
 
         s = [s stringByReplacingOccurrencesOfString:@"+" withString:@"-"];
         s = [s stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
-        
+        s = [s stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+        s = [s stringByReplacingOccurrencesOfString:@"\n" withString:@"" options:0 range:NSMakeRange(0, s.length)];
+        s = [s stringByReplacingOccurrencesOfString:@"\r" withString:@"" options:0 range:NSMakeRange(0, s.length)];
+
         [self.finalUrlField setText:[NSString stringWithFormat:@"http://www.pathofexile.com/passive-skill-tree/%@", s]];
         
         //ENCODE TEST
+
+        switch (characterClassID) {
+            case 1:
+                [self.activeClassImageView setImage:[UIImage imageNamed:@"marauder-large.png"]];
+                break;
+            case 2:
+                [self.activeClassImageView setImage:[UIImage imageNamed:@"ranger-large.png"]];
+                break;
+            case 3:
+                [self.activeClassImageView setImage:[UIImage imageNamed:@"witch-large.png"]];
+                break;
+            case 4:
+                [self.activeClassImageView setImage:[UIImage imageNamed:@"duelist-large.png"]];
+                break;
+            case 5:
+                [self.activeClassImageView setImage:[UIImage imageNamed:@"templar-large.png"]];
+                break;
+            case 6:
+                [self.activeClassImageView setImage:[UIImage imageNamed:@"shadow-large.png"]];
+                break;
+            default:
+                break;
+        }
+
+        int da = 0;
+        int sa = 0;
+        int ia = 0;
+        for (NSNumber *skillID in f) {
+            if ([skillID intValue] == [rootID intValue]) {
+                //NSLog(@"ROOT");
+            }
+            else
+            {
+                da += ((SkillNode *)[self.containerView.skillNodes objectForKey:skillID]).da;
+                sa += ((SkillNode *)[self.containerView.skillNodes objectForKey:skillID]).sa;
+                ia += ((SkillNode *)[self.containerView.skillNodes objectForKey:skillID]).ia;
+            }
+        }
+        
+        //base  self.characterData
+        
+        NSDictionary *baseAttr = [self.containerView.characterData objectForKey:[NSString stringWithFormat:@"%d", characterClassID]];
+        da += [[baseAttr objectForKey:@"base_dex"] intValue];
+        sa += [[baseAttr objectForKey:@"base_str"] intValue];
+        ia += [[baseAttr objectForKey:@"base_int"] intValue];
+        
+        [self.currentDextLabel setText:[NSString stringWithFormat:@"%d", da]];
+        [self.currentIntelLabel setText:[NSString stringWithFormat:@"%d", ia]];
+        [self.currentStrLabel setText:[NSString stringWithFormat:@"%d", sa]];
         
         if (![_menuView isHidden]) {
             [_menuView setHidden:YES];
@@ -256,6 +307,13 @@
     
     finalUrlField.font = [UIFont fontWithName:@"Fontin-Regular" size:13.0];
     finalUrlField.canCopyBBcode = YES;
+    
+    self.currentDextLabel.font = [UIFont fontWithName:@"Fontin-Regular" size:10.0];
+    self.currentIntelLabel.font = [UIFont fontWithName:@"Fontin-Regular" size:10.0];
+    self.currentStrLabel.font = [UIFont fontWithName:@"Fontin-Regular" size:10.0];
+    [self.currentIntelLabel setTextColor:[UIColor colorWithRed:73/255.f green:159/255.f blue:210/255.f alpha:1.00]];
+    [self.currentStrLabel setTextColor:[UIColor colorWithRed:205/255.f green:47/255.f blue:19/255.f alpha:1.00]];
+    [self.currentDextLabel setTextColor:[UIColor colorWithRed:4/255.f green:195/255.f blue:4/255.f alpha:1.00]];
     
     if ([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait || [[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
         [self setupMenuPortrait];

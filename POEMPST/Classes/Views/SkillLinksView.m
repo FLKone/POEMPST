@@ -76,6 +76,27 @@
      */
 }
 
+-(void)reset {
+    
+    NSArray *viewArr = [self subviews];
+    
+    for (id item in viewArr)
+    {
+        if ([item isKindOfClass:[SkillLinkView class]])
+        {
+            SkillLinkView *blankItem = (SkillLinkView *)item;
+            
+            // this works
+            [blankItem removeFromSuperview];
+            
+        }
+        else
+        {
+            //
+        }
+    }
+}
+
 -(void)disableLinks:(NSArray *)linkToDisable {
     //NSLog(@"disableLinks");
 

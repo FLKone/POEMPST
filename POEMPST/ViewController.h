@@ -7,7 +7,7 @@
 
 #import <UIKit/UIKit.h>
 @class URLTextField;
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <UIActionSheetDelegate>
 
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) IBOutlet UIView *menuView;
@@ -29,5 +29,6 @@
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *activityView;
 
 -(IBAction) loadURL:(id) sender;
+-(IBAction) resetAS:(id) sender;
 
 @end

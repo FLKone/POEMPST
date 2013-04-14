@@ -159,12 +159,18 @@
 }
 
 - (void)desactivate {
+    
     [self.overlayImage removeFromSuperview];
     [self.skillImage removeFromSuperview];
     self.overlayImage = nil;
     self.skillImage = nil;
     
     self.isActivated = NO;
+    self.isHighlighted = NO;
+    
+    self.linksIDs = [NSMutableArray array];
+    self.linksHighIDs = [NSMutableArray array];
+    
     //self.layer.borderColor = [UIColor whiteColor].CGColor;
 }
 

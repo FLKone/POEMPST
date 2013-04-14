@@ -21,6 +21,7 @@
 - (void)activate:(BOOL)isFirstLoad;
 - (void)highlight:(BOOL)isFirstLoad;
 
+
 - (void)desactivate;
 - (void)lowlight;
 @end

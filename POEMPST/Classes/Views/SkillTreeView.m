@@ -773,52 +773,59 @@
     //NSLog(@"drawActiveLayer isFirstLoad %d", isFirstLoad);
 
     //ACTIVATE START NODE
-    for (NSString *key in self.skillNodes) {
-
-        SkillNode *sn = [self.skillNodes objectForKey:key];
-
-        if ([arrayCharName indexOfObject:sn.name] != NSNotFound) {
+    if ([self.touchLayer viewWithTag:ACTIVEFACEID]) {
+        //
+    }
+    else {
+        for (NSString *key in self.skillNodes) {
             
-
-            UIImage *faceImg;
-            UIImage *newImage;
+            SkillNode *sn = [self.skillNodes objectForKey:key];
             
-            if ([arrayCharName indexOfObject:sn.name] == (self.characterClassID - 1)) {
-
+            if ([arrayCharName indexOfObject:sn.name] != NSNotFound) {
                 
-                //[self.activeSkills addObject:[NSNumber numberWithInt:sn.id]];
-                //NSLog(@"ID START %d", sn.id);
                 
-                faceImg = [((Asset *)[assets objectForKey:[arrayFaceNames objectAtIndex:[arrayCharName indexOfObject:sn.name]]]) UIImage];
-
+                UIImage *faceImg;
+                UIImage *newImage;
                 
-                CGSize targetSize = CGSizeMake(faceImg.size.width/MiniScale,  faceImg.size.height/MiniScale);
-                
-                UIGraphicsBeginImageContext(targetSize); // this will crop
-                
-                CGRect newSize = CGRectZero;
-                //thumbnailRect.origin = thumbnailPoint;
-                newSize.size.width  = targetSize.width;
-                newSize.size.height = targetSize.height;
-                
-                [faceImg drawInRect:newSize];
-                
-                newImage = UIGraphicsGetImageFromCurrentImageContext();
-                
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:newImage];
-                imageView.center = CGPointMake((sn.Position.x + fullX/2)/Zoom/MiniScale, (sn.Position.y + fullY/2)/Zoom/MiniScale);
-
-                
+                if ([arrayCharName indexOfObject:sn.name] == (self.characterClassID - 1)) {
+                    
+                    
+                    //[self.activeSkills addObject:[NSNumber numberWithInt:sn.id]];
+                    //NSLog(@"ID START %d", sn.id);
+                    
+                    faceImg = [((Asset *)[assets objectForKey:[arrayFaceNames objectAtIndex:[arrayCharName indexOfObject:sn.name]]]) UIImage];
+                    
+                    
+                    CGSize targetSize = CGSizeMake(faceImg.size.width/MiniScale,  faceImg.size.height/MiniScale);
+                    
+                    UIGraphicsBeginImageContext(targetSize); // this will crop
+                    
+                    CGRect newSize = CGRectZero;
+                    //thumbnailRect.origin = thumbnailPoint;
+                    newSize.size.width  = targetSize.width;
+                    newSize.size.height = targetSize.height;
+                    
+                    [faceImg drawInRect:newSize];
+                    
+                    newImage = UIGraphicsGetImageFromCurrentImageContext();
+                    
+                    UIImageView *imageView = [[UIImageView alloc] initWithImage:newImage];
+                    imageView.center = CGPointMake((sn.Position.x + fullX/2)/Zoom/MiniScale, (sn.Position.y + fullY/2)/Zoom/MiniScale);
+                    imageView.tag = ACTIVEFACEID;
+                    //NSLog(@"imageView.tag %d", imageView.tag);
+                    
                     dispatch_async(dispatch_get_main_queue(), ^{
                         
                         [self.touchLayer insertSubview:imageView atIndex:0];
                     });
-                
-
-                break;
+                    
+                    
+                    break;
+                }
             }
         }
     }
+
     //-- ACTIVATE START NODE
 
     //LINKS

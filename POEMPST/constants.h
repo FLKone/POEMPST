@@ -31,6 +31,7 @@ typedef enum {
 #define DUELISTBTNID    400000000
 #define TEMPLARBTNID    500000000
 #define SIXBTNID        600000000
+#define ACTIVEFACEID    600000010
 
 #define MAXSKILLS       120
 

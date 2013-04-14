@@ -34,10 +34,10 @@
         int i = (MAXSKILLS - [notif.object intValue] + 1);
         
         if (i <= 1) {
-            [skillPointsView setTitle:[NSString stringWithFormat:@"%d Point Left", i] forState:UIControlStateNormal];
-        }
+            [skillPointsView setTitle:[NSString stringWithFormat:@"%d Point Left   ↻", i] forState:UIControlStateNormal];
+        } 
         else
-            [skillPointsView setTitle:[NSString stringWithFormat:@"%d Points Left", i] forState:UIControlStateNormal];
+            [skillPointsView setTitle:[NSString stringWithFormat:@"%d Points Left   ↻", i] forState:UIControlStateNormal];
         
         
         NSArray *f = self.containerView.activeSkills;
@@ -161,6 +161,8 @@
         
         if (![_menuView isHidden]) {
             [_menuView setHidden:YES];
+            [self.loadFromURLBtn setHidden:NO];
+            [self.activityView setHidden:YES];
         }
     });
 }
@@ -581,6 +583,103 @@
     CGFloat newZoomScale = self.scrollView.zoomScale / 1.5f;
     newZoomScale = MAX(newZoomScale, self.scrollView.minimumZoomScale);
     [self.scrollView setZoomScale:newZoomScale animated:YES];
+}
+
+-(IBAction) resetAS:(id) sender{
+    NSLog(@"resetAS");
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Reset Tree ?"
+                                                        delegate:self cancelButtonTitle:@"Cancel"
+                                          destructiveButtonTitle:@"Yes !"
+                                               otherButtonTitles:@"Back to main menu",
+                             nil,
+                             nil];
+    
+    // use the same style as the nav bar
+    actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        [actionSheet showFromRect:self.skillPointsView.frame inView:self.view animated:YES];
+    }
+    
+    //else
+    //    [self.topicActionSheet showInView:[[[xxx sharedAppDelegate] rootController] view]];
+    
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSLog(@"buttonIndex %d", buttonIndex);
+    if (buttonIndex == 0) {
+        //reset tree
+        int cID = [self.containerView characterClassID];
+        
+        [self.containerView.skillLinksView reset];
+        self.containerView.activeSkills = nil;
+        
+        for (id item in [self.containerView.touchLayer subviews])
+        {
+            if ([item isKindOfClass:[SkillTouchView class]])
+            {
+                SkillTouchView *blankItem = (SkillTouchView *)item;
+                
+                // this works
+                [blankItem desactivate];
+
+            }
+            else
+            {
+                //
+            }
+        }
+        
+        switch (cID) {
+            case 1:
+                [(UIButton *)[self.view viewWithTag:MARAUDERBTNID] sendActionsForControlEvents: UIControlEventTouchUpInside];
+                break;
+            case 2:
+                [(UIButton *)[self.view viewWithTag:RANGERBTNID] sendActionsForControlEvents: UIControlEventTouchUpInside];
+                break;
+            case 3:
+                [(UIButton *)[self.view viewWithTag:WITCHBTNID] sendActionsForControlEvents: UIControlEventTouchUpInside];
+                break;
+            case 4:
+                [(UIButton *)[self.view viewWithTag:DUELISTBTNID] sendActionsForControlEvents: UIControlEventTouchUpInside];
+                break;
+            case 5:
+                [(UIButton *)[self.view viewWithTag:TEMPLARBTNID] sendActionsForControlEvents: UIControlEventTouchUpInside];
+                break;
+            case 6:
+                [(UIButton *)[self.view viewWithTag:SIXBTNID] sendActionsForControlEvents: UIControlEventTouchUpInside];
+                break;
+            default:
+                break;
+        }
+    }
+    else if (buttonIndex == 1) {
+        //reset + main menu
+        [self.containerView.skillLinksView reset];
+        self.containerView.activeSkills = nil;
+        [[self.containerView.touchLayer viewWithTag:ACTIVEFACEID] removeFromSuperview];
+        
+        for (id item in [self.containerView.touchLayer subviews])
+        {
+            if ([item isKindOfClass:[SkillTouchView class]])
+            {
+                SkillTouchView *blankItem = (SkillTouchView *)item;
+                
+                // this works
+                [blankItem desactivate];
+                
+            }
+            else
+            {
+                //
+            }
+        }
+        
+        [_menuView setHidden:NO];
+    }
 }
 
 @end

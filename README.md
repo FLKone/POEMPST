@@ -18,7 +18,7 @@ Roadmap
   </tr>
 <tr>
     <td>
-    0.0.3
+    0.0.4
     </td>
     <td>
     	Alpha (internal)
@@ -73,14 +73,14 @@ Working :
 * Load Tree from any URL.
 * Tree generation (with cache).
 * Add/Remove skill(s).
-
-TODO for Beta release :
-
-* Load Tree from official website (current: local cached version).
 * Reset Tree.
 * Reset with another class or URL.
 * Display Skill details.
 * Display Int/Dex/Str totals.
+
+TODO for Beta release :
+
+* Load Tree from official website (current: local cached version).
 * Ability to refresh cache without deleting the app.
 
 TODO for Store release :

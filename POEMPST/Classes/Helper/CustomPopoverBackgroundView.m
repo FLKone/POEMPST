@@ -2,8 +2,7 @@
 //  CustomPopoverBackgroundView.m
 //  POEMPST
 //
-//  Created by Shasta on 14/04/13.
-//  Copyright (c) 2013 FLKone. All rights reserved.
+//  Created by FLK on 14/04/13.
 //
 
 #import "CustomPopoverBackgroundView.h"

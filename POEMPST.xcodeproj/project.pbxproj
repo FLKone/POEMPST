@@ -28,6 +28,8 @@
 		CA6DA273171A89C700483E5E /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = CA6DA271171A89C700483E5E /* arrow.png */; };
 		CA6DA274171A89C700483E5E /* popoverBG.png in Resources */ = {isa = PBXBuildFile; fileRef = CA6DA272171A89C700483E5E /* popoverBG.png */; };
 		CA6DA277171AA72800483E5E /* CustomPopoverBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA6DA276171AA72800483E5E /* CustomPopoverBackgroundView.m */; };
+		CA6DA27A171AECA700483E5E /* btnOFF.png in Resources */ = {isa = PBXBuildFile; fileRef = CA6DA278171AECA700483E5E /* btnOFF.png */; };
+		CA6DA27B171AECA700483E5E /* btnON.png in Resources */ = {isa = PBXBuildFile; fileRef = CA6DA279171AECA700483E5E /* btnON.png */; };
 		CAA1EED01707E5AF002BF206 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA1EECF1707E5AF002BF206 /* UIKit.framework */; };
 		CAA1EED21707E5AF002BF206 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA1EED11707E5AF002BF206 /* Foundation.framework */; };
 		CAA1EED41707E5AF002BF206 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA1EED31707E5AF002BF206 /* CoreGraphics.framework */; };
@@ -115,6 +117,8 @@
 		CA6DA272171A89C700483E5E /* popoverBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popoverBG.png; sourceTree = "<group>"; };
 		CA6DA275171AA72800483E5E /* CustomPopoverBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomPopoverBackgroundView.h; path = Classes/Helper/CustomPopoverBackgroundView.h; sourceTree = "<group>"; };
 		CA6DA276171AA72800483E5E /* CustomPopoverBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomPopoverBackgroundView.m; path = Classes/Helper/CustomPopoverBackgroundView.m; sourceTree = "<group>"; };
+		CA6DA278171AECA700483E5E /* btnOFF.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btnOFF.png; sourceTree = "<group>"; };
+		CA6DA279171AECA700483E5E /* btnON.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btnON.png; sourceTree = "<group>"; };
 		CAA1EECC1707E5AF002BF206 /* POEMPST.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = POEMPST.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAA1EECF1707E5AF002BF206 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CAA1EED11707E5AF002BF206 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -452,6 +456,8 @@
 		CAF636D81718398500D91EB4 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				CA6DA278171AECA700483E5E /* btnOFF.png */,
+				CA6DA279171AECA700483E5E /* btnON.png */,
 				CA6DA271171A89C700483E5E /* arrow.png */,
 				CA6DA272171A89C700483E5E /* popoverBG.png */,
 				CAF3A40317189A0000014FCE /* PointsBackground.png */,
@@ -560,6 +566,8 @@
 				CA6DA270171A794C00483E5E /* SkillSelectionViewController.xib in Resources */,
 				CA6DA273171A89C700483E5E /* arrow.png in Resources */,
 				CA6DA274171A89C700483E5E /* popoverBG.png in Resources */,
+				CA6DA27A171AECA700483E5E /* btnOFF.png in Resources */,
+				CA6DA27B171AECA700483E5E /* btnON.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

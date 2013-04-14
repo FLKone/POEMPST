@@ -59,21 +59,21 @@
     self.titleLabel.font = [UIFont fontWithName:@"Fontin-Bold" size:15.0];
     self.descriptionLabel.font = [UIFont fontWithName:@"Fontin-Regular" size:13.0];
     
-    self.validateBtn.layer.cornerRadius=5.0f;
-    self.validateBtn.layer.masksToBounds=YES;
-    self.validateBtn.layer.borderColor=[[UIColor colorWithRed:162/255.f green:141/255.f blue:109/255.f alpha:1.00] CGColor];
+    //self.validateBtn.layer.cornerRadius=5.0f;
+    //self.validateBtn.layer.masksToBounds=YES;
+    //self.validateBtn.layer.borderColor=[[UIColor colorWithRed:162/255.f green:141/255.f blue:109/255.f alpha:1.00] CGColor];
     [self.validateBtn titleLabel].font = [UIFont fontWithName:@"Fontin-SmallCaps" size:18.0];
-    [self.validateBtn setTitleColor:[UIColor colorWithRed:162/255.f green:141/255.f blue:109/255.f alpha:1.00] forState:UIControlStateNormal];
-    [self.validateBtn setTitleColor:[UIColor colorWithRed:107/255.f green:93/255.f blue:72/255.f alpha:1.00] forState:UIControlStateHighlighted];
-    self.validateBtn.layer.borderWidth= 2.0f;
+    [self.validateBtn setTitleColor:[UIColor colorWithRed:135/255.f green:101/255.f blue:63/255.f alpha:1.00] forState:UIControlStateNormal];
+    [self.validateBtn setTitleColor:[UIColor colorWithRed:238/255.f green:175/255.f blue:105/255.f alpha:1.00] forState:UIControlStateHighlighted];
+    //self.validateBtn.layer.borderWidth= 2.0f;
     
-    self.cancelBtn.layer.cornerRadius=5.0f;
-    self.cancelBtn.layer.masksToBounds=YES;
-    self.cancelBtn.layer.borderColor=[[UIColor colorWithRed:79/255.f green:69/255.f blue:53/255.f alpha:1.00] CGColor];
+//    self.cancelBtn.layer.cornerRadius=5.0f;
+//    self.cancelBtn.layer.masksToBounds=YES;
+//    self.cancelBtn.layer.borderColor=[[UIColor colorWithRed:79/255.f green:69/255.f blue:53/255.f alpha:1.00] CGColor];
     [self.cancelBtn titleLabel].font = [UIFont fontWithName:@"Fontin-SmallCaps" size:18.0];
-    [self.cancelBtn setTitleColor:[UIColor colorWithRed:79/255.f green:69/255.f blue:53/255.f alpha:1.00] forState:UIControlStateNormal];
-    [self.cancelBtn setTitleColor:[UIColor colorWithRed:53/255.f green:46/255.f blue:36/255.f alpha:1.00] forState:UIControlStateHighlighted];
-    self.cancelBtn.layer.borderWidth= 2.0f;
+    [self.cancelBtn setTitleColor:[UIColor colorWithRed:135/255.f green:101/255.f blue:63/255.f alpha:1.00] forState:UIControlStateNormal];
+    [self.cancelBtn setTitleColor:[UIColor colorWithRed:238/255.f green:175/255.f blue:105/255.f alpha:1.00] forState:UIControlStateHighlighted];
+//    self.cancelBtn.layer.borderWidth= 2.0f;
     
     
     [self.titleLabel setText:[self.node name]];

@@ -1123,7 +1123,7 @@
         _skillPickerPopover = [[UIPopoverController alloc] initWithContentViewController:_skillPicker];
         _skillPickerPopover.popoverBackgroundViewClass = [CustomPopoverBackgroundView class];
         _skillPickerPopover.delegate = self;
-        [_skillPickerPopover presentPopoverFromRect:CGRectMake((node.Position.x + fullX/2)/Zoom/MiniScale - 13, (node.Position.y + fullY/2)/Zoom/MiniScale - 13, 26, 26)
+        [_skillPickerPopover presentPopoverFromRect:CGRectMake((node.Position.x + fullX/2)/Zoom/MiniScale - 6, (node.Position.y + fullY/2)/Zoom/MiniScale - 6, 12, 12)
                                              inView:self.touchLayer
                            permittedArrowDirections:UIPopoverArrowDirectionAny
                                            animated:YES];

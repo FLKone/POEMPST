@@ -8,8 +8,8 @@
 
 #import "CustomPopoverBackgroundView.h"
 
-#define CONTENT_INSET 2.0
-#define CAP_INSET 2.0
+#define CONTENT_INSET 0
+#define CAP_INSET 0
 #define ARROW_BASE 16.0
 #define ARROW_HEIGHT 16.0
 
@@ -19,11 +19,11 @@
 -(id)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
         _borderImageView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"popoverBG.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(CAP_INSET,CAP_INSET,CAP_INSET,CAP_INSET)]];
-        
+//        _borderImageView.alpha = 1f;
         _arrowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow.png"]];
         
-        [self addSubview:_borderImageView];
-        [self addSubview:_arrowView];
+        //[self addSubview:_borderImageView];
+        //[self addSubview:_arrowView];
         
     }
     return self;
@@ -102,7 +102,7 @@
             
     }
     
-    _borderImageView.frame =  CGRectMake(_left, _top, _width, _height);
+    //_borderImageView.frame =  CGRectMake(_left, _top, _width, _height);
     
     
     [_arrowView setTransform:_rotation];

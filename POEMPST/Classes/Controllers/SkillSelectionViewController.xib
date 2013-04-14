@@ -70,7 +70,7 @@
 					<object class="IBUIButton" id="659438623">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">264</int>
-						<string key="NSFrame">{{10, 72}, {100, 40}}</string>
+						<string key="NSFrame">{{10, 72}, {100, 41}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="125359707"/>
@@ -110,7 +110,7 @@
 					<object class="IBUIButton" id="125359707">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">264</int>
-						<string key="NSFrame">{{140, 72}, {100, 40}}</string>
+						<string key="NSFrame">{{140, 72}, {100, 41}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
@@ -162,13 +162,13 @@
 						<double key="preferredMaxLayoutWidth">230</double>
 					</object>
 				</array>
-				<string key="NSFrameSize">{250, 122}</string>
+				<string key="NSFrameSize">{250, 123}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="609691574"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
-					<bytes key="NSWhite">MCAwLjU3AA</bytes>
+					<bytes key="NSWhite">MCAwLjY1AA</bytes>
 				</object>
 				<object class="IBUISimulatedSizeMetrics" key="IBUISimulatedDestinationMetrics">
 					<string key="IBUISimulatedSizeMetricsClass">IBUISimulatedFreeformSizeMetricsSentinel</string>

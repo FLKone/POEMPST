@@ -27,6 +27,9 @@
 @property (nonatomic, strong) IBOutlet UIButton *validateBtn;
 @property (nonatomic, strong) IBOutlet UIButton *cancelBtn;
 
+@property BOOL canAdd;
+@property BOOL canRemove;
+
 -(IBAction)selectSkill;
 -(IBAction)cancelSkill;
 

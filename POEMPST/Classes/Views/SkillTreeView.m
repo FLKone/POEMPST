@@ -1114,6 +1114,23 @@
     //Create the ColorPickerViewController.
     _skillPicker = [[SkillSelectionViewController alloc] initWithNibName:@"SkillSelectionViewController" bundle:nil andNode:node];
     
+    int nbLinks = ((SkillTouchView *)[self.touchLayer viewWithTag:node.id]).linksHighIDs.count + ((SkillTouchView *)[self.touchLayer viewWithTag:node.id]).linksIDs.count;
+    
+    if (nbLinks && self.activeSkills.count - 1 < MAXSKILLS) {
+        if ([self.activeSkills indexOfObject:[NSNumber numberWithInt:node.id]] == NSNotFound) {
+            NSLog(@"ADD");
+            _skillPicker.canAdd = YES;
+        }
+    }
+    
+    if (self.activeSkills && [self.activeSkills indexOfObject:[NSNumber numberWithInt:node.id]] != NSNotFound) {
+                    NSLog(@"REMOVE");
+            _skillPicker.canRemove = YES;
+    }
+    
+    
+    
+
     //Set this VC as the delegate.
     _skillPicker.delegate = self;
     

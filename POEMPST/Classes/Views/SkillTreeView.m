@@ -61,7 +61,7 @@
     
     //NSLog(@"loadUrl %@", sender);
     
-    if ([sender.object rangeOfString:@"http://www.pathofexile.com/passive-skill-tree/AAAAA"].location == NSNotFound) {
+    if ([sender.object rangeOfString:@"http://www.pathofexile.com/passive-skill-tree/"].location == NSNotFound) {
         
     }
     else
@@ -90,19 +90,38 @@
            // NSLog(@"theData   %@", theData);
           //  NSLog(@"theString %@", s);
 
+            NSLog(@"b4");
+
             DataString *ss = [[DataString alloc] init];
             [ss setDataString:theData];
+            
+            NSLog(@"a4");
+
             int o = [ss readInt:0]; //ver
             int u = [ss readInt8];  //char
             int a = 0;
             o > 0 && (a = [ss readInt8]);
             
+            if (u == 0 || o > 5) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"errorLoading" object:@"URL" userInfo:nil];
+                NSLog(@"ERROR URL");
+                return;
+
+            }
+            
             NSLog(@"u %d | o %d", u, o);
             self.characterClassID = u;
 
             NSMutableArray *f = [NSMutableArray array]; //skills
-            while ([ss hasData]) {
-                [f addObject:[NSNumber numberWithInteger:[ss readInt16]]];
+            int returnInt;
+            while ([ss hasData] && returnInt != -1) {
+                returnInt = [ss readInt16];
+                [f addObject:[NSNumber numberWithInteger:returnInt]];
+            }
+            
+            if (returnInt == -1) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"errorLoading" object:@"URL" userInfo:nil];
+                return;
             }
             
             self.activeSkills = f;
@@ -424,12 +443,14 @@
     
     if (![fileManager fileExistsAtPath:diskDataLayerBackgroundCachePath])
     {
+
         UIView *layerBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 0, fullX/Zoom/MiniScale, fullY/Zoom/MiniScale)];
         layerBackground.backgroundColor = [UIColor clearColor];
         
         NSMutableArray *ngImages = [NSMutableArray arrayWithObjects:  [((Asset *)[assets objectForKey:@"PSGroupBackground1"]) UIImage],
                                     [((Asset *)[assets objectForKey:@"PSGroupBackground2"]) UIImage],
                                     [((Asset *)[assets objectForKey:@"PSGroupBackground3"]) UIImage], nil];
+        
         
         // BACKGROUND 3 transformation
         UIImage *PSG2 = [ngImages objectAtIndex:2];
@@ -770,7 +791,7 @@
 
 -(void)drawActiveLayer:(NSArray *)forLinks {
     BOOL isFirstLoad = NO;
-    //NSLog(@"drawActiveLayer isFirstLoad %d", isFirstLoad);
+    NSLog(@"drawActiveLayer isFirstLoad %d", isFirstLoad);
 
     //ACTIVATE START NODE
     if ([self.touchLayer viewWithTag:ACTIVEFACEID]) {

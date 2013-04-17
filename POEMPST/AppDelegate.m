@@ -13,38 +13,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // DIRECTORIES
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-	NSString *diskDataCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data"];
-	
-	if (![[NSFileManager defaultManager] fileExistsAtPath:diskDataCachePath])
-	{
-		[[NSFileManager defaultManager] createDirectoryAtPath:diskDataCachePath
-								  withIntermediateDirectories:YES
-												   attributes:nil
-														error:NULL];
-	}
-    
-	NSString *diskDataAssetsCachePath = [diskDataCachePath stringByAppendingPathComponent:@"Assets"];
-	
-	if (![[NSFileManager defaultManager] fileExistsAtPath:diskDataAssetsCachePath])
-	{
-		[[NSFileManager defaultManager] createDirectoryAtPath:diskDataAssetsCachePath
-								  withIntermediateDirectories:YES
-												   attributes:nil
-														error:NULL];
-	}
-    
-	NSString *diskDataLayerCachePath = [diskDataCachePath stringByAppendingPathComponent:@"Layers"];
-	
-	if (![[NSFileManager defaultManager] fileExistsAtPath:diskDataLayerCachePath])
-	{
-		[[NSFileManager defaultManager] createDirectoryAtPath:diskDataLayerCachePath
-								  withIntermediateDirectories:YES
-												   attributes:nil
-														error:NULL];
-	}
-    // DIRECTORIES
+
     
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

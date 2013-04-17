@@ -50,6 +50,7 @@ static float orbitRadii[] =     {0.0f   , 83.5f , 163.0f    , 336.0f    , 489.0f
 #endif
 
 //Vendor
+#import "SFObservers.h"
 #import "AFNetworking.h"
 #import "RegexKitLite.h"
 #import "JSONKit.h"

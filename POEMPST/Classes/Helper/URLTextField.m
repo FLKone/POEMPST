@@ -98,11 +98,18 @@
 - (void)paste:(id)sender {
     UIPasteboard *board = [UIPasteboard generalPasteboard];
     
-    if ([board.string rangeOfString:@"http://www.pathofexile.com/passive-skill-tree/AAAAA"].location == NSNotFound) {
-
+    if ([board.string rangeOfString:@"http://www.pathofexile.com/passive-skill-tree/"].location == NSNotFound || ![NSURL URLWithString:board.string]) {
+        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"This is not a valid PoE link" message:board.string delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alertView show];
     }
     else
     {
+        NSURL *url = [NSURL URLWithString:board.string];
+        
+        
+        NSLog(@"url = %@", url);
+        
+        
         [self setText:board.string];
         [self resizeHeightToFitText];
     }

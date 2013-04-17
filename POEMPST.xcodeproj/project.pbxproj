@@ -67,6 +67,9 @@
 		CAA1EF7C170A5F2B002BF206 /* base64.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF7B170A5F2B002BF206 /* base64.m */; };
 		CAA1EF80170A6568002BF206 /* DataString.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF7F170A6568002BF206 /* DataString.m */; };
 		CAA1EF8D170B9748002BF206 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA1EF8C170B9748002BF206 /* QuartzCore.framework */; };
+		CAB101A0171F192C0047268F /* NSNotificationCenter+SFObservers.m in Sources */ = {isa = PBXBuildFile; fileRef = CAB10199171F192C0047268F /* NSNotificationCenter+SFObservers.m */; };
+		CAB101A1171F192C0047268F /* NSObject+SFObservers.m in Sources */ = {isa = PBXBuildFile; fileRef = CAB1019B171F192C0047268F /* NSObject+SFObservers.m */; };
+		CAB101A2171F192C0047268F /* NSObject+SFExecuteOnDealloc.m in Sources */ = {isa = PBXBuildFile; fileRef = CAB1019E171F192C0047268F /* NSObject+SFExecuteOnDealloc.m */; };
 		CAF3A40417189A0000014FCE /* PointsBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF3A40317189A0000014FCE /* PointsBackground.png */; };
 		CAF3A4061719763800014FCE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CAF3A4051719763800014FCE /* README.md */; };
 		CAF636AF1716441900D91EB4 /* SkillTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF636AE1716441900D91EB4 /* SkillTouchView.m */; };
@@ -183,6 +186,13 @@
 		CAA1EF7E170A6568002BF206 /* DataString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = DataString.h; path = Classes/Helper/DataString.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CAA1EF7F170A6568002BF206 /* DataString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = DataString.m; path = Classes/Helper/DataString.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CAA1EF8C170B9748002BF206 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		CAB10198171F192C0047268F /* NSNotificationCenter+SFObservers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+SFObservers.h"; sourceTree = "<group>"; };
+		CAB10199171F192C0047268F /* NSNotificationCenter+SFObservers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotificationCenter+SFObservers.m"; sourceTree = "<group>"; };
+		CAB1019A171F192C0047268F /* NSObject+SFObservers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SFObservers.h"; sourceTree = "<group>"; };
+		CAB1019B171F192C0047268F /* NSObject+SFObservers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SFObservers.m"; sourceTree = "<group>"; };
+		CAB1019D171F192C0047268F /* NSObject+SFExecuteOnDealloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SFExecuteOnDealloc.h"; sourceTree = "<group>"; };
+		CAB1019E171F192C0047268F /* NSObject+SFExecuteOnDealloc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SFExecuteOnDealloc.m"; sourceTree = "<group>"; };
+		CAB1019F171F192C0047268F /* SFObservers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFObservers.h; sourceTree = "<group>"; };
 		CAF3A40317189A0000014FCE /* PointsBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PointsBackground.png; sourceTree = "<group>"; };
 		CAF3A4051719763800014FCE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		CAF636AD1716441900D91EB4 /* SkillTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SkillTouchView.h; path = Classes/Views/SkillTouchView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -346,6 +356,7 @@
 		CAA1EEF81707EBA6002BF206 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				CAB10197171F192C0047268F /* SFObservers */,
 				CAF636B01716827600D91EB4 /* PESGraph */,
 				CAA1EF5F17080080002BF206 /* JSONKit */,
 				CAA1EF251707F2FF002BF206 /* RegexKitLite */,
@@ -435,6 +446,29 @@
 				CA6DA276171AA72800483E5E /* CustomPopoverBackgroundView.m */,
 			);
 			name = Helper;
+			sourceTree = "<group>";
+		};
+		CAB10197171F192C0047268F /* SFObservers */ = {
+			isa = PBXGroup;
+			children = (
+				CAB1019C171F192C0047268F /* SFExecuteOnDealloc */,
+				CAB10198171F192C0047268F /* NSNotificationCenter+SFObservers.h */,
+				CAB10199171F192C0047268F /* NSNotificationCenter+SFObservers.m */,
+				CAB1019A171F192C0047268F /* NSObject+SFObservers.h */,
+				CAB1019B171F192C0047268F /* NSObject+SFObservers.m */,
+				CAB1019F171F192C0047268F /* SFObservers.h */,
+			);
+			name = SFObservers;
+			path = vendor/SFObservers;
+			sourceTree = "<group>";
+		};
+		CAB1019C171F192C0047268F /* SFExecuteOnDealloc */ = {
+			isa = PBXGroup;
+			children = (
+				CAB1019D171F192C0047268F /* NSObject+SFExecuteOnDealloc.h */,
+				CAB1019E171F192C0047268F /* NSObject+SFExecuteOnDealloc.m */,
+			);
+			path = SFExecuteOnDealloc;
 			sourceTree = "<group>";
 		};
 		CAF636B01716827600D91EB4 /* PESGraph */ = {
@@ -617,6 +651,9 @@
 				CAF636F31718421900D91EB4 /* URLTextField.m in Sources */,
 				CA6DA26F171A794C00483E5E /* SkillSelectionViewController.m in Sources */,
 				CA6DA277171AA72800483E5E /* CustomPopoverBackgroundView.m in Sources */,
+				CAB101A0171F192C0047268F /* NSNotificationCenter+SFObservers.m in Sources */,
+				CAB101A1171F192C0047268F /* NSObject+SFObservers.m in Sources */,
+				CAB101A2171F192C0047268F /* NSObject+SFExecuteOnDealloc.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

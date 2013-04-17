@@ -78,7 +78,10 @@
     
     //NSLog(@"readInt t = %d", t);
     
-    if (t > self.string.length) NSLog(@"Integer read exceeds bounds");
+    if (t > self.string.length) {
+        NSLog(@"Integer read exceeds bounds");
+        return -1;
+    }
 
     //NSLog(@"string %@", self.string);
     

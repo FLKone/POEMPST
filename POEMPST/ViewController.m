@@ -26,6 +26,20 @@
 
 @synthesize  loadFromURLBtn, urlField, skillPointsView, progressView, loadingView, activityView, loadingLabel, finalUrlField, activeClassImageView, currentDextLabel, currentStrLabel, currentIntelLabel;
 
+-(void)errorLoading:(NSNotification *)notif {
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+
+        NSLog(@"notif %@", notif);
+    
+        [self.loadFromURLBtn setHidden:NO];
+        [self.activityView setHidden:YES];
+        
+        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"This is not a valid PoE link" message:@"Could be an old link no longer valid, or a new one which is not yet supported by the application.\nYou can try to clear the cache, if the problem persist, contact me." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:@"Clear app's cache", nil];
+        [alertView show];
+    });
+}
+
 -(void)changeSkillCount:(NSNotification *)notif {
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -176,7 +190,7 @@
 
 -(IBAction)loadURL:(id) sender {
 
-    if ([self.urlField.text rangeOfString:@"http://www.pathofexile.com/passive-skill-tree/AAAAA"].location == NSNotFound) {
+    if ([self.urlField.text rangeOfString:@"http://www.pathofexile.com/passive-skill-tree/"].location == NSNotFound) {
     }
     else {
             [self.loadFromURLBtn setHidden:YES];
@@ -328,22 +342,65 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSkillCount:) name:@"changeSkillCount" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeProgress:) name:@"changeProgress" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorLoading:) name:@"errorLoading" object:nil];
 
+    [self setup];
+}
+
+-(void)setup {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"loadingView hidden");
+        self.loadingView.alpha = 0.9;
+        self.loadingView.hidden = NO;
+    });
+    
+    
+    // DIRECTORIES
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+	NSString *diskDataCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data"];
+	
+	if (![[NSFileManager defaultManager] fileExistsAtPath:diskDataCachePath])
+	{
+		[[NSFileManager defaultManager] createDirectoryAtPath:diskDataCachePath
+								  withIntermediateDirectories:YES
+												   attributes:nil
+														error:NULL];
+	}
+    
+	NSString *diskDataAssetsCachePath = [diskDataCachePath stringByAppendingPathComponent:@"Assets"];
+	
+	if (![[NSFileManager defaultManager] fileExistsAtPath:diskDataAssetsCachePath])
+	{
+		[[NSFileManager defaultManager] createDirectoryAtPath:diskDataAssetsCachePath
+								  withIntermediateDirectories:YES
+												   attributes:nil
+														error:NULL];
+	}
+    
+	NSString *diskDataLayerCachePath = [diskDataCachePath stringByAppendingPathComponent:@"Layers"];
+	
+	if (![[NSFileManager defaultManager] fileExistsAtPath:diskDataLayerCachePath])
+	{
+		[[NSFileManager defaultManager] createDirectoryAtPath:diskDataLayerCachePath
+								  withIntermediateDirectories:YES
+												   attributes:nil
+														error:NULL];
+	}
+    // DIRECTORIES
+    
     //NSURL *clientURL = [[NSBundle mainBundle] URLForResource:@"passive-skill-tree-v2" withExtension:@"html"];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *diskDataCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data"];
     
     NSURL *clientURL;
 	if ([[NSFileManager defaultManager] fileExistsAtPath:[diskDataCachePath stringByAppendingPathComponent:@"tree.html"]])
 	{
         clientURL = [NSURL fileURLWithPath:[diskDataCachePath stringByAppendingPathComponent:@"tree.html"]
-                                   isDirectory:NO];
+                               isDirectory:NO];
     }
     else
     {
-
+        
         clientURL = [NSURL URLWithString:@"http://www.pathofexile.com/passive-skill-tree/"];
-
+        
     }
     
     NSURLRequest *request = [NSURLRequest requestWithURL:clientURL];
@@ -356,22 +413,22 @@
         
         
         [[NSOperationQueue mainQueue] addOperationWithBlock:^ {
-
+            
             NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-
+            
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
             NSString *diskDataCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data"];
             
             NSError *error;
             BOOL succeed = [responseString writeToFile:[diskDataCachePath stringByAppendingPathComponent:@"tree.html"]
-                                      atomically:YES encoding:NSUTF8StringEncoding error:&error];
+                                            atomically:YES encoding:NSUTF8StringEncoding error:&error];
             if (!succeed){
                 // Handle error here
             }
             
             
             NSString *regex = @"var passiveSkillTreeData(.*)";
-
+            
             NSString *JSData = [[responseString stringByMatching:regex] stringByReplacingOccurrencesOfString:@"\\/" withString:@"/"];
             
             NSRange rangeToSearch = NSMakeRange(0, [JSData length]);
@@ -382,12 +439,12 @@
             JSData = [JSData substringWithRange: r];
             NSDictionary *json = [JSData objectFromJSONString];
             
-
+            
             float min_x = [[json objectForKey:@"min_x"] floatValue];
             float min_y = [[json objectForKey:@"min_y"] floatValue];
             float max_x = [[json objectForKey:@"max_x"] floatValue];
             float max_y = [[json objectForKey:@"max_y"] floatValue];
-
+            
             float fullX, fullY;
             
             
@@ -400,13 +457,14 @@
             CGSize containerSize = CGSizeMake(fullX, fullY);
             NSLog(@"before async");
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                            NSLog(@"in async");
+                NSLog(@"in async");
+                self.containerView = nil;
                 self.containerView = [[SkillTreeView alloc] initWithFrame:(CGRect){.origin=CGPointMake(0.0f, 30.0f), .size=containerSize} andJSON:(NSDictionary *)json];
                 
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     NSLog(@"in async MAIN");
-
+                    
                     [self.scrollView addSubview:self.containerView];
                     
                     // Tell the scroll view the size of the contents
@@ -423,7 +481,7 @@
                     twoFingerTapRecognizer.numberOfTouchesRequired = 2;
                     [self.scrollView addGestureRecognizer:twoFingerTapRecognizer];
                     
-            
+                    
                     // Set up the minimum & maximum zoom scales
                     CGRect scrollViewFrame = self.scrollView.frame;
                     CGFloat scaleWidth = scrollViewFrame.size.width / self.scrollView.contentSize.width;
@@ -436,8 +494,8 @@
                     self.scrollView.minimumZoomScale = minScale;
                     self.scrollView.maximumZoomScale = 1;//0.3835f;
                     self.scrollView.zoomScale = minScale;
-            
-
+                    
+                    
                     [self centerScrollViewContents];
                     
                     NSLog(@"END in async MAIN");
@@ -466,11 +524,11 @@
                      ];
                     
                 });
-
                 
-         });
-
-        
+                
+            });
+            
+            
         }];
         
         
@@ -479,9 +537,8 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
-            
-    [operation start];
     
+    [operation start];
     
 }
 
@@ -719,6 +776,32 @@
         }
         
         [_menuView setHidden:NO];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    NSLog(@"buttonIndex %d", buttonIndex);
+    if (buttonIndex == 0) {
+        //OK
+    }
+    else if (buttonIndex == 1) {
+        //CLEAR CACHE
+        
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+        NSString *DataCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data"];
+        
+        if ([fileManager fileExistsAtPath:DataCachePath])
+        {
+           // [fileManager removeItemAtPath:DataCachePath error:NULL];
+        }
+        
+        [self.containerView removeFromSuperview];
+        self.containerView = nil;
+
+        [self setup];
+
     }
 }
 

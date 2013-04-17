@@ -329,7 +329,22 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSkillCount:) name:@"changeSkillCount" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeProgress:) name:@"changeProgress" object:nil];
 
-    NSURL *clientURL = [[NSBundle mainBundle] URLForResource:@"passive-skill-tree-v2" withExtension:@"html"];
+    //NSURL *clientURL = [[NSBundle mainBundle] URLForResource:@"passive-skill-tree-v2" withExtension:@"html"];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *diskDataCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data"];
+    
+    NSURL *clientURL;
+	if ([[NSFileManager defaultManager] fileExistsAtPath:[diskDataCachePath stringByAppendingPathComponent:@"tree.html"]])
+	{
+        clientURL = [NSURL fileURLWithPath:[diskDataCachePath stringByAppendingPathComponent:@"tree.html"]
+                                   isDirectory:NO];
+    }
+    else
+    {
+
+        clientURL = [NSURL URLWithString:@"http://www.pathofexile.com/passive-skill-tree/"];
+
+    }
     
     NSURLRequest *request = [NSURLRequest requestWithURL:clientURL];
     
@@ -337,24 +352,45 @@
     
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         
+        
+        
+        
         [[NSOperationQueue mainQueue] addOperationWithBlock:^ {
-            
+
             NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+            NSString *diskDataCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data"];
+            
+            NSError *error;
+            BOOL succeed = [responseString writeToFile:[diskDataCachePath stringByAppendingPathComponent:@"tree.html"]
+                                      atomically:YES encoding:NSUTF8StringEncoding error:&error];
+            if (!succeed){
+                // Handle error here
+            }
+            
             
             NSString *regex = @"var passiveSkillTreeData(.*)";
-            
+
             NSString *JSData = [[responseString stringByMatching:regex] stringByReplacingOccurrencesOfString:@"\\/" withString:@"/"];
             
-            NSRange r = NSMakeRange(27, JSData.length - 27 - 1);
+            NSRange rangeToSearch = NSMakeRange(0, [JSData length]);
+            NSRange rangeOfSecondToLastSpace = [JSData rangeOfString:@"," options:NSBackwardsSearch range:rangeToSearch];
+            
+            
+            NSRange r = NSMakeRange(27, rangeOfSecondToLastSpace.location - 27);
             JSData = [JSData substringWithRange: r];
             NSDictionary *json = [JSData objectFromJSONString];
             
+
             float min_x = [[json objectForKey:@"min_x"] floatValue];
             float min_y = [[json objectForKey:@"min_y"] floatValue];
             float max_x = [[json objectForKey:@"max_x"] floatValue];
             float max_y = [[json objectForKey:@"max_y"] floatValue];
 
             float fullX, fullY;
+            
+            
             fullX = (float)(MAX(abs(min_x),abs(max_x))*2.15)/Zoom/MiniScale;
             fullY = (float)(MAX(abs(min_y),abs(max_y))*2.15)/Zoom/MiniScale;
             
@@ -432,9 +468,13 @@
                 });
 
                 
-           });
+         });
 
+        
         }];
+        
+        
+        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);

@@ -53,10 +53,10 @@
 
 #pragma mark -
 #pragma mark Overrides
-/*
+
 - (NSString *)description {
     
     return [NSString stringWithFormat:@"Edge: %@ with Weight:%@", self.name, self.weight];
 }
-*/
+
 @end

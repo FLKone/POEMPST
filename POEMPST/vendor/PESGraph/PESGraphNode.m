@@ -24,9 +24,4 @@
     return aNode;
 }
 
-- (NSString *)description {
-    
-    return [NSString stringWithFormat:@"PESGraphNode title %@ with identifier:%@", self.title, self.identifier];
-}
-
 @end

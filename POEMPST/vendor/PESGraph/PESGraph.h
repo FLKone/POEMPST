@@ -14,7 +14,7 @@
 	Class that depicts a set of nodes and the relationship between then (edges).  Also
     allows for calculating the quickest distance between two points in the graph
  */
-@interface PESGraph : NSObject <NSCopying> {
+@interface PESGraph : NSObject {
     
     /**
     	A collection of PESGraphNodes managed by the graph.  Keys will be identifiers for
@@ -30,10 +30,7 @@
     NSMutableDictionary *nodes;
 }
 
-- (id)copyWithZone:(NSZone *) zone;
-
 @property (nonatomic, readonly) NSDictionary *nodes;
-@property (nonatomic, readonly) NSDictionary *nodeEdges;
 
 /**
     Returns a count of the number of edges currently in the graph.  Bi-directional edges are counted

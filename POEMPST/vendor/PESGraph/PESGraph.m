@@ -13,7 +13,7 @@
 
 @implementation PESGraph
 
-@synthesize nodes, nodeEdges;
+@synthesize nodes;
 
 - (id)init
 {
@@ -25,17 +25,6 @@
         nodes = [[NSMutableDictionary alloc] init];
     }
     
-    return self;
-}
-
-- (id) copyWithZone:(NSZone *)zone {
-    PESGraph *copy = [[[self class] allocWithZone:zone] initWithGraph:self];
-    return copy;
-}
-
-- (PESGraph *) initWithGraph:(PESGraph *) copyFrom {
-    nodes = [(NSMutableDictionary *)[copyFrom nodes] copy];
-    nodeEdges = [(NSMutableDictionary *)[copyFrom nodeEdges] copy];
     return self;
 }
 
@@ -197,8 +186,6 @@
 
     // Set every node to be infinitely far from the origin (ie no path back has been found yet).
     for (NSString *nodeIdentifier in unexaminedNodes) {
-        
-        //NSLog(@"nodeIdentifier %@ - %d", nodeIdentifier, [nodeIdentifier length]);
         
         [distancesFromSource setValue:infinity
                                forKey:nodeIdentifier];

@@ -32,9 +32,9 @@
     NSMutableDictionary *additionalData;
 }
 
-@property (nonatomic, strong) NSString *identifier;
-@property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSMutableDictionary *additionalData;
+@property (nonatomic) NSString *identifier;
+@property (nonatomic) NSString *title;
+@property (nonatomic) NSMutableDictionary *additionalData;
 
 /**
 	Convenience method to return an initialized and un-retained node

@@ -78,6 +78,8 @@
             
             NSString *s = [[[loadUrl stringByReplacingOccurrencesOfString:siteUrl withString:@""] stringByReplacingOccurrencesOfString:@"-" withString:@"+"] stringByReplacingOccurrencesOfString:@"_" withString:@"/"];
             
+            NSLog(@"s %@", s);
+            
             /*
             NSString *stringValue = s;
              Byte inputData[[stringValue lengthOfBytesUsingEncoding:NSUTF8StringEncoding]];//prepare a Byte[]
@@ -115,9 +117,10 @@
             self.characterClassID = u;
 
             NSMutableArray *f = [NSMutableArray array]; //skills
-            int returnInt;
+            int returnInt = 0;
             while ([ss hasData] && returnInt != -1) {
                 returnInt = [ss readInt16];
+                //NSLog(@"return Int %d", returnInt);
                 [f addObject:[NSNumber numberWithInteger:returnInt]];
             }
             

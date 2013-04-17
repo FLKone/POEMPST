@@ -15,8 +15,6 @@
 		CA2609D5171893A0008F7249 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA2609CB171893A0008F7249 /* Icon-Small@2x.png */; };
 		CA2609D6171893A0008F7249 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CA2609CC171893A0008F7249 /* Icon.png */; };
 		CA2609D7171893A0008F7249 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA2609CD171893A0008F7249 /* Icon@2x.png */; };
-		CA2609D8171893A0008F7249 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = CA2609CE171893A0008F7249 /* iTunesArtwork.png */; };
-		CA2609D9171893A0008F7249 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA2609CF171893A0008F7249 /* iTunesArtwork@2x.png */; };
 		CA2FF91E170FCD3E003DA79B /* UIView+Image.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2FF91D170FCD3E003DA79B /* UIView+Image.m */; };
 		CA2FF921170FE7F3003DA79B /* SkillLinksView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2FF920170FE7F3003DA79B /* SkillLinksView.m */; };
 		CA2FF924170FF347003DA79B /* SkillLinkView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2FF923170FF347003DA79B /* SkillLinkView.m */; };
@@ -104,8 +102,6 @@
 		CA2609CB171893A0008F7249 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
 		CA2609CC171893A0008F7249 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		CA2609CD171893A0008F7249 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		CA2609CE171893A0008F7249 /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
-		CA2609CF171893A0008F7249 /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
 		CA2FF91C170FCD3E003DA79B /* UIView+Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = "UIView+Image.h"; path = "Classes/Helper/UIView+Image.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CA2FF91D170FCD3E003DA79B /* UIView+Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = "UIView+Image.m"; path = "Classes/Helper/UIView+Image.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CA2FF91F170FE7F3003DA79B /* SkillLinksView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SkillLinksView.h; path = Classes/Views/SkillLinksView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -347,8 +343,6 @@
 				CA2609CB171893A0008F7249 /* Icon-Small@2x.png */,
 				CA2609CC171893A0008F7249 /* Icon.png */,
 				CA2609CD171893A0008F7249 /* Icon@2x.png */,
-				CA2609CE171893A0008F7249 /* iTunesArtwork.png */,
-				CA2609CF171893A0008F7249 /* iTunesArtwork@2x.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -616,8 +610,6 @@
 				CA2609D5171893A0008F7249 /* Icon-Small@2x.png in Resources */,
 				CA2609D6171893A0008F7249 /* Icon.png in Resources */,
 				CA2609D7171893A0008F7249 /* Icon@2x.png in Resources */,
-				CA2609D8171893A0008F7249 /* iTunesArtwork.png in Resources */,
-				CA2609D9171893A0008F7249 /* iTunesArtwork@2x.png in Resources */,
 				CAF3A40417189A0000014FCE /* PointsBackground.png in Resources */,
 				CAF3A4061719763800014FCE /* README.md in Resources */,
 				CA6DA270171A794C00483E5E /* SkillSelectionViewController.xib in Resources */,

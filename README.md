@@ -18,7 +18,7 @@ Roadmap
   </tr>
 <tr>
     <td>
-    <a href="https://github.com/FLKone/POEMPST/issues?milestone=2&state=open">0.1</a>
+    <a href="https://github.com/FLKone/POEMPST/issues?milestone=2&state=open">0.1.5</a>
     </td>
     <td>
     	Beta

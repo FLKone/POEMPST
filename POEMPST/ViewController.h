@@ -30,5 +30,6 @@
 
 -(IBAction) loadURL:(id) sender;
 -(IBAction) resetAS:(id) sender;
+-(IBAction) settingMenu:(id) sender;
 
 @end

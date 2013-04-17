@@ -691,7 +691,7 @@
                                                otherButtonTitles:@"Back to main menu",
                              nil,
                              nil];
-    
+    actionSheet.tag = 1;
     // use the same style as the nav bar
     actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
     
@@ -707,75 +707,97 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     NSLog(@"buttonIndex %d", buttonIndex);
-    if (buttonIndex == 0) {
-        //reset tree
-        int cID = [self.containerView characterClassID];
-        
-        [self.containerView.skillLinksView reset];
-        self.containerView.activeSkills = nil;
-        
-        for (id item in [self.containerView.touchLayer subviews])
-        {
-            if ([item isKindOfClass:[SkillTouchView class]])
+    
+    if (actionSheet.tag == 1) {
+        if (buttonIndex == 0) {
+            //reset tree
+            int cID = [self.containerView characterClassID];
+            
+            [self.containerView.skillLinksView reset];
+            self.containerView.activeSkills = nil;
+            
+            for (id item in [self.containerView.touchLayer subviews])
             {
-                SkillTouchView *blankItem = (SkillTouchView *)item;
-                
-                // this works
-                [blankItem desactivate];
+                if ([item isKindOfClass:[SkillTouchView class]])
+                {
+                    SkillTouchView *blankItem = (SkillTouchView *)item;
+                    
+                    // this works
+                    [blankItem desactivate];
+                    
+                }
+                else
+                {
+                    //
+                }
+            }
+            
+            switch (cID) {
+                case 1:
+                    [(UIButton *)[self.view viewWithTag:MARAUDERBTNID] sendActionsForControlEvents: UIControlEventTouchUpInside];
+                    break;
+                case 2:
+                    [(UIButton *)[self.view viewWithTag:RANGERBTNID] sendActionsForControlEvents: UIControlEventTouchUpInside];
+                    break;
+                case 3:
+                    [(UIButton *)[self.view viewWithTag:WITCHBTNID] sendActionsForControlEvents: UIControlEventTouchUpInside];
+                    break;
+                case 4:
+                    [(UIButton *)[self.view viewWithTag:DUELISTBTNID] sendActionsForControlEvents: UIControlEventTouchUpInside];
+                    break;
+                case 5:
+                    [(UIButton *)[self.view viewWithTag:TEMPLARBTNID] sendActionsForControlEvents: UIControlEventTouchUpInside];
+                    break;
+                case 6:
+                    [(UIButton *)[self.view viewWithTag:SIXBTNID] sendActionsForControlEvents: UIControlEventTouchUpInside];
+                    break;
+                default:
+                    break;
+            }
+        }
+        else if (buttonIndex == 1) {
+            //reset + main menu
+            [self.containerView.skillLinksView reset];
+            self.containerView.activeSkills = nil;
+            [[self.containerView.touchLayer viewWithTag:ACTIVEFACEID] removeFromSuperview];
+            
+            for (id item in [self.containerView.touchLayer subviews])
+            {
+                if ([item isKindOfClass:[SkillTouchView class]])
+                {
+                    SkillTouchView *blankItem = (SkillTouchView *)item;
+                    
+                    // this works
+                    [blankItem desactivate];
+                    
+                }
+                else
+                {
+                    //
+                }
+            }
+            
+            [_menuView setHidden:NO];
+        }
 
-            }
-            else
-            {
-                //
-            }
-        }
-        
-        switch (cID) {
-            case 1:
-                [(UIButton *)[self.view viewWithTag:MARAUDERBTNID] sendActionsForControlEvents: UIControlEventTouchUpInside];
-                break;
-            case 2:
-                [(UIButton *)[self.view viewWithTag:RANGERBTNID] sendActionsForControlEvents: UIControlEventTouchUpInside];
-                break;
-            case 3:
-                [(UIButton *)[self.view viewWithTag:WITCHBTNID] sendActionsForControlEvents: UIControlEventTouchUpInside];
-                break;
-            case 4:
-                [(UIButton *)[self.view viewWithTag:DUELISTBTNID] sendActionsForControlEvents: UIControlEventTouchUpInside];
-                break;
-            case 5:
-                [(UIButton *)[self.view viewWithTag:TEMPLARBTNID] sendActionsForControlEvents: UIControlEventTouchUpInside];
-                break;
-            case 6:
-                [(UIButton *)[self.view viewWithTag:SIXBTNID] sendActionsForControlEvents: UIControlEventTouchUpInside];
-                break;
-            default:
-                break;
-        }
     }
-    else if (buttonIndex == 1) {
-        //reset + main menu
-        [self.containerView.skillLinksView reset];
-        self.containerView.activeSkills = nil;
-        [[self.containerView.touchLayer viewWithTag:ACTIVEFACEID] removeFromSuperview];
-        
-        for (id item in [self.containerView.touchLayer subviews])
-        {
-            if ([item isKindOfClass:[SkillTouchView class]])
+    else if (actionSheet.tag == 2) {
+        if (buttonIndex == 0) {
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+            NSString *DataCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data"];
+            
+            if ([fileManager fileExistsAtPath:DataCachePath])
             {
-                SkillTouchView *blankItem = (SkillTouchView *)item;
-                
-                // this works
-                [blankItem desactivate];
-                
+                [fileManager removeItemAtPath:DataCachePath error:NULL];
             }
-            else
-            {
-                //
-            }
+            
+            [self.containerView removeFromSuperview];
+            self.containerView = nil;
+            
+            [self setup];
         }
-        
-        [_menuView setHidden:NO];
     }
 }
 
@@ -794,7 +816,7 @@
         
         if ([fileManager fileExistsAtPath:DataCachePath])
         {
-           // [fileManager removeItemAtPath:DataCachePath error:NULL];
+            [fileManager removeItemAtPath:DataCachePath error:NULL];
         }
         
         [self.containerView removeFromSuperview];
@@ -802,6 +824,26 @@
 
         [self setup];
 
+    }
+}
+
+-(IBAction) settingMenu:(UIButton *) sender {
+    NSLog(@"SM");
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Settings"
+                                                             delegate:self cancelButtonTitle:@"Hide"
+                                               destructiveButtonTitle:@"Clear app's cache"
+                                                    otherButtonTitles:[NSString stringWithFormat:@"Version: %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]],
+                                  nil,
+                                  nil];
+    actionSheet.tag = 2;
+
+    // use the same style as the nav bar
+    actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        [actionSheet showFromRect:sender.frame inView:self.view animated:YES];
     }
 }
 

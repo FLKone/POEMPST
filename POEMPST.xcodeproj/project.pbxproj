@@ -70,6 +70,8 @@
 		CAB101A0171F192C0047268F /* NSNotificationCenter+SFObservers.m in Sources */ = {isa = PBXBuildFile; fileRef = CAB10199171F192C0047268F /* NSNotificationCenter+SFObservers.m */; };
 		CAB101A1171F192C0047268F /* NSObject+SFObservers.m in Sources */ = {isa = PBXBuildFile; fileRef = CAB1019B171F192C0047268F /* NSObject+SFObservers.m */; };
 		CAB101A2171F192C0047268F /* NSObject+SFExecuteOnDealloc.m in Sources */ = {isa = PBXBuildFile; fileRef = CAB1019E171F192C0047268F /* NSObject+SFExecuteOnDealloc.m */; };
+		CAB101A5171F1BB20047268F /* 19-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = CAB101A3171F1BB20047268F /* 19-gear.png */; };
+		CAB101A6171F1BB20047268F /* 19-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAB101A4171F1BB20047268F /* 19-gear@2x.png */; };
 		CAF3A40417189A0000014FCE /* PointsBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF3A40317189A0000014FCE /* PointsBackground.png */; };
 		CAF3A4061719763800014FCE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CAF3A4051719763800014FCE /* README.md */; };
 		CAF636AF1716441900D91EB4 /* SkillTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF636AE1716441900D91EB4 /* SkillTouchView.m */; };
@@ -193,6 +195,8 @@
 		CAB1019D171F192C0047268F /* NSObject+SFExecuteOnDealloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SFExecuteOnDealloc.h"; sourceTree = "<group>"; };
 		CAB1019E171F192C0047268F /* NSObject+SFExecuteOnDealloc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SFExecuteOnDealloc.m"; sourceTree = "<group>"; };
 		CAB1019F171F192C0047268F /* SFObservers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFObservers.h; sourceTree = "<group>"; };
+		CAB101A3171F1BB20047268F /* 19-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "19-gear.png"; sourceTree = "<group>"; };
+		CAB101A4171F1BB20047268F /* 19-gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "19-gear@2x.png"; sourceTree = "<group>"; };
 		CAF3A40317189A0000014FCE /* PointsBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PointsBackground.png; sourceTree = "<group>"; };
 		CAF3A4051719763800014FCE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		CAF636AD1716441900D91EB4 /* SkillTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SkillTouchView.h; path = Classes/Views/SkillTouchView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -492,6 +496,8 @@
 		CAF636D81718398500D91EB4 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				CAB101A3171F1BB20047268F /* 19-gear.png */,
+				CAB101A4171F1BB20047268F /* 19-gear@2x.png */,
 				CA3B5055171AF70600C29D4C /* charactersheet.png */,
 				CA6DA278171AECA700483E5E /* btnOFF.png */,
 				CA6DA279171AECA700483E5E /* btnON.png */,
@@ -606,6 +612,8 @@
 				CA6DA27A171AECA700483E5E /* btnOFF.png in Resources */,
 				CA6DA27B171AECA700483E5E /* btnON.png in Resources */,
 				CA3B5056171AF70600C29D4C /* charactersheet.png in Resources */,
+				CAB101A5171F1BB20047268F /* 19-gear.png in Resources */,
+				CAB101A6171F1BB20047268F /* 19-gear@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -35,7 +35,8 @@ typedef enum {
 
 #define MAXSKILLS       120
 
-#define LOADSTEP1       0.00f    //base
+#define LOADSTEP11      0.05f    //base
+#define LOADSTEP1       0.10f   //after sprites
 #define LOADSTEP2       0.15f   //after sprites
 #define LOADSTEP3       0.30f   //after assets
 #define LOADSTEP4       0.45f   //endparsing assets

@@ -177,6 +177,7 @@
             [_menuView setHidden:YES];
             [self.loadFromURLBtn setHidden:NO];
             [self.activityView setHidden:YES];
+            self.progressView.progress = 0;
         }
     });
 }
@@ -185,6 +186,7 @@
 
     [[NSNotificationCenter defaultCenter] postNotificationName:@"loadClass" object:sender userInfo:nil];
     [_menuView setHidden:YES];
+    self.progressView.progress = 0;
 
 }
 
@@ -350,6 +352,7 @@
 -(void)setup {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSLog(@"loadingView hidden");
+        self.progressView.progress = 0;
         self.loadingView.alpha = 0.9;
         self.loadingView.hidden = NO;
     });
@@ -414,6 +417,8 @@
         
         [[NSOperationQueue mainQueue] addOperationWithBlock:^ {
             
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP11] userInfo:nil];
+
             NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
             
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);

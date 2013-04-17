@@ -8,7 +8,7 @@
 #ifndef POEMPST_constants_h
 #define POEMPST_constants_h
 
-#define NSLog(__FORMAT__, ...) NSLog((@"%s [Line %d] " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+#define NSLog(__FORMAT__, ...) TFLog((@"%s [Line %d] " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
 typedef enum {
 	kNormal,
@@ -49,7 +49,10 @@ static float orbitRadii[] =     {0.0f   , 83.5f , 163.0f    , 336.0f    , 489.0f
 
 #endif
 
+#import "apikey.h"
+
 //Vendor
+#import "TestFlight.h"
 #import "SFObservers.h"
 #import "AFNetworking.h"
 #import "RegexKitLite.h"

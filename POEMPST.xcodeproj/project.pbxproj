@@ -73,6 +73,8 @@
 		CAB101A5171F1BB20047268F /* 19-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = CAB101A3171F1BB20047268F /* 19-gear.png */; };
 		CAB101A6171F1BB20047268F /* 19-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAB101A4171F1BB20047268F /* 19-gear@2x.png */; };
 		CAB101A9171F28780047268F /* UIScrollView+ZoomToPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = CAB101A8171F28780047268F /* UIScrollView+ZoomToPoint.m */; };
+		CAB101AD171F2F950047268F /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CAB101AB171F2F950047268F /* libTestFlight.a */; };
+		CAB101AF171F300D0047268F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CAB101AE171F300D0047268F /* libz.dylib */; };
 		CAF3A40417189A0000014FCE /* PointsBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF3A40317189A0000014FCE /* PointsBackground.png */; };
 		CAF3A4061719763800014FCE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CAF3A4051719763800014FCE /* README.md */; };
 		CAF636AF1716441900D91EB4 /* SkillTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF636AE1716441900D91EB4 /* SkillTouchView.m */; };
@@ -200,6 +202,10 @@
 		CAB101A4171F1BB20047268F /* 19-gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "19-gear@2x.png"; sourceTree = "<group>"; };
 		CAB101A7171F28780047268F /* UIScrollView+ZoomToPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+ZoomToPoint.h"; path = "Classes/Helper/UIScrollView+ZoomToPoint.h"; sourceTree = "<group>"; };
 		CAB101A8171F28780047268F /* UIScrollView+ZoomToPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+ZoomToPoint.m"; path = "Classes/Helper/UIScrollView+ZoomToPoint.m"; sourceTree = "<group>"; };
+		CAB101AB171F2F950047268F /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		CAB101AC171F2F950047268F /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		CAB101AE171F300D0047268F /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		CAB101B0171F311D0047268F /* apikey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = apikey.h; sourceTree = "<group>"; };
 		CAF3A40317189A0000014FCE /* PointsBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PointsBackground.png; sourceTree = "<group>"; };
 		CAF3A4051719763800014FCE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		CAF636AD1716441900D91EB4 /* SkillTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SkillTouchView.h; path = Classes/Views/SkillTouchView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -241,6 +247,8 @@
 				CAA1EF241707EED1002BF206 /* SystemConfiguration.framework in Frameworks */,
 				CAA1EF201707EE76002BF206 /* MobileCoreServices.framework in Frameworks */,
 				CAA1EF8D170B9748002BF206 /* QuartzCore.framework in Frameworks */,
+				CAB101AD171F2F950047268F /* libTestFlight.a in Frameworks */,
+				CAB101AF171F300D0047268F /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,6 +301,7 @@
 		CAA1EECE1707E5AF002BF206 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CAB101AE171F300D0047268F /* libz.dylib */,
 				CAA1EF8C170B9748002BF206 /* QuartzCore.framework */,
 				CAA1EF231707EED1002BF206 /* SystemConfiguration.framework */,
 				CAA1EF1F1707EE76002BF206 /* MobileCoreServices.framework */,
@@ -309,6 +318,7 @@
 				CAA1EEDE1707E5AF002BF206 /* AppDelegate.h */,
 				CAA1EEDF1707E5AF002BF206 /* AppDelegate.m */,
 				CAA1EF691709F850002BF206 /* constants.h */,
+				CAB101B0171F311D0047268F /* apikey.h */,
 				CAA1EEE71707E5AF002BF206 /* ViewController.h */,
 				CAA1EEE81707E5AF002BF206 /* ViewController.m */,
 				CAA1EF291707F81D002BF206 /* ViewController_iPad.xib */,
@@ -363,6 +373,7 @@
 		CAA1EEF81707EBA6002BF206 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				CAB101AA171F2F950047268F /* TestFlight */,
 				CAB10197171F192C0047268F /* SFObservers */,
 				CAF636B01716827600D91EB4 /* PESGraph */,
 				CAA1EF5F17080080002BF206 /* JSONKit */,
@@ -478,6 +489,16 @@
 				CAB1019E171F192C0047268F /* NSObject+SFExecuteOnDealloc.m */,
 			);
 			path = SFExecuteOnDealloc;
+			sourceTree = "<group>";
+		};
+		CAB101AA171F2F950047268F /* TestFlight */ = {
+			isa = PBXGroup;
+			children = (
+				CAB101AB171F2F950047268F /* libTestFlight.a */,
+				CAB101AC171F2F950047268F /* TestFlight.h */,
+			);
+			name = TestFlight;
+			path = vendor/TestFlight;
 			sourceTree = "<group>";
 		};
 		CAF636B01716827600D91EB4 /* PESGraph */ = {
@@ -752,6 +773,10 @@
 				GCC_PREFIX_HEADER = "POEMPST/POEMPST-Prefix.pch";
 				INFOPLIST_FILE = "POEMPST/POEMPST-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/POEMPST/vendor/TestFlight\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
@@ -765,6 +790,10 @@
 				GCC_PREFIX_HEADER = "POEMPST/POEMPST-Prefix.pch";
 				INFOPLIST_FILE = "POEMPST/POEMPST-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/POEMPST/vendor/TestFlight\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;

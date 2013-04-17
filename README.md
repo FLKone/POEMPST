@@ -18,24 +18,13 @@ Roadmap
   </tr>
 <tr>
     <td>
-    0.0.4
-    </td>
-    <td>
-    	Alpha (internal)
-    </td>
-    <td>
-    	current version
-    </td>
-  </tr>  
-<tr>
-    <td>
     <a href="https://github.com/FLKone/POEMPST/issues?milestone=2&state=open">0.1</a>
     </td>
     <td>
     	Beta
     </td>
     <td>
-    	TBD
+    	Current version
     </td>
 </tr>
 <tr>
@@ -62,30 +51,6 @@ Roadmap
 </tr>
 </table>
 
-
-Alpha Status
--------------------------
-
-Working :
-
-* Launch Menu.
-* Class selection
-* Load Tree from any URL.
-* Tree generation (with cache).
-* Add/Remove skill(s).
-* Reset Tree.
-* Reset with another class or URL.
-* Display Skill details.
-* Display Int/Dex/Str totals.
-
-TODO for Beta release :
-
-* Load Tree from official website (current: local cached version).
-* Ability to refresh cache without deleting the app.
-
-TODO for Store release :
-
-* Debug/Testing :)
 
 Credits
 -------------------------

@@ -38,6 +38,8 @@
 }
 
 - (void)loadClass:(NSNotification *)sender {
+    self.isFromURL = NO;
+    
     //NSLog(@"loadClass %@", sender);
     self.characterClassID = ((UIButton*)sender.object).tag/BTNID;
     self.activeSkills = [NSMutableArray array];
@@ -58,7 +60,7 @@
 }
 
 - (void)loadUrl:(NSNotification *)sender {
-    
+    self.isFromURL = YES;
     //NSLog(@"loadUrl %@", sender);
     
     if ([sender.object rangeOfString:@"http://www.pathofexile.com/passive-skill-tree/"].location == NSNotFound) {
@@ -177,6 +179,7 @@
         self.arrayFaceNames = [NSArray arrayWithObjects:@"centermarauder", @"centerranger", @"centerwitch", @"centerduelist", @"centertemplar", @"centershadow", nil];
         self.spritesUnitedActive = [NSMutableDictionary dictionary];
         self.graph = [[PESGraph alloc] init];
+        self.isFromURL = NO;
         //-- iVAR
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadUrl:) name:@"loadUrl" object:nil];
@@ -831,12 +834,26 @@
                     newImage = UIGraphicsGetImageFromCurrentImageContext();
                     
                     UIImageView *imageView = [[UIImageView alloc] initWithImage:newImage];
+                    
                     imageView.center = CGPointMake((sn.Position.x + fullX/2)/Zoom/MiniScale, (sn.Position.y + fullY/2)/Zoom/MiniScale);
                     imageView.tag = ACTIVEFACEID;
-                    //NSLog(@"imageView.tag %d", imageView.tag);
+                   // NSLog(@"frame %f %f", self.superview.bounds.size.width, self.superview.bounds.size.height);
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        
+                        if (!self.isFromURL) {
+                            //[(UIScrollView *)[self superview] zoomToPoint:imageView.center withScale:1 animated:NO];
+                            CGPoint newOffset;
+                            newOffset.x = (sn.Position.x + fullX/2)/Zoom/MiniScale - self.superview.frame.size.width  /2;// - 120;// (1024-768)/2;
+                            newOffset.y = (sn.Position.y + fullY/2)/Zoom/MiniScale - self.superview.frame.size.height /2;// - 111;// - 768/2;
+                            
+                            ((UIScrollView *)[self superview]).zoomScale = 1.0f;
+                            ((UIScrollView *)[self superview]).contentOffset = newOffset;
+                        }
+                        else
+                        {
+                            ((UIScrollView *)[self superview]).zoomScale = ((UIScrollView *)[self superview]).minimumZoomScale;
+                        }
+
                         [self.touchLayer insertSubview:imageView atIndex:0];
                     });
                     

@@ -72,6 +72,7 @@
 		CAB101A2171F192C0047268F /* NSObject+SFExecuteOnDealloc.m in Sources */ = {isa = PBXBuildFile; fileRef = CAB1019E171F192C0047268F /* NSObject+SFExecuteOnDealloc.m */; };
 		CAB101A5171F1BB20047268F /* 19-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = CAB101A3171F1BB20047268F /* 19-gear.png */; };
 		CAB101A6171F1BB20047268F /* 19-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAB101A4171F1BB20047268F /* 19-gear@2x.png */; };
+		CAB101A9171F28780047268F /* UIScrollView+ZoomToPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = CAB101A8171F28780047268F /* UIScrollView+ZoomToPoint.m */; };
 		CAF3A40417189A0000014FCE /* PointsBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF3A40317189A0000014FCE /* PointsBackground.png */; };
 		CAF3A4061719763800014FCE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CAF3A4051719763800014FCE /* README.md */; };
 		CAF636AF1716441900D91EB4 /* SkillTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF636AE1716441900D91EB4 /* SkillTouchView.m */; };
@@ -197,6 +198,8 @@
 		CAB1019F171F192C0047268F /* SFObservers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFObservers.h; sourceTree = "<group>"; };
 		CAB101A3171F1BB20047268F /* 19-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "19-gear.png"; sourceTree = "<group>"; };
 		CAB101A4171F1BB20047268F /* 19-gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "19-gear@2x.png"; sourceTree = "<group>"; };
+		CAB101A7171F28780047268F /* UIScrollView+ZoomToPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+ZoomToPoint.h"; path = "Classes/Helper/UIScrollView+ZoomToPoint.h"; sourceTree = "<group>"; };
+		CAB101A8171F28780047268F /* UIScrollView+ZoomToPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+ZoomToPoint.m"; path = "Classes/Helper/UIScrollView+ZoomToPoint.m"; sourceTree = "<group>"; };
 		CAF3A40317189A0000014FCE /* PointsBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PointsBackground.png; sourceTree = "<group>"; };
 		CAF3A4051719763800014FCE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		CAF636AD1716441900D91EB4 /* SkillTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SkillTouchView.h; path = Classes/Views/SkillTouchView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -448,6 +451,8 @@
 				CAF636F21718421900D91EB4 /* URLTextField.m */,
 				CA6DA275171AA72800483E5E /* CustomPopoverBackgroundView.h */,
 				CA6DA276171AA72800483E5E /* CustomPopoverBackgroundView.m */,
+				CAB101A7171F28780047268F /* UIScrollView+ZoomToPoint.h */,
+				CAB101A8171F28780047268F /* UIScrollView+ZoomToPoint.m */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -662,6 +667,7 @@
 				CAB101A0171F192C0047268F /* NSNotificationCenter+SFObservers.m in Sources */,
 				CAB101A1171F192C0047268F /* NSObject+SFObservers.m in Sources */,
 				CAB101A2171F192C0047268F /* NSObject+SFExecuteOnDealloc.m in Sources */,
+				CAB101A9171F28780047268F /* UIScrollView+ZoomToPoint.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

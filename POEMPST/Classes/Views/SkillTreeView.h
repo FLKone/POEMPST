@@ -42,6 +42,7 @@
 
 @property float fullX;
 @property float fullY;
+@property BOOL isFromURL;
 
 - (id)initWithFrame:(CGRect)frame andJSON:(NSDictionary *)json;
 

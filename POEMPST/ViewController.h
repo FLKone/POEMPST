@@ -7,7 +7,7 @@
 
 #import <UIKit/UIKit.h>
 @class URLTextField;
-@interface ViewController : UIViewController <UIActionSheetDelegate, UIAlertViewDelegate>
+@interface ViewController : UIViewController <UIActionSheetDelegate, UIAlertViewDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) IBOutlet UIView *menuView;

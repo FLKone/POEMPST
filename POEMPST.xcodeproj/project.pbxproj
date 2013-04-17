@@ -20,7 +20,6 @@
 		CA2FF91E170FCD3E003DA79B /* UIView+Image.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2FF91D170FCD3E003DA79B /* UIView+Image.m */; };
 		CA2FF921170FE7F3003DA79B /* SkillLinksView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2FF920170FE7F3003DA79B /* SkillLinksView.m */; };
 		CA2FF924170FF347003DA79B /* SkillLinkView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2FF923170FF347003DA79B /* SkillLinkView.m */; };
-		CA2FF9261712804D003DA79B /* passive-skill-tree-v2.html in Resources */ = {isa = PBXBuildFile; fileRef = CA2FF9251712804D003DA79B /* passive-skill-tree-v2.html */; };
 		CA2FF9281713C944003DA79B /* Background1.png in Resources */ = {isa = PBXBuildFile; fileRef = CA2FF9271713C944003DA79B /* Background1.png */; };
 		CA3B5056171AF70600C29D4C /* charactersheet.png in Resources */ = {isa = PBXBuildFile; fileRef = CA3B5055171AF70600C29D4C /* charactersheet.png */; };
 		CA41BE9D170FB7A500C0E1D2 /* SkillTreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA41BE9C170FB7A500C0E1D2 /* SkillTreeView.m */; };
@@ -41,7 +40,6 @@
 		CAA1EEE41707E5AF002BF206 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA1EEE31707E5AF002BF206 /* Default@2x.png */; };
 		CAA1EEE61707E5AF002BF206 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA1EEE51707E5AF002BF206 /* Default-568h@2x.png */; };
 		CAA1EEE91707E5AF002BF206 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EEE81707E5AF002BF206 /* ViewController.m */; };
-		CAA1EEF71707EAEA002BF206 /* passive-skill-tree-v1.html in Resources */ = {isa = PBXBuildFile; fileRef = CAA1EEF61707EAEA002BF206 /* passive-skill-tree-v1.html */; };
 		CAA1EF0D1707EC5D002BF206 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EEFB1707EC5D002BF206 /* AFHTTPClient.m */; };
 		CAA1EF0E1707EC5D002BF206 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EEFD1707EC5D002BF206 /* AFHTTPRequestOperation.m */; };
 		CAA1EF0F1707EC5D002BF206 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EEFF1707EC5D002BF206 /* AFImageRequestOperation.m */; };
@@ -57,7 +55,6 @@
 		CAA1EF2B1707F81D002BF206 /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAA1EF291707F81D002BF206 /* ViewController_iPad.xib */; };
 		CAA1EF2C1707F81D002BF206 /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAA1EF2A1707F81D002BF206 /* ViewController_iPhone.xib */; };
 		CAA1EF6217080080002BF206 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF6117080080002BF206 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		CAA1EF6417082025002BF206 /* KeystoneFrameAllocated.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA1EF6317082025002BF206 /* KeystoneFrameAllocated.png */; };
 		CAA1EF681709F74B002BF206 /* SkillIcons.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF671709F74B002BF206 /* SkillIcons.m */; };
 		CAA1EF6C170A038D002BF206 /* SkillNode.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF6B170A038D002BF206 /* SkillNode.m */; };
 		CAA1EF6F170A07E2002BF206 /* NodeGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1EF6E170A07E1002BF206 /* NodeGroup.m */; };
@@ -115,7 +112,6 @@
 		CA2FF920170FE7F3003DA79B /* SkillLinksView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SkillLinksView.m; path = Classes/Views/SkillLinksView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CA2FF922170FF347003DA79B /* SkillLinkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SkillLinkView.h; path = Classes/Views/SkillLinkView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CA2FF923170FF347003DA79B /* SkillLinkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SkillLinkView.m; path = Classes/Views/SkillLinkView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		CA2FF9251712804D003DA79B /* passive-skill-tree-v2.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "passive-skill-tree-v2.html"; sourceTree = "<group>"; };
 		CA2FF9271713C944003DA79B /* Background1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background1.png; sourceTree = "<group>"; };
 		CA3B5055171AF70600C29D4C /* charactersheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = charactersheet.png; sourceTree = "<group>"; };
 		CA41BE9B170FB7A500C0E1D2 /* SkillTreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SkillTreeView.h; path = Classes/Views/SkillTreeView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -144,7 +140,6 @@
 		CAA1EEE51707E5AF002BF206 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		CAA1EEE71707E5AF002BF206 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CAA1EEE81707E5AF002BF206 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		CAA1EEF61707EAEA002BF206 /* passive-skill-tree-v1.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "passive-skill-tree-v1.html"; sourceTree = "<group>"; };
 		CAA1EEFA1707EC5D002BF206 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		CAA1EEFB1707EC5D002BF206 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
 		CAA1EEFC1707EC5D002BF206 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -172,7 +167,6 @@
 		CAA1EF2A1707F81D002BF206 /* ViewController_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController_iPhone.xib; sourceTree = "<group>"; };
 		CAA1EF6017080080002BF206 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		CAA1EF6117080080002BF206 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
-		CAA1EF6317082025002BF206 /* KeystoneFrameAllocated.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KeystoneFrameAllocated.png; sourceTree = "<group>"; };
 		CAA1EF661709F74B002BF206 /* SkillIcons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SkillIcons.h; path = Classes/Models/SkillIcons.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CAA1EF671709F74B002BF206 /* SkillIcons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SkillIcons.m; path = Classes/Models/SkillIcons.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CAA1EF691709F850002BF206 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = constants.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -363,9 +357,6 @@
 			isa = PBXGroup;
 			children = (
 				CA2FF9271713C944003DA79B /* Background1.png */,
-				CAA1EF6317082025002BF206 /* KeystoneFrameAllocated.png */,
-				CAA1EEF61707EAEA002BF206 /* passive-skill-tree-v1.html */,
-				CA2FF9251712804D003DA79B /* passive-skill-tree-v2.html */,
 			);
 			name = "Test Files";
 			sourceTree = "<group>";
@@ -602,11 +593,8 @@
 				CAA1EEE21707E5AF002BF206 /* Default.png in Resources */,
 				CAA1EEE41707E5AF002BF206 /* Default@2x.png in Resources */,
 				CAA1EEE61707E5AF002BF206 /* Default-568h@2x.png in Resources */,
-				CAA1EEF71707EAEA002BF206 /* passive-skill-tree-v1.html in Resources */,
 				CAA1EF2B1707F81D002BF206 /* ViewController_iPad.xib in Resources */,
 				CAA1EF2C1707F81D002BF206 /* ViewController_iPhone.xib in Resources */,
-				CAA1EF6417082025002BF206 /* KeystoneFrameAllocated.png in Resources */,
-				CA2FF9261712804D003DA79B /* passive-skill-tree-v2.html in Resources */,
 				CA2FF9281713C944003DA79B /* Background1.png in Resources */,
 				CAF636E51718398500D91EB4 /* duelist-large.png in Resources */,
 				CAF636E61718398500D91EB4 /* Fontin-Bold.ttf in Resources */,

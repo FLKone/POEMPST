@@ -495,6 +495,7 @@
                     self.scrollView.maximumZoomScale = 1;//0.3835f;
                     self.scrollView.zoomScale = minScale;
                     
+                    self.scrollView.autoresizesSubviews = NO;
                     
                     [self centerScrollViewContents];
                     
@@ -553,12 +554,43 @@
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
 
+    NSLog(@"will %f %f", self.scrollView.contentOffset.x, self.scrollView.contentOffset.y);
+    
     if((interfaceOrientation == UIDeviceOrientationLandscapeLeft) || (interfaceOrientation == UIDeviceOrientationLandscapeRight)){
         [self setupMenuLandscape];
+        
+        if (self.scrollView.contentOffset.x != 0 && self.scrollView.contentOffset.y != 0 ) {
+            CGPoint newOffset;
+            newOffset.x = self.scrollView.contentOffset.x - 128;// (1024-768)/2;
+            newOffset.y = self.scrollView.contentOffset.y + 128;// - 768/2;
+            
+            self.scrollView.contentOffset = newOffset;
+        }
+        
+
+        
     } else  if((interfaceOrientation == UIDeviceOrientationPortrait) || (interfaceOrientation == UIDeviceOrientationPortraitUpsideDown)){
         [self setupMenuPortrait];
+        
+        if (self.scrollView.contentOffset.x != 0 && self.scrollView.contentOffset.y != 0 ) {
+
+            CGPoint newOffset;
+            newOffset.x = self.scrollView.contentOffset.x + 128;// (1024-768)/2;
+            newOffset.y = self.scrollView.contentOffset.y - 128;// - 768/2;
+            
+            self.scrollView.contentOffset = newOffset;
+        }
     }
+    
+    [self centerScrollViewContents];
+
 }
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [self centerScrollViewContents];
+    
+}
+
 
 -(void)setupMenuLandscape {
     float offsetY = 520;

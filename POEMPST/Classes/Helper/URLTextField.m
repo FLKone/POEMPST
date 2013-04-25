@@ -15,7 +15,7 @@
 - (id)initWithCoder:(NSCoder *)coder {
     self = [super initWithCoder:coder];
     if (self) {
-        NSLog(@"dsds iwc %@", self);
+        //NSLog(@"dsds iwc %@", self);
         self.canCopyBBcode = NO;
         self.canPaste = NO;
     }
@@ -110,9 +110,7 @@
     {
         NSURL *url = [NSURL URLWithString:board.string];
         
-        
         NSLog(@"url = %@", url);
-        
         
         [self setText:@""];
         [self setText:[board.string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];

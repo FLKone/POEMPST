@@ -102,6 +102,10 @@
         UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"This is not a valid PoE link" message:board.string delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         [alertView show];
     }
+    else if ([[NSURL URLWithString:board.string] pathComponents].count != 3) {
+        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"This is not a valid PoE link" message:board.string delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alertView show];
+    }
     else
     {
         NSURL *url = [NSURL URLWithString:board.string];
@@ -110,7 +114,8 @@
         NSLog(@"url = %@", url);
         
         
-        [self setText:board.string];
+        [self setText:@""];
+        [self setText:[board.string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
         [self resizeHeightToFitText];
     }
     

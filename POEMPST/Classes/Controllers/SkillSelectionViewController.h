@@ -28,6 +28,8 @@
 
 @property BOOL canAdd;
 @property BOOL canRemove;
+@property BOOL canCancel;
+@property BOOL reqNeeded;
 
 -(IBAction)selectSkill;
 -(IBAction)cancelSkill;

@@ -21,7 +21,7 @@
 @synthesize titleLabel;
 @synthesize descriptionLabel;
 @synthesize validateBtn;
-@synthesize cancelBtn, canAdd, canRemove;
+@synthesize cancelBtn, canAdd, canRemove, canCancel, reqNeeded;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andNode:(SkillNode *)aNode
 {
@@ -31,6 +31,7 @@
         self.node = aNode;
         self.canAdd = NO;
         self.canRemove = NO;
+        self.canCancel = NO;
         
 //        NSLog(@"name = %@", [aNode name]);
   //      NSLog(@"name = %@", [aNode description]);
@@ -76,12 +77,18 @@
     [self.cancelBtn setTitleColor:[UIColor colorWithRed:238/255.f green:175/255.f blue:105/255.f alpha:1.00] forState:UIControlStateHighlighted];
 //    self.cancelBtn.layer.borderWidth= 2.0f;
     
-    if (self.canAdd) {
-        [self.validateBtn setTitle:@"add" forState:UIControlStateNormal];
+    if (self.reqNeeded) {
+        [self.validateBtn setTitle:@"req. needed" forState:UIControlStateNormal];
+        [self.validateBtn titleLabel].font = [UIFont fontWithName:@"Fontin-SmallCaps" size:14.0];
+        [self.validateBtn setEnabled:NO];
     }
-    else if (self.canRemove)
+    else if (self.canCancel) {
+        [self.validateBtn setTitle:@"cancel" forState:UIControlStateNormal];
+    }
+    else if (!self.canRemove)
     {
-        [self.validateBtn setTitle:@"remove" forState:UIControlStateNormal];
+        [self.validateBtn setTitle:@"needed" forState:UIControlStateNormal];
+        [self.validateBtn setEnabled:NO];
     }
     else
     {

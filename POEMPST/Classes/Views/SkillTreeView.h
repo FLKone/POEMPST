@@ -47,7 +47,7 @@
 - (id)initWithFrame:(CGRect)frame andJSON:(NSDictionary *)json;
 
 - (void)addActiveSkill:(NSNumber *)skillID;
-- (void)removeActiveSkill:(NSNumber *)skillID;
+- (BOOL)removeActiveSkill:(NSNumber *)skillID;
 
 @property (nonatomic, strong) SkillSelectionViewController *skillPicker;
 @property (nonatomic, strong) UIPopoverController *skillPickerPopover;

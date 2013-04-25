@@ -17,26 +17,6 @@
 @synthesize skillPicker = _skillPicker;
 @synthesize skillPickerPopover = _skillPickerPopover;
 
-- (void)bannerTapped:(UIGestureRecognizer *)gestureRecognizer {
-    
-    int nbLinks = ((SkillTouchView *)[self.touchLayer viewWithTag:[gestureRecognizer view].tag]).linksHighIDs.count + ((SkillTouchView *)[self.touchLayer viewWithTag:[gestureRecognizer view].tag]).linksIDs.count;
-    
-    if (nbLinks && self.activeSkills.count - 1 < MAXSKILLS) {        
-        if ([self.activeSkills indexOfObject:[NSNumber numberWithInt:[gestureRecognizer view].tag]] == NSNotFound) {
-            [self addActiveSkill:[NSNumber numberWithInt:[gestureRecognizer view].tag]];
-            return;
-        }
-    }
-
-    if (self.activeSkills && [self.activeSkills indexOfObject:[NSNumber numberWithInt:[gestureRecognizer view].tag]] != NSNotFound) {        
-        [self removeActiveSkill:[NSNumber numberWithInt:[gestureRecognizer view].tag]];
-    }
-}
-
-- (void)button1:(id)sender {
-    
-}
-
 - (void)loadClass:(NSNotification *)sender {
     self.isFromURL = NO;
     
@@ -412,12 +392,6 @@
         float min_y = [[json objectForKey:@"min_y"] floatValue];
         float max_x = [[json objectForKey:@"max_x"] floatValue];
         float max_y = [[json objectForKey:@"max_y"] floatValue];
-        
-        //UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(10, 10, 800, 100)];
-        //[[button1 titleLabel] setFont:[UIFont fontWithName:@"Times New Roman" size:100]];
-        //[button1 setTitle:@"START" forState:UIControlStateNormal];
-        //[button1 addTarget:self action:@selector(button1:) forControlEvents:UIControlEventTouchUpInside];
-        //[self addSubview:button1];
 
         fullX = (float)(MAX(abs(min_x),abs(max_x))*2.15);
         fullY = (float)(MAX(abs(min_y),abs(max_y))*2.15);
@@ -1012,7 +986,7 @@
     }
 }
 
-- (void)removeActiveSkill:(NSNumber *)skillID {
+- (BOOL)removeActiveSkill:(NSNumber *)skillID {
     // CHECK IF IT CAN BE REMOVED
     SkillTouchView *tmpView = (SkillTouchView *)[self.touchLayer viewWithTag:[skillID intValue]];
     BOOL canBeRemoved = YES;
@@ -1080,7 +1054,7 @@
             
         }
         
-        return;
+        return NO;
     }
     //return;
     /*
@@ -1166,6 +1140,8 @@
     
     
     [self drawActiveLayer:skillLinksToDisable];
+    
+    return YES;
 }
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
@@ -1190,21 +1166,27 @@
     
     int nbLinks = ((SkillTouchView *)[self.touchLayer viewWithTag:node.id]).linksHighIDs.count + ((SkillTouchView *)[self.touchLayer viewWithTag:node.id]).linksIDs.count;
     
-    if (nbLinks && self.activeSkills.count - 1 < MAXSKILLS) {
-        if ([self.activeSkills indexOfObject:[NSNumber numberWithInt:node.id]] == NSNotFound) {
-            NSLog(@"ADD");
-            _skillPicker.canAdd = YES;
+    if (nbLinks && self.activeSkills.count - 1 < MAXSKILLS && [self.activeSkills indexOfObject:[NSNumber numberWithInt:node.id]] == NSNotFound) {
+        NSLog(@"ADD");
+        [self addActiveSkill:[NSNumber numberWithInt:node.id]];
+        _skillPicker.canCancel = YES;
+        //_skillPicker.canAdd = YES;
+    }
+    else if (self.activeSkills && [self.activeSkills indexOfObject:[NSNumber numberWithInt:node.id]] != NSNotFound)
+    {
+        NSLog(@"REMOVE");
+        BOOL canBeRemoved = [self removeActiveSkill:[NSNumber numberWithInt:node.id]];
+        if (canBeRemoved) {
+            _skillPicker.canCancel = YES;
+        }
+        else {
+            _skillPicker.canRemove = NO;
         }
     }
-    
-    if (self.activeSkills && [self.activeSkills indexOfObject:[NSNumber numberWithInt:node.id]] != NSNotFound) {
-                    NSLog(@"REMOVE");
-            _skillPicker.canRemove = YES;
+    else
+    {
+        _skillPicker.reqNeeded = YES;
     }
-    
-    
-    
-
     //Set this VC as the delegate.
     _skillPicker.delegate = self;
     
@@ -1232,22 +1214,20 @@
 
 #pragma mark - SkillSelectionViewController method
 -(void)selectedSkill:(SkillNode *)node {
-    //NSLog(@"node %@", node);
+    NSLog(@"selectedSkill");
     
     int nbLinks = ((SkillTouchView *)[self.touchLayer viewWithTag:node.id]).linksHighIDs.count + ((SkillTouchView *)[self.touchLayer viewWithTag:node.id]).linksIDs.count;
     
-    if (nbLinks && self.activeSkills.count - 1 < MAXSKILLS) {
-        if ([self.activeSkills indexOfObject:[NSNumber numberWithInt:node.id]] == NSNotFound) {
-            [self addActiveSkill:[NSNumber numberWithInt:node.id]];
-            [self cancelSkill];
-            return;
-        }
+    if (nbLinks && self.activeSkills.count - 1 < MAXSKILLS && [self.activeSkills indexOfObject:[NSNumber numberWithInt:node.id]] == NSNotFound) {
+        [self addActiveSkill:[NSNumber numberWithInt:node.id]];
+        [self cancelSkill];
+        return;
     }
-    
-    if (self.activeSkills && [self.activeSkills indexOfObject:[NSNumber numberWithInt:node.id]] != NSNotFound) {
+    else if (self.activeSkills && [self.activeSkills indexOfObject:[NSNumber numberWithInt:node.id]] != NSNotFound)
+    {
         [self removeActiveSkill:[NSNumber numberWithInt:node.id]];
     }
-    
+
     [self cancelSkill];
 }
 

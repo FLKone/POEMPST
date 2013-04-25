@@ -316,7 +316,7 @@
     [loadFromURLBtn.titleLabel setFont:[UIFont fontWithName:@"Fontin-Regular" size:18.0]];
 
     // skill points
-    [skillPointsView.titleLabel setFont:[UIFont fontWithName:@"Fontin-Bold" size:12.0]];
+    [skillPointsView.titleLabel setFont:[UIFont fontWithName:@"Fontin-Bold" size:14.0]];
     
     [self.activityView setHidden:YES];
 

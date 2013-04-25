@@ -14,6 +14,7 @@
 
 @property BOOL isActivated;
 @property BOOL isHighlighted;
+@property float scaleTouch;
 
 @property (strong, nonatomic) NSMutableArray *linksIDs;
 @property (strong, nonatomic) NSMutableArray *linksHighIDs;

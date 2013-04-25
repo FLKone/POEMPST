@@ -763,10 +763,14 @@
         NSString *iconkey = sn.isMastery ? @"mastery" : (sn.isKeystone ? @"keystoneActive" : (sn.isNotable ? @"notableActive" : @"normalActive"));
         CGRect rect = CGRectFromString([[[[iconActiveSkills.skillPositions objectForKey:[sn icon]] objectForKey:iconkey] allValues] objectAtIndex:0]);
         
+        float TouchLayerScale = 1;
+        TouchLayerScale = (rect.size.width > 35 ? TouchLayerScaleDown : TouchLayerScaleUp);
+        
         rect.size.width = rect.size.width*TouchLayerScale;
         rect.size.height = rect.size.height*TouchLayerScale;
         
         SkillTouchView *touchView = [[SkillTouchView alloc] initWithFrame:rect];
+        touchView.scaleTouch = TouchLayerScale;
         touchView.clipsToBounds = YES;
         touchView.center = CGPointMake((sn.Position.x + fullX/2)/Zoom/MiniScale, (sn.Position.y + fullY/2)/Zoom/MiniScale);
         touchView.tag = sn.id;

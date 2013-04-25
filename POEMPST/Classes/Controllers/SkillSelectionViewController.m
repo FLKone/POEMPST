@@ -92,10 +92,8 @@
     
     
     [self.titleLabel setText:[self.node name]];
-//    NSLog(@"descriptionLabel %@", [[self.node attributes] componentsJoinedByString:@"\n"]);
-    NSString *desc = [[self.node attributes] componentsJoinedByString:@"\n∙ "];
-    [self.descriptionLabel setText:[NSString stringWithFormat:@"∙ %@", desc]];
-    
+    NSString *desc = [NSString stringWithFormat:@"∙ %@", [[self.node attributes] componentsJoinedByString:@"\n∙ "]];
+
     CGSize maximumLabelSize = CGSizeMake(230, FLT_MAX);
     CGSize expectedLabelSize = [desc sizeWithFont:self.descriptionLabel.font constrainedToSize:maximumLabelSize lineBreakMode:self.descriptionLabel.lineBreakMode];
     
@@ -105,7 +103,9 @@
 
     newFrame.size.height = expectedLabelSize.height;
     self.descriptionLabel.frame = newFrame;
-    
+
+    [self.descriptionLabel setText:desc];
+
     
     
     self.contentSizeForViewInPopover = CGSizeMake(250, 125 + newFrame.size.height - baseH);

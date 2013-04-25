@@ -846,10 +846,15 @@
                         if (!self.isFromURL) {
                             //[(UIScrollView *)[self superview] zoomToPoint:imageView.center withScale:1 animated:NO];
                             CGPoint newOffset;
-                            newOffset.x = (sn.Position.x + fullX/2)/Zoom/MiniScale - self.superview.frame.size.width  /2;// - 120;// (1024-768)/2;
-                            newOffset.y = (sn.Position.y + fullY/2)/Zoom/MiniScale - self.superview.frame.size.height /2;// - 111;// - 768/2;
+                            newOffset.x = (sn.Position.x + fullX/2)/Zoom/MiniScale*MaxZoom - self.superview.frame.size.width/2;// - 120;// (1024-768)/2;
+                            newOffset.y = (sn.Position.y + fullY/2)/Zoom/MiniScale*MaxZoom - self.superview.frame.size.height/2;// - 111;// - 768/2;
                             
-                            ((UIScrollView *)[self superview]).zoomScale = 1.0f;
+                            //newOffset.x = newOffset.x*MaxZoom;
+                            //newOffset.y = newOffset.y*MaxZoom;
+                            
+                            NSLog(@"newOffset %@", NSStringFromCGPoint(newOffset));
+                            
+                            ((UIScrollView *)[self superview]).zoomScale = MaxZoom;
                             ((UIScrollView *)[self superview]).contentOffset = newOffset;
                         }
                         else

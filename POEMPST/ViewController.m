@@ -497,7 +497,7 @@
                     self.scrollView.backgroundColor = backgroundColor;
                     
                     self.scrollView.minimumZoomScale = minScale;
-                    self.scrollView.maximumZoomScale = 1;//0.3835f;
+                    self.scrollView.maximumZoomScale = MaxZoom;//0.3835f;
                     self.scrollView.zoomScale = minScale;
                     
                     self.scrollView.autoresizesSubviews = NO;

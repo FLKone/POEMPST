@@ -56,5 +56,8 @@
 -(void)selectedSkill:(SkillNode *)node;
 -(void)cancelSkill:(BOOL)animated;
 
+@property (nonatomic, strong) UILabel *currentDextLabel;
+@property (nonatomic, strong) UILabel *currentStrLabel;
+@property (nonatomic, strong) UILabel *currentIntelLabel;
 
 @end

@@ -173,6 +173,10 @@
         [self.currentIntelLabel setText:[NSString stringWithFormat:@"%d", ia]];
         [self.currentStrLabel setText:[NSString stringWithFormat:@"%d", sa]];
         
+        [self.containerView.currentDextLabel setText:[NSString stringWithFormat:@"%d", da]];
+        [self.containerView.currentIntelLabel setText:[NSString stringWithFormat:@"%d", ia]];
+        [self.containerView.currentStrLabel setText:[NSString stringWithFormat:@"%d", sa]];
+        
         if (![_menuView isHidden]) {
             [_menuView setHidden:YES];
             [self.loadFromURLBtn setHidden:NO];
@@ -805,6 +809,10 @@
             //reset + main menu
             [self.containerView.skillLinksView reset];
             self.containerView.activeSkills = nil;
+            [self.containerView.currentStrLabel removeFromSuperview];
+            [self.containerView.currentIntelLabel removeFromSuperview];
+            [self.containerView.currentDextLabel removeFromSuperview];
+            
             [[self.containerView.touchLayer viewWithTag:ACTIVEFACEID] removeFromSuperview];
             
             for (id item in [self.containerView.touchLayer subviews])

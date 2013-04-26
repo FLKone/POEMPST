@@ -46,11 +46,10 @@
     }
 }
 
-
 -(IBAction)cancelSkill {
     //Notify the delegate if it exists.
     if (_delegate != nil) {
-        [_delegate cancelSkill];
+        [_delegate cancelSkill:YES];
     }
 }
 

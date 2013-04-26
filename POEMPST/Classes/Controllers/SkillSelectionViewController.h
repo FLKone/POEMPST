@@ -12,7 +12,7 @@
 @protocol SkillSelectionDelegate <NSObject>
 @required
 -(void)selectedSkill:(SkillNode *)node;
--(void)cancelSkill;
+-(void)cancelSkill:(BOOL)animated;
 @end
 
 @interface SkillSelectionViewController : UIViewController

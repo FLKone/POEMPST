@@ -680,8 +680,16 @@
 }
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView {
+//    NSLog(@"scrollViewDidZoom");
+    [self.containerView cancelSkill:YES];
+
     // The scroll view has zoomed, so we need to re-center the contents
     [self centerScrollViewContents];
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self.containerView cancelSkill:YES];
 }
 
 - (void)didReceiveMemoryWarning

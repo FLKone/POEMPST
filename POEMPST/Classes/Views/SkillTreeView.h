@@ -54,8 +54,7 @@
 
 -(IBAction)chooseSkillButtonTapped:(id)sender;
 -(void)selectedSkill:(SkillNode *)node;
--(void)cancelSkill;
-
+-(void)cancelSkill:(BOOL)animated;
 
 
 @end

@@ -1153,6 +1153,7 @@
 #pragma mark - IBActions
 -(IBAction)chooseSkillButtonTapped:(UIGestureRecognizer *)gestureRecognizer
 {
+    [self cancelSkill:NO];
 /*
 
   */  
@@ -1195,6 +1196,7 @@
         //The color picker popover is not showing. Show it.
         _skillPickerPopover = [[UIPopoverController alloc] initWithContentViewController:_skillPicker];
         _skillPickerPopover.popoverBackgroundViewClass = [CustomPopoverBackgroundView class];
+        _skillPickerPopover.passthroughViews = [NSArray arrayWithObjects:self, nil];
         _skillPickerPopover.delegate = self;
         [_skillPickerPopover presentPopoverFromRect:CGRectMake((node.Position.x + fullX/2)/Zoom/MiniScale - 6, (node.Position.y + fullY/2)/Zoom/MiniScale - 6, 12, 12)
                                              inView:self.touchLayer
@@ -1212,6 +1214,16 @@
     }
 }
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [super touchesBegan:touches withEvent:event];
+    
+    [self cancelSkill:YES];
+    
+    NSLog(@"touchesBegan");
+}
+
+
 #pragma mark - SkillSelectionViewController method
 -(void)selectedSkill:(SkillNode *)node {
     NSLog(@"selectedSkill");
@@ -1220,7 +1232,7 @@
     
     if (nbLinks && self.activeSkills.count - 1 < MAXSKILLS && [self.activeSkills indexOfObject:[NSNumber numberWithInt:node.id]] == NSNotFound) {
         [self addActiveSkill:[NSNumber numberWithInt:node.id]];
-        [self cancelSkill];
+        [self cancelSkill:NO];
         return;
     }
     else if (self.activeSkills && [self.activeSkills indexOfObject:[NSNumber numberWithInt:node.id]] != NSNotFound)
@@ -1228,12 +1240,12 @@
         [self removeActiveSkill:[NSNumber numberWithInt:node.id]];
     }
 
-    [self cancelSkill];
+    [self cancelSkill:NO];
 }
 
--(void)cancelSkill {
+-(void)cancelSkill:(BOOL)animated {
     if (_skillPickerPopover) {
-        [_skillPickerPopover dismissPopoverAnimated:YES];
+        [_skillPickerPopover dismissPopoverAnimated:animated];
         _skillPickerPopover = nil;
     }
 }

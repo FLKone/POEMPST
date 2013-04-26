@@ -70,6 +70,7 @@
 		CAB101A9171F28780047268F /* UIScrollView+ZoomToPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = CAB101A8171F28780047268F /* UIScrollView+ZoomToPoint.m */; };
 		CAB101AD171F2F950047268F /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CAB101AB171F2F950047268F /* libTestFlight.a */; };
 		CAB101AF171F300D0047268F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CAB101AE171F300D0047268F /* libz.dylib */; };
+		CAE297BB172B06310007A678 /* libCrittercism_v3_5_1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE297BA172B06310007A678 /* libCrittercism_v3_5_1.a */; };
 		CAF3A40417189A0000014FCE /* PointsBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF3A40317189A0000014FCE /* PointsBackground.png */; };
 		CAF3A4061719763800014FCE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CAF3A4051719763800014FCE /* README.md */; };
 		CAF636AF1716441900D91EB4 /* SkillTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF636AE1716441900D91EB4 /* SkillTouchView.m */; };
@@ -196,6 +197,9 @@
 		CAB101AC171F2F950047268F /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		CAB101AE171F300D0047268F /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		CAB101B0171F311D0047268F /* apikey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = apikey.h; sourceTree = "<group>"; };
+		CAE297B8172B06310007A678 /* Crittercism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crittercism.h; sourceTree = "<group>"; };
+		CAE297B9172B06310007A678 /* CrittercismDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrittercismDelegate.h; sourceTree = "<group>"; };
+		CAE297BA172B06310007A678 /* libCrittercism_v3_5_1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCrittercism_v3_5_1.a; sourceTree = "<group>"; };
 		CAF3A40317189A0000014FCE /* PointsBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PointsBackground.png; sourceTree = "<group>"; };
 		CAF3A4051719763800014FCE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		CAF636AD1716441900D91EB4 /* SkillTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SkillTouchView.h; path = Classes/Views/SkillTouchView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -239,6 +243,7 @@
 				CAA1EF8D170B9748002BF206 /* QuartzCore.framework in Frameworks */,
 				CAB101AD171F2F950047268F /* libTestFlight.a in Frameworks */,
 				CAB101AF171F300D0047268F /* libz.dylib in Frameworks */,
+				CAE297BB172B06310007A678 /* libCrittercism_v3_5_1.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,6 +363,7 @@
 		CAA1EEF81707EBA6002BF206 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				CAE297B7172B06310007A678 /* CrittercismSDK */,
 				CAB101AA171F2F950047268F /* TestFlight */,
 				CAB10197171F192C0047268F /* SFObservers */,
 				CAF636B01716827600D91EB4 /* PESGraph */,
@@ -484,6 +490,17 @@
 			);
 			name = TestFlight;
 			path = vendor/TestFlight;
+			sourceTree = "<group>";
+		};
+		CAE297B7172B06310007A678 /* CrittercismSDK */ = {
+			isa = PBXGroup;
+			children = (
+				CAE297B8172B06310007A678 /* Crittercism.h */,
+				CAE297B9172B06310007A678 /* CrittercismDelegate.h */,
+				CAE297BA172B06310007A678 /* libCrittercism_v3_5_1.a */,
+			);
+			name = CrittercismSDK;
+			path = vendor/CrittercismSDK;
 			sourceTree = "<group>";
 		};
 		CAF636B01716827600D91EB4 /* PESGraph */ = {
@@ -757,6 +774,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/POEMPST/vendor/TestFlight\"",
+					"\"$(SRCROOT)/POEMPST/vendor/CrittercismSDK\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 2;
@@ -774,6 +792,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/POEMPST/vendor/TestFlight\"",
+					"\"$(SRCROOT)/POEMPST/vendor/CrittercismSDK\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 2;

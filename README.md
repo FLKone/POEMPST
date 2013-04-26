@@ -28,18 +28,18 @@ Roadmap
     	Basic Features
     </td>
     <td>
-    	Available
+    	Current Store version
     </td>
 </tr>
 <tr>
     <td>
-    <a href="https://github.com/FLKone/POEMPST/issues?milestone=5&state=open">0.2</a>
+    <a href="https://github.com/FLKone/POEMPST/issues?milestone=5&state=open">0.2.2</a>
     </td>
     <td>
     	Bug Fixes ~ UI Enhancements
     </td>
     <td>
-    	Current version
+    	Current beta version
     </td>
 </tr>
 <tr>

@@ -172,16 +172,16 @@
         [self.currentIntelLabel setBackgroundColor:[UIColor clearColor]];
         [self.currentStrLabel setBackgroundColor:[UIColor clearColor]];
 
-        //self.currentDextLabel.font = [UIFont fontWithName:@"Fontin-Regular" size:7.0];
-        //self.currentIntelLabel.font = [UIFont fontWithName:@"Fontin-Regular" size:7.0];
-        //self.currentStrLabel.font = [UIFont fontWithName:@"Fontin-Regular" size:7.0];
+        self.currentDextLabel.font = [UIFont fontWithName:@"Fontin-Regular" size:7.0];
+        self.currentIntelLabel.font = [UIFont fontWithName:@"Fontin-Regular" size:7.0];
+        self.currentStrLabel.font = [UIFont fontWithName:@"Fontin-Regular" size:7.0];
 
         [self.currentDextLabel setTextAlignment:NSTextAlignmentCenter];
         [self.currentIntelLabel setTextAlignment:NSTextAlignmentCenter];
         [self.currentStrLabel setTextAlignment:NSTextAlignmentCenter];
-        self.currentDextLabel.font = [UIFont systemFontOfSize:7.0];
-        self.currentIntelLabel.font = [UIFont systemFontOfSize:7.0];
-        self.currentStrLabel.font = [UIFont systemFontOfSize:7.0];
+        //self.currentDextLabel.font = [UIFont systemFontOfSize:7.0];
+        //self.currentIntelLabel.font = [UIFont systemFontOfSize:7.0];
+        //self.currentStrLabel.font = [UIFont systemFontOfSize:7.0];
         [self.currentIntelLabel setTextColor:[UIColor colorWithRed:73/255.f green:159/255.f blue:210/255.f alpha:1.00]];
         [self.currentStrLabel setTextColor:[UIColor colorWithRed:205/255.f green:47/255.f blue:19/255.f alpha:1.00]];
         [self.currentDextLabel setTextColor:[UIColor colorWithRed:4/255.f green:195/255.f blue:4/255.f alpha:1.00]];
@@ -842,17 +842,19 @@
                     imageView.tag = ACTIVEFACEID;
                    // NSLog(@"frame %f %f", self.superview.bounds.size.width, self.superview.bounds.size.height);
                     
+                    CGRect intFrame = CGRectMake(imageView.center.x - 11         , imageView.center.y - 35   , 22, 21);
+                    CGRect dexFrame = CGRectMake(imageView.center.x - 11 + 22    , imageView.center.y + 1.5   , 22, 21);
+                    CGRect strFrame = CGRectMake(imageView.center.x - 11 - 21    , imageView.center.y + 1.5   , 22, 21);
+                    
+                    self.currentDextLabel.frame     = dexFrame;
+                    self.currentIntelLabel.frame    = intFrame;
+                    self.currentStrLabel.frame      = strFrame;
+                    
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if (!self.isFromURL) {
-                            //[(UIScrollView *)[self superview] zoomToPoint:imageView.center withScale:1 animated:NO];
                             CGPoint newOffset;
-                            newOffset.x = (sn.Position.x + fullX/2)/Zoom/MiniScale*MaxZoom - self.superview.frame.size.width/2;// - 120;// (1024-768)/2;
-                            newOffset.y = (sn.Position.y + fullY/2)/Zoom/MiniScale*MaxZoom - self.superview.frame.size.height/2;// - 111;// - 768/2;
-                            
-                            //newOffset.x = newOffset.x*MaxZoom;
-                            //newOffset.y = newOffset.y*MaxZoom;
-                            
-                            NSLog(@"newOffset %@", NSStringFromCGPoint(newOffset));
+                            newOffset.x = (sn.Position.x + fullX/2)/Zoom/MiniScale*MaxZoom - self.superview.frame.size.width/2;
+                            newOffset.y = (sn.Position.y + fullY/2)/Zoom/MiniScale*MaxZoom - self.superview.frame.size.height/2;
                             
                             ((UIScrollView *)[self superview]).zoomScale = MaxZoom;
                             ((UIScrollView *)[self superview]).contentOffset = newOffset;
@@ -862,22 +864,10 @@
                             ((UIScrollView *)[self superview]).zoomScale = ((UIScrollView *)[self superview]).minimumZoomScale;
                         }
                         
-                        NSLog(@"INSERT START NODE");
-                        
-                        CGRect intFrame = CGRectMake(imageView.center.x - 11         , imageView.center.y - 36.5   , 22, 21);
-                        CGRect dexFrame = CGRectMake(imageView.center.x - 11 + 22    , imageView.center.y + 1   , 22, 21);
-                        CGRect strFrame = CGRectMake(imageView.center.x - 11 - 22    , imageView.center.y + 1   , 22, 21);
-                        
-                        self.currentDextLabel.frame     = dexFrame;
-                        self.currentIntelLabel.frame    = intFrame;
-                        self.currentStrLabel.frame      = strFrame;
-                        
                         [self.touchLayer insertSubview:currentIntelLabel atIndex:0];
                         [self.touchLayer insertSubview:currentStrLabel atIndex:0];
                         [self.touchLayer insertSubview:currentDextLabel atIndex:0];
-                        
                         [self.touchLayer insertSubview:imageView atIndex:0];
-                        
                     });
                     
                     

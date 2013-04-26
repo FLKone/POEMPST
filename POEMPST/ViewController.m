@@ -494,6 +494,7 @@
                     CGFloat minScale = MIN(scaleWidth, scaleHeight);
                     
                     UIColor *backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background1.png"]];
+                    self.containerView.backgroundColor = backgroundColor;
                     self.scrollView.backgroundColor = backgroundColor;
                     
                     self.scrollView.minimumZoomScale = minScale;

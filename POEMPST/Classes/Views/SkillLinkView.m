@@ -262,7 +262,7 @@ CGFloat RadiansToDegrees(CGFloat radians)
     self.isActivated = YES;
     
     brushPattern=[UIColor colorWithRed:173/255.f green:151/255.f blue:107/255.f alpha:1.00];
-    myPath.lineWidth=4;
+    myPath.lineWidth=3;
     [self setNeedsDisplay];
 }
 

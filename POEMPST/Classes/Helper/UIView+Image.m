@@ -11,7 +11,7 @@
 
 -(UIImage *) capture
 {
-    UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 1);
+    UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0.0);
     [self.layer renderInContext:UIGraphicsGetCurrentContext()];
     
     UIImage * img = UIGraphicsGetImageFromCurrentImageContext();

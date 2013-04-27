@@ -165,16 +165,24 @@
         self.graph = [[PESGraph alloc] init];
         self.isFromURL = NO;
         
-        self.currentDextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 22, 21)];
-        self.currentIntelLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 22, 21)];
-        self.currentStrLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 22, 21)];
+        self.currentDextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+        self.currentIntelLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+        self.currentStrLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
         [self.currentDextLabel setBackgroundColor:[UIColor clearColor]];
         [self.currentIntelLabel setBackgroundColor:[UIColor clearColor]];
         [self.currentStrLabel setBackgroundColor:[UIColor clearColor]];
 
-        self.currentDextLabel.font = [UIFont fontWithName:@"Fontin-Regular" size:7.0];
-        self.currentIntelLabel.font = [UIFont fontWithName:@"Fontin-Regular" size:7.0];
-        self.currentStrLabel.font = [UIFont fontWithName:@"Fontin-Regular" size:7.0];
+        if (IS_RETINA) {
+            self.currentDextLabel.font = [UIFont fontWithName:@"Fontin-Regular" size:4.0f];
+            self.currentIntelLabel.font = [UIFont fontWithName:@"Fontin-Regular" size:4.0f];
+            self.currentStrLabel.font = [UIFont fontWithName:@"Fontin-Regular" size:4.0f];
+        }
+        else
+        {
+            self.currentDextLabel.font = [UIFont systemFontOfSize:7.0f];
+            self.currentIntelLabel.font = [UIFont systemFontOfSize:7.0f];
+            self.currentStrLabel.font = [UIFont systemFontOfSize:7.0f];           
+        }
 
         [self.currentDextLabel setTextAlignment:NSTextAlignmentCenter];
         [self.currentIntelLabel setTextAlignment:NSTextAlignmentCenter];
@@ -290,8 +298,10 @@
         for (j = 0; j < [snImages count]; j++) {
             UIImage *object = [snImages objectAtIndex:j];
             
+            CGFloat scale = 1.0;
+            if (IS_RETINA) scale = 2.0;
             
-            float icontype = 2.61f/Zoom/MiniScale;
+            float icontype = 2.61f/Zoom/MiniScale*scale;
             CGSize targetSize = CGSizeMake(object.size.width * icontype, object.size.height * icontype);
             
             UIGraphicsBeginImageContext(targetSize); // this will crop
@@ -439,7 +449,8 @@
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     
-    NSString *diskDataLayerBackgroundCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data/Layers/background.png"];
+    NSString *diskDataLayerBackgroundCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:
+                                                  [NSString stringWithFormat:@"Data/Layers/%f-background.png", MiniScale]];
     
     UIImage *layerBackgroundIMAGE;
     
@@ -517,17 +528,23 @@
             
         }
         
-        layerBackgroundIMAGE = [layerBackground capture];
-        [UIImagePNGRepresentation(layerBackgroundIMAGE) writeToFile:diskDataLayerBackgroundCachePath atomically:YES];
-        
-    }
-    else
-    {
-        layerBackgroundIMAGE = [UIImage imageWithContentsOfFile:diskDataLayerBackgroundCachePath];
+        UIImage *layerBackgroundIMAGEtmp = [layerBackground capture];
+        //[UIImageJPEGRepresentation(layerBackgroundIMAGEtmp, 0.9) writeToFile:diskDataLayerBackgroundCachePath atomically:YES];
+        [UIImagePNGRepresentation(layerBackgroundIMAGEtmp) writeToFile:diskDataLayerBackgroundCachePath atomically:YES];
+
+        layerBackgroundIMAGEtmp = nil;
+        layerBackground = nil;
     }
 
-    [self insertSubview:[[UIImageView alloc] initWithImage:layerBackgroundIMAGE] atIndex:10];
+    CGFloat scale = 1.0;
+    if (IS_RETINA) scale = 2.0;
     
+    layerBackgroundIMAGE = [[UIImage alloc] initWithCGImage:[[UIImage imageWithData:[NSData dataWithContentsOfFile:diskDataLayerBackgroundCachePath]] CGImage]
+                                                      scale:scale
+                                                orientation:UIImageOrientationUp];
+
+    [self insertSubview:[[UIImageView alloc] initWithImage:layerBackgroundIMAGE] atIndex:10];
+
     [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP5] userInfo:nil];
 
     [self drawLinksLayer];
@@ -540,7 +557,9 @@
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *diskDataLinksCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data/Layers/links.png"];
+    
+    NSString *diskDataLinksCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:
+                                                  [NSString stringWithFormat:@"Data/Layers/%f-links.png", MiniScale]];
     
     UIImage *layerLinksIMAGE;
 
@@ -548,16 +567,22 @@
         SkillLinksView *localskillLinksView = [[SkillLinksView alloc] initWithFrame:CGRectMake(0, 0, fullX/Zoom/MiniScale, fullY/Zoom/MiniScale) andLinks:skillLinks andSkills:skillNodes];
         [localskillLinksView load];
         
-        layerLinksIMAGE = [localskillLinksView capture];
-        [UIImagePNGRepresentation(layerLinksIMAGE) writeToFile:diskDataLinksCachePath atomically:YES];
+        UIImage *layerLinksIMAGEtmp = [localskillLinksView capture];
+        //[UIImageJPEGRepresentation(layerLinksIMAGEtmp, 0.9) writeToFile:diskDataLinksCachePath atomically:YES];
+        [UIImagePNGRepresentation(layerLinksIMAGEtmp) writeToFile:diskDataLinksCachePath atomically:YES];
+        
+        layerLinksIMAGEtmp = nil;
+        localskillLinksView = nil;
     }
-    else
-    {
-        layerLinksIMAGE = [UIImage imageWithContentsOfFile:diskDataLinksCachePath];
-    }
-     
-    [self insertSubview:[[UIImageView alloc] initWithImage:layerLinksIMAGE] atIndex:10];
     
+    CGFloat scale = 1.0;
+    if (IS_RETINA) scale = 2.0;
+    
+    layerLinksIMAGE = [[UIImage alloc] initWithCGImage:[[UIImage imageWithData:[NSData dataWithContentsOfFile:diskDataLinksCachePath]] CGImage]
+                                                      scale:scale
+                                                orientation:UIImageOrientationUp];
+    
+    [self insertSubview:[[UIImageView alloc] initWithImage:layerLinksIMAGE] atIndex:10];
     
     self.skillLinksView = [[SkillLinksView alloc] initWithFrame:CGRectMake(0, 0, fullX/Zoom/MiniScale, fullY/Zoom/MiniScale) andLinks:skillLinks andSkills:skillNodes];
     [self insertSubview:self.skillLinksView atIndex:10];
@@ -578,14 +603,18 @@
     
     UIImage *newImage;
     
-    NSString *diskDataLayerSkillsCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data/Layers/skills.png"];
-    
+    NSString *diskDataLayerSkillsCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:
+                                        [NSString stringWithFormat:@"Data/Layers/%f-skills.png", MiniScale]];
+        
     UIImage *layerSkillsIMAGE;
     
     if (![fileManager fileExistsAtPath:diskDataLayerSkillsCachePath])
     {
         UIView *layerSkills = [[UIView alloc] initWithFrame:CGRectMake(0, 0, fullX/Zoom/MiniScale, fullY/Zoom/MiniScale)];
         layerSkills.backgroundColor = [UIColor clearColor];
+        
+        CGFloat scale = 1.0;
+        if (IS_RETINA) scale = 2.0;
         
         for (NSString *key in self.skillNodes) {
             
@@ -598,7 +627,7 @@
                 
                 UIImage *faceImg = [((Asset *)[assets objectForKey:@"PSStartNodeBackgroundInactive"]) UIImage];
                 
-                CGSize targetSize = CGSizeMake(faceImg.size.width/MiniScale,  faceImg.size.height/MiniScale);
+                CGSize targetSize = CGSizeMake(faceImg.size.width/MiniScale*scale,  faceImg.size.height/MiniScale*scale);
                 
                 UIGraphicsBeginImageContext(targetSize); // this will crop
                 
@@ -611,7 +640,11 @@
                 
                 newImage = UIGraphicsGetImageFromCurrentImageContext();
                 
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:newImage];
+                UIImage *StartTmp = [[UIImage alloc] initWithCGImage:[newImage CGImage]
+                                                              scale:scale
+                                                        orientation:UIImageOrientationUp];
+                
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:StartTmp];
                 imageView.center = CGPointMake((sn.Position.x + fullX/2)/Zoom/MiniScale, (sn.Position.y + fullY/2)/Zoom/MiniScale);
                 [layerSkills addSubview:imageView];
                 
@@ -630,7 +663,7 @@
             {
                 
                 icontype = sn.isMastery ? 2.61f/Zoom/MiniScale : (sn.isKeystone ? 2.61f/Zoom/MiniScale : (sn.isNotable ? 2.61f/Zoom/MiniScale : 2.61f/Zoom/MiniScale));
-                
+                icontype = icontype * scale;
                 //icontype = 2.61f;
                 CGRect rect = CGRectFromString([[[[iconInactiveSkills.skillPositions objectForKey:[sn icon]] objectForKey:iconkey] allValues] objectAtIndex:0]);
                 
@@ -681,7 +714,11 @@
               
             }
            
-            UIImageView *imageView = [[UIImageView alloc] initWithImage:[[[spritesUnited objectForKey:spriteSheetName] objectForKey:[sn icon]] objectForKey:iconkey]];
+            UIImage *IconTmp = [[UIImage alloc] initWithCGImage:[[[[spritesUnited objectForKey:spriteSheetName] objectForKey:[sn icon]] objectForKey:iconkey] CGImage]
+                                                             scale:scale
+                                                       orientation:UIImageOrientationUp];
+            
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:IconTmp];
             imageView.center = CGPointMake((sn.Position.x + fullX/2)/Zoom/MiniScale, (sn.Position.y + fullY/2)/Zoom/MiniScale);
             
             [layerSkills addSubview:imageView];
@@ -703,19 +740,31 @@
             }
             
             if (sn.isNotable) {
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:[snImages objectAtIndex:3]];
+                UIImage *OverlayTmp = [[UIImage alloc] initWithCGImage:[[snImages objectAtIndex:3] CGImage]
+                                                                 scale:scale
+                                                           orientation:UIImageOrientationUp];
+                
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:OverlayTmp];
                 imageView.center = CGPointMake((sn.Position.x + fullX/2)/Zoom/MiniScale, (sn.Position.y + fullY/2)/Zoom/MiniScale);
                 imageView.tag = sn.id * SkillOverlayID;
                 [layerSkills addSubview:imageView];
             }
             else if (sn.isKeystone) {
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:[snImages objectAtIndex:2]];
+                UIImage *OverlayTmp = [[UIImage alloc] initWithCGImage:[[snImages objectAtIndex:2] CGImage]
+                                                                 scale:scale
+                                                           orientation:UIImageOrientationUp];
+                
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:OverlayTmp];
                 imageView.center = CGPointMake((sn.Position.x + fullX/2)/Zoom/MiniScale, (sn.Position.y + fullY/2)/Zoom/MiniScale);
                 imageView.tag = sn.id * SkillOverlayID;
                 [layerSkills addSubview:imageView];
             }
             else {
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:[snImages objectAtIndex:0]];
+                UIImage *OverlayTmp = [[UIImage alloc] initWithCGImage:[[snImages objectAtIndex:0] CGImage]
+                                                                 scale:scale
+                                                           orientation:UIImageOrientationUp];
+                
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:OverlayTmp];
                 imageView.center = CGPointMake((sn.Position.x + fullX/2)/Zoom/MiniScale, (sn.Position.y + fullY/2)/Zoom/MiniScale);
                 imageView.tag = sn.id * SkillOverlayID;
                 [layerSkills addSubview:imageView];
@@ -723,15 +772,20 @@
             
         }
         
-        layerSkillsIMAGE = [layerSkills capture];
-
-        [UIImagePNGRepresentation(layerSkillsIMAGE) writeToFile:diskDataLayerSkillsCachePath atomically:YES];
+        UIImage *layerSkillsIMAGEtmp = [layerSkills capture];
+        //[UIImageJPEGRepresentation(layerSkillsIMAGEtmp, 0.9) writeToFile:diskDataLayerSkillsCachePath atomically:YES];
+        [UIImagePNGRepresentation(layerSkillsIMAGEtmp) writeToFile:diskDataLayerSkillsCachePath atomically:YES];
         
+        layerSkillsIMAGEtmp = nil;
+        layerSkills = nil;
     }
-    else
-    {
-        layerSkillsIMAGE = [UIImage imageWithContentsOfFile:diskDataLayerSkillsCachePath];
-    }
+
+    CGFloat scale = 1.0;
+    if (IS_RETINA) scale = 2.0;
+    
+    layerSkillsIMAGE = [[UIImage alloc] initWithCGImage:[[UIImage imageWithData:[NSData dataWithContentsOfFile:diskDataLayerSkillsCachePath]] CGImage]
+                                                 scale:scale
+                                           orientation:UIImageOrientationUp];
     
     [self insertSubview:[[UIImageView alloc] initWithImage:layerSkillsIMAGE] atIndex:10];
     
@@ -741,6 +795,9 @@
 }
 
 -(void)drawTouchLayer {
+
+    CGFloat scale = 1.0;
+    if (IS_RETINA) scale = 2.0;
     
     self.touchLayer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, fullX/Zoom/MiniScale, fullY/Zoom/MiniScale)];
     
@@ -759,20 +816,17 @@
         NSString *iconkey = sn.isMastery ? @"mastery" : (sn.isKeystone ? @"keystoneActive" : (sn.isNotable ? @"notableActive" : @"normalActive"));
         CGRect rect = CGRectFromString([[[[iconActiveSkills.skillPositions objectForKey:[sn icon]] objectForKey:iconkey] allValues] objectAtIndex:0]);
         
-        float TouchLayerScale = 1;
-        TouchLayerScale = (rect.size.width > 35 ? TouchLayerScaleDown : TouchLayerScaleUp);
+        float icontype = sn.isMastery ? 0.90f/MiniScale : (sn.isKeystone ? 0.80f/MiniScale : (sn.isNotable ? 0.80f/MiniScale : 0.90f/MiniScale));
+        icontype = icontype * scale * (1 + 2 - scale);
         
-        rect.size.width = rect.size.width*TouchLayerScale;
-        rect.size.height = rect.size.height*TouchLayerScale;
+        rect.size.width = rect.size.width*icontype;
+        rect.size.height = rect.size.height*icontype;
         
         SkillTouchView *touchView = [[SkillTouchView alloc] initWithFrame:rect];
-        touchView.scaleTouch = TouchLayerScale;
+        touchView.scaleTouch = icontype;
         touchView.clipsToBounds = YES;
         touchView.center = CGPointMake((sn.Position.x + fullX/2)/Zoom/MiniScale, (sn.Position.y + fullY/2)/Zoom/MiniScale);
         touchView.tag = sn.id;
-        
-        //touchView.layer.borderColor = [UIColor redColor].CGColor;
-        //touchView.layer.borderWidth = 1.0f;
         
         if (!sn.isMastery) {
             UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseSkillButtonTapped:)];
@@ -799,6 +853,9 @@
     BOOL isFirstLoad = NO;
     NSLog(@"drawActiveLayer isFirstLoad %d", isFirstLoad);
 
+    CGFloat scale = 1.0;
+    if (IS_RETINA) scale = 2.0;
+    
     //ACTIVATE START NODE
     if ([self.touchLayer viewWithTag:ACTIVEFACEID]) {
         //
@@ -822,8 +879,7 @@
                     
                     faceImg = [((Asset *)[assets objectForKey:[arrayFaceNames objectAtIndex:[arrayCharName indexOfObject:sn.name]]]) UIImage];
                     
-                    
-                    CGSize targetSize = CGSizeMake(faceImg.size.width/MiniScale,  faceImg.size.height/MiniScale);
+                    CGSize targetSize = CGSizeMake(faceImg.size.width/MiniScale*scale,  faceImg.size.height/MiniScale*scale);
                     
                     UIGraphicsBeginImageContext(targetSize); // this will crop
                     
@@ -835,16 +891,31 @@
                     [faceImg drawInRect:newSize];
                     
                     newImage = UIGraphicsGetImageFromCurrentImageContext();
+
+                    UIImage *StartTmp = [[UIImage alloc] initWithCGImage:[newImage CGImage]
+                                                                   scale:scale
+                                                             orientation:UIImageOrientationUp];
                     
-                    UIImageView *imageView = [[UIImageView alloc] initWithImage:newImage];
+                    UIImageView *imageView = [[UIImageView alloc] initWithImage:StartTmp];
                     
                     imageView.center = CGPointMake((sn.Position.x + fullX/2)/Zoom/MiniScale, (sn.Position.y + fullY/2)/Zoom/MiniScale);
                     imageView.tag = ACTIVEFACEID;
                    // NSLog(@"frame %f %f", self.superview.bounds.size.width, self.superview.bounds.size.height);
                     
-                    CGRect intFrame = CGRectMake(imageView.center.x - 11         , imageView.center.y - 35   , 22, 21);
-                    CGRect dexFrame = CGRectMake(imageView.center.x - 11 + 22    , imageView.center.y + 1.5   , 22, 21);
-                    CGRect strFrame = CGRectMake(imageView.center.x - 11 - 21    , imageView.center.y + 1.5   , 22, 21);
+                    CGRect intFrame;
+                    CGRect dexFrame;
+                    CGRect strFrame;
+                    
+                    if (IS_RETINA) {
+                        intFrame = CGRectMake(imageView.center.x - 5         , imageView.center.y - 21.5   , 10, 10);
+                        dexFrame = CGRectMake(imageView.center.x - 5 + 15    , imageView.center.y + 3   , 10, 10);
+                        strFrame = CGRectMake(imageView.center.x - 5 - 14    , imageView.center.y + 3   , 10, 10);
+                    }
+                    else {
+                        intFrame = CGRectMake(imageView.center.x - 11         , imageView.center.y - 36   , 22, 21);
+                        dexFrame = CGRectMake(imageView.center.x - 11 + 22    , imageView.center.y + 0.5   , 22, 21);
+                        strFrame = CGRectMake(imageView.center.x - 11 - 21    , imageView.center.y + 0.5   , 22, 21);
+                    }
                     
                     self.currentDextLabel.frame     = dexFrame;
                     self.currentIntelLabel.frame    = intFrame;
@@ -1225,7 +1296,7 @@
         _skillPickerPopover.popoverBackgroundViewClass = [CustomPopoverBackgroundView class];
         _skillPickerPopover.passthroughViews = [NSArray arrayWithObjects:self, nil];
         _skillPickerPopover.delegate = self;
-        [_skillPickerPopover presentPopoverFromRect:CGRectMake((node.Position.x + fullX/2)/Zoom/MiniScale - 6, (node.Position.y + fullY/2)/Zoom/MiniScale - 6, 12, 12)
+        [_skillPickerPopover presentPopoverFromRect:CGRectMake((node.Position.x + fullX/2)/Zoom/MiniScale - 12, (node.Position.y + fullY/2)/Zoom/MiniScale - 12, 24, 24)
                                              inView:self.touchLayer
                            permittedArrowDirections:UIPopoverArrowDirectionAny
                                            animated:YES];

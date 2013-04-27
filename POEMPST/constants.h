@@ -9,6 +9,7 @@
 #define POEMPST_constants_h
 
 #define NSLog(__FORMAT__, ...) NSLog((@"%s [Line %d] " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+#define IS_RETINA ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] && ([UIScreen mainScreen].scale == 2.0))
 
 typedef enum {
 	kNormal,
@@ -20,12 +21,11 @@ typedef enum {
 #define SkillLinkID 1
 
 #define Zoom 2.61f
-#define MiniScale 2
-#define StrokeWidth 10
-#define TouchLayerScaleDown 0.85
-#define TouchLayerScaleUp   1.00
 
-#define MaxZoom 1.50f
+
+#define StrokeWidth 10
+
+
 
 #define BTNID           100000000
 #define MARAUDERBTNID   100000000
@@ -51,7 +51,10 @@ typedef enum {
 static float skillsPerOrbit[] = {1.0f   , 6.0f  , 12.0f     , 12.0f     , 12.0f};
 static float orbitRadii[] =     {0.0f   , 83.5f , 163.0f    , 336.0f    , 489.0f};
 
+extern float MiniScale;
+extern float MaxZoom;
 #endif
+
 
 #import "apikey.h"
 

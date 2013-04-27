@@ -887,7 +887,7 @@
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Settings"
                                                              delegate:self cancelButtonTitle:@"Hide"
                                                destructiveButtonTitle:@"Clear app's cache"
-                                                    otherButtonTitles:[NSString stringWithFormat:@"Version: %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]],
+                                                    otherButtonTitles:[NSString stringWithFormat:@"Version: %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]],
                                   nil,
                                   nil];
     actionSheet.tag = 2;

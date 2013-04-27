@@ -23,7 +23,7 @@
         self.linksHighIDs = [NSMutableArray array];
         //self.layer.borderColor = [UIColor greenColor].CGColor;
         //self.layer.borderWidth = 1;
-        self.layer.cornerRadius = 7;
+        //self.layer.cornerRadius = 7;
         //self.layer.masksToBounds = NO;
         //self.clipsToBounds = NO;
     }

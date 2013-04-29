@@ -947,9 +947,7 @@ int RoundUp(int n, int roundTo)
                         {
                             ((UIScrollView *)[self superview]).zoomScale = ((UIScrollView *)[self superview]).minimumZoomScale;
                         }
-                        
-                        ((UIScrollView *)[self superview]).zoomScale = ((UIScrollView *)[self superview]).minimumZoomScale;
-                        
+                                                
                         [self.touchLayer insertSubview:currentIntelLabel atIndex:0];
                         [self.touchLayer insertSubview:currentStrLabel atIndex:0];
                         [self.touchLayer insertSubview:currentDextLabel atIndex:0];

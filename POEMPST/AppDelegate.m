@@ -9,10 +9,30 @@
 
 #import "ViewController.h"
 
+float MiniScale;
+float MaxZoom;
+CGFloat scale;
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    if (IS_RETINA)
+    {
+        MiniScale = 3.00f;
+        MaxZoom = 2.50f;
+        scale = 2.0f;
+    }
+    else
+    {
+        MiniScale = 2.00f;
+        MaxZoom = 1.50f;
+        scale = 1.0f;
+    }
+    
+    NSLog(@"MiniScale %f", MiniScale);
+    NSLog(@"MiniScale %f", MaxZoom);
+    
     [Crittercism enableWithAppID:kCrittercismAPI];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

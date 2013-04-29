@@ -24,7 +24,7 @@
 @synthesize scrollView = _scrollView;
 @synthesize containerView = _containerView;
 
-@synthesize  loadFromURLBtn, urlField, skillPointsView, progressView, loadingView, activityView, loadingLabel, finalUrlField, activeClassImageView, currentDextLabel, currentStrLabel, currentIntelLabel;
+@synthesize  loadFromURLBtn, urlField, skillPointsView, progressView, loadingView, activityView, loadingLabel, finalUrlField, activeClassImageView, currentDextLabel, currentStrLabel, currentIntelLabel, treeView;
 
 -(void)errorLoading:(NSNotification *)notif {
     
@@ -179,6 +179,9 @@
         
         if (![_menuView isHidden]) {
             [_menuView setHidden:YES];
+            [self.treeView setHidden:NO];
+            [self.treeView setAlpha:1];
+
             [self.loadFromURLBtn setHidden:NO];
             [self.activityView setHidden:YES];
             self.progressView.progress = 0;
@@ -187,11 +190,7 @@
 }
 
 -(void)selectClass:(id)sender {
-
     [[NSNotificationCenter defaultCenter] postNotificationName:@"loadClass" object:sender userInfo:nil];
-    [_menuView setHidden:YES];
-    self.progressView.progress = 0;
-
 }
 
 -(IBAction)loadURL:(id) sender {
@@ -208,11 +207,26 @@
 }
 
 -(void)changeProgress:(NSNotification *)notif {
-    NSLog(@"Progress %f", [notif.object floatValue]);
+    
     dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"Progress %f", [notif.object floatValue]);
 
         self.progressView.progress = [notif.object floatValue];
+        
+        if ([notif.object intValue] == 1) {
+            [UIView beginAnimations:nil context:nil];
+            [UIView setAnimationDuration:0.70];
+            [UIView setAnimationDelay:0.0];
+            [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+
+            [self.loadingView setAlpha:0];
+            [self.treeView setAlpha:0];
+            
+            [UIView commitAnimations];
+            
+        }
     });
+
 }
 
 - (void)viewDidLoad
@@ -498,9 +512,9 @@
                     CGFloat minScale = MIN(scaleWidth, scaleHeight);
                     
                     UIColor *backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background1.png"]];
-                    self.containerView.backgroundColor = backgroundColor;
+                    //self.treeView.backgroundColor = backgroundColor;
+
                     self.scrollView.backgroundColor = backgroundColor;
-                    
                     self.scrollView.minimumZoomScale = minScale;
                     self.scrollView.maximumZoomScale = MaxZoom;//0.3835f;
                     self.scrollView.zoomScale = minScale;
@@ -509,34 +523,13 @@
                     
                     [self centerScrollViewContents];
                     
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP9] userInfo:nil];
+
+                    
                     NSLog(@"END in async MAIN");
-                    
-                    BOOL hide = YES;
-                    
-                    [UIView animateWithDuration:0.5
-                                          delay:0.0
-                                        options:UIViewAnimationOptionCurveEaseOut
-                                     animations:^
-                     {
-                         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-                         if (hide)
-                             self.loadingView.alpha=0;
-                         else
-                         {
-                             self.loadingView.hidden= NO;
-                             self.loadingView.alpha=1;
-                         }
-                     }
-                                     completion:^(BOOL b)
-                     {
-                         if (hide)
-                             self.loadingView.hidden= YES;
-                     }
-                     ];
-                    
+
                 });
-                
-                
+
             });
             
             
@@ -832,6 +825,7 @@
             }
             
             [_menuView setHidden:NO];
+            [self.treeView setHidden:YES];
         }
 
     }
@@ -887,7 +881,7 @@
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Settings"
                                                              delegate:self cancelButtonTitle:@"Hide"
                                                destructiveButtonTitle:@"Clear app's cache"
-                                                    otherButtonTitles:[NSString stringWithFormat:@"Version: %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]],
+                                                    otherButtonTitles:[NSString stringWithFormat:@"Version: %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]],
                                   nil,
                                   nil];
     actionSheet.tag = 2;

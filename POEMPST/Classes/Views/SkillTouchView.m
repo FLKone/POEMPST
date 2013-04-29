@@ -23,13 +23,12 @@
         self.linksHighIDs = [NSMutableArray array];
         //self.layer.borderColor = [UIColor greenColor].CGColor;
         //self.layer.borderWidth = 1;
-        self.layer.cornerRadius = 12;
-        self.layer.masksToBounds = NO;
-        self.clipsToBounds = NO;
+        //self.layer.cornerRadius = 7;
+        //self.layer.masksToBounds = NO;
+        //self.clipsToBounds = NO;
     }
     return self;
 }
-
 
 - (BOOL)isActivable {
     return YES;
@@ -63,7 +62,6 @@
             NSString *spriteSheetName = [[[[localTreeView.iconActiveSkills.skillPositions objectForKey:[sn icon]] objectForKey:iconkey] allKeys] objectAtIndex:0];
             CGRect rect = CGRectFromString([[[[localTreeView.iconActiveSkills.skillPositions objectForKey:[sn icon]] objectForKey:iconkey] allValues] objectAtIndex:0]);
 
-
             if ([localTreeView.spritesUnitedActive objectForKey:spriteSheetName] && [[localTreeView.spritesUnitedActive objectForKey:spriteSheetName] objectForKey:[sn icon]] && [[[localTreeView.spritesUnitedActive objectForKey:spriteSheetName] objectForKey:[sn icon]] objectForKey:iconkey]) {
 
             }
@@ -71,7 +69,8 @@
             {
 
                 float icontype = sn.isMastery ? 2.61f/Zoom/MiniScale : (sn.isKeystone ? 2.61f/Zoom/MiniScale : (sn.isNotable ? 2.61f/Zoom/MiniScale : 2.61f/Zoom/MiniScale));
-
+                icontype = icontype * scale;
+                
                 UIImage *sprite = [localTreeView.iconActiveSkills.images objectForKey:spriteSheetName];
 
                 CGImageRef cgIcon = CGImageCreateWithImageInRect(sprite.CGImage, rect);
@@ -110,31 +109,50 @@
                 }
 
             }
+
+            UIImage *IconTmp = [[UIImage alloc] initWithCGImage:[[[[localTreeView.spritesUnitedActive objectForKey:spriteSheetName] objectForKey:[sn icon]] objectForKey:iconkey] CGImage]
+                                                             scale:scale
+                                                       orientation:UIImageOrientationUp];
             
-            UIImageView *imageView = [[UIImageView alloc] initWithImage:[[[localTreeView.spritesUnitedActive objectForKey:spriteSheetName] objectForKey:[sn icon]] objectForKey:iconkey]];
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:IconTmp];
             imageView.clipsToBounds = NO;
             imageView.center = CGPointMake(rect.size.width*self.scaleTouch/2, rect.size.height*self.scaleTouch/2);
             self.skillImage = imageView;
             [self addSubview:self.skillImage];
             //- SKILL SPRITE
-            
+
             // SKILL OVERLAY
+
+            
             if (sn.isNotable) {
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:[localTreeView.snImages objectAtIndex:5]];
+                UIImage *OverlayTmp = [[UIImage alloc] initWithCGImage:[[localTreeView.snImages objectAtIndex:5] CGImage]
+                                                                 scale:scale
+                                                           orientation:UIImageOrientationUp];
+                
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:OverlayTmp];
                 imageView.clipsToBounds = NO;                
                 imageView.center = CGPointMake(rect.size.width*self.scaleTouch/2, rect.size.height*self.scaleTouch/2);
                 self.overlayImage = imageView;
                 [self addSubview:self.overlayImage];
             }
             else if (sn.isKeystone) {
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:[localTreeView.snImages objectAtIndex:4]];
+                UIImage *OverlayTmp = [[UIImage alloc] initWithCGImage:[[localTreeView.snImages objectAtIndex:4] CGImage]
+                                                                 scale:scale
+                                                           orientation:UIImageOrientationUp];
+                
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:OverlayTmp];
                 imageView.clipsToBounds = NO;
                 imageView.center = CGPointMake(rect.size.width*self.scaleTouch/2, rect.size.height*self.scaleTouch/2);
                 self.overlayImage = imageView;
                 [self addSubview:self.overlayImage];
             }
             else {
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:[localTreeView.snImages objectAtIndex:1]];
+                UIImage *OverlayTmp = [[UIImage alloc] initWithCGImage:[[localTreeView.snImages objectAtIndex:1] CGImage]
+                                                                  scale:scale
+                                                            orientation:UIImageOrientationUp];
+                
+                
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:OverlayTmp];
                 imageView.clipsToBounds = NO;
                 imageView.center = CGPointMake(rect.size.width*self.scaleTouch/2, rect.size.height*self.scaleTouch/2);
                 self.overlayImage = imageView;

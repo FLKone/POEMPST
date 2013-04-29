@@ -18,8 +18,9 @@
 		CA2FF91E170FCD3E003DA79B /* UIView+Image.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2FF91D170FCD3E003DA79B /* UIView+Image.m */; };
 		CA2FF921170FE7F3003DA79B /* SkillLinksView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2FF920170FE7F3003DA79B /* SkillLinksView.m */; };
 		CA2FF924170FF347003DA79B /* SkillLinkView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2FF923170FF347003DA79B /* SkillLinkView.m */; };
-		CA2FF9281713C944003DA79B /* Background1.png in Resources */ = {isa = PBXBuildFile; fileRef = CA2FF9271713C944003DA79B /* Background1.png */; };
+		CA2FF9281713C944003DA79B /* Background1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA2FF9271713C944003DA79B /* Background1@2x.png */; };
 		CA3B5056171AF70600C29D4C /* charactersheet.png in Resources */ = {isa = PBXBuildFile; fileRef = CA3B5055171AF70600C29D4C /* charactersheet.png */; };
+		CA3D2533172D8A2B00001AE1 /* Background1.png in Resources */ = {isa = PBXBuildFile; fileRef = CA3D2532172D8A2B00001AE1 /* Background1.png */; };
 		CA41BE9D170FB7A500C0E1D2 /* SkillTreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA41BE9C170FB7A500C0E1D2 /* SkillTreeView.m */; };
 		CA6DA26F171A794C00483E5E /* SkillSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA6DA26D171A794C00483E5E /* SkillSelectionViewController.m */; };
 		CA6DA270171A794C00483E5E /* SkillSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA6DA26E171A794C00483E5E /* SkillSelectionViewController.xib */; };
@@ -109,8 +110,9 @@
 		CA2FF920170FE7F3003DA79B /* SkillLinksView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SkillLinksView.m; path = Classes/Views/SkillLinksView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CA2FF922170FF347003DA79B /* SkillLinkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SkillLinkView.h; path = Classes/Views/SkillLinkView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CA2FF923170FF347003DA79B /* SkillLinkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SkillLinkView.m; path = Classes/Views/SkillLinkView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		CA2FF9271713C944003DA79B /* Background1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background1.png; sourceTree = "<group>"; };
+		CA2FF9271713C944003DA79B /* Background1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Background1@2x.png"; sourceTree = "<group>"; };
 		CA3B5055171AF70600C29D4C /* charactersheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = charactersheet.png; sourceTree = "<group>"; };
+		CA3D2532172D8A2B00001AE1 /* Background1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background1.png; sourceTree = "<group>"; };
 		CA41BE9B170FB7A500C0E1D2 /* SkillTreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SkillTreeView.h; path = Classes/Views/SkillTreeView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CA41BE9C170FB7A500C0E1D2 /* SkillTreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SkillTreeView.m; path = Classes/Views/SkillTreeView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CA6DA26C171A794C00483E5E /* SkillSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SkillSelectionViewController.h; path = Classes/Controllers/SkillSelectionViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -355,7 +357,8 @@
 		CAA1EEF51707EAD6002BF206 /* Test Files */ = {
 			isa = PBXGroup;
 			children = (
-				CA2FF9271713C944003DA79B /* Background1.png */,
+				CA3D2532172D8A2B00001AE1 /* Background1.png */,
+				CA2FF9271713C944003DA79B /* Background1@2x.png */,
 			);
 			name = "Test Files";
 			sourceTree = "<group>";
@@ -606,7 +609,7 @@
 				CAA1EEE61707E5AF002BF206 /* Default-568h@2x.png in Resources */,
 				CAA1EF2B1707F81D002BF206 /* ViewController_iPad.xib in Resources */,
 				CAA1EF2C1707F81D002BF206 /* ViewController_iPhone.xib in Resources */,
-				CA2FF9281713C944003DA79B /* Background1.png in Resources */,
+				CA2FF9281713C944003DA79B /* Background1@2x.png in Resources */,
 				CAF636E51718398500D91EB4 /* duelist-large.png in Resources */,
 				CAF636E61718398500D91EB4 /* Fontin-Bold.ttf in Resources */,
 				CAF636E71718398500D91EB4 /* Fontin-Italic.ttf in Resources */,
@@ -637,6 +640,7 @@
 				CA3B5056171AF70600C29D4C /* charactersheet.png in Resources */,
 				CAB101A5171F1BB20047268F /* 19-gear.png in Resources */,
 				CAB101A6171F1BB20047268F /* 19-gear@2x.png in Resources */,
+				CA3D2533172D8A2B00001AE1 /* Background1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

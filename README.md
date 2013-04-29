@@ -33,7 +33,7 @@ Roadmap
 </tr>
 <tr>
     <td>
-    <a href="https://github.com/FLKone/POEMPST/issues?milestone=5&state=open">0.2.3</a>
+    <a href="https://github.com/FLKone/POEMPST/issues?milestone=5&state=open">0.2.5</a>
     </td>
     <td>
     	Bug Fixes ~ UI Enhancements

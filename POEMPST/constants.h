@@ -45,15 +45,19 @@ typedef enum {
 #define LOADSTEP4       0.45f   //endparsing assets
 #define LOADSTEP5       0.60f   //after drawBG
 #define LOADSTEP6       0.75f   //after skill
-#define LOADSTEP7       0.90f   //after links
-#define LOADSTEP8       1.00f    //after touch
+#define LOADSTEP7       0.85f   //after links
+#define LOADSTEP8       0.90f    //after touch
+#define LOADSTEP9       1.00f    //after touch
 
 static float skillsPerOrbit[] = {1.0f   , 6.0f  , 12.0f     , 12.0f     , 12.0f};
 static float orbitRadii[] =     {0.0f   , 83.5f , 163.0f    , 336.0f    , 489.0f};
 
 extern float MiniScale;
 extern float MaxZoom;
+extern CGFloat scale;
+
 #endif
+
 
 
 #import "apikey.h"

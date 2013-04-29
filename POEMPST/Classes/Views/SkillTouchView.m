@@ -62,10 +62,6 @@
             NSString *spriteSheetName = [[[[localTreeView.iconActiveSkills.skillPositions objectForKey:[sn icon]] objectForKey:iconkey] allKeys] objectAtIndex:0];
             CGRect rect = CGRectFromString([[[[localTreeView.iconActiveSkills.skillPositions objectForKey:[sn icon]] objectForKey:iconkey] allValues] objectAtIndex:0]);
 
-            
-            CGFloat scale = 1.0;
-            if (IS_RETINA) scale = 2.0;
-
             if ([localTreeView.spritesUnitedActive objectForKey:spriteSheetName] && [[localTreeView.spritesUnitedActive objectForKey:spriteSheetName] objectForKey:[sn icon]] && [[[localTreeView.spritesUnitedActive objectForKey:spriteSheetName] objectForKey:[sn icon]] objectForKey:iconkey]) {
 
             }

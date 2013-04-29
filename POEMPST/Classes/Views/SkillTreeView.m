@@ -172,7 +172,7 @@
         [self.currentIntelLabel setBackgroundColor:[UIColor clearColor]];
         [self.currentStrLabel setBackgroundColor:[UIColor clearColor]];
 
-        if (IS_RETINA) {
+        if (scale == 2.0f) {
             self.currentDextLabel.font = [UIFont fontWithName:@"Fontin-Regular" size:4.0f];
             self.currentIntelLabel.font = [UIFont fontWithName:@"Fontin-Regular" size:4.0f];
             self.currentStrLabel.font = [UIFont fontWithName:@"Fontin-Regular" size:4.0f];
@@ -297,9 +297,6 @@
         int j;
         for (j = 0; j < [snImages count]; j++) {
             UIImage *object = [snImages objectAtIndex:j];
-            
-            CGFloat scale = 1.0;
-            if (IS_RETINA) scale = 2.0;
             
             float icontype = 2.61f/Zoom/MiniScale*scale;
             CGSize targetSize = CGSizeMake(object.size.width * icontype, object.size.height * icontype);
@@ -444,21 +441,37 @@
     return self;
 }
 
+int RoundUp(int n, int roundTo)
+{
+    // fails on negative?  What does that mean?
+    if (roundTo == 0) return 0;
+    return ((n + roundTo - 1) / roundTo) * roundTo; // edit - fixed error
+}
+
 -(void)drawBackgroundLayer {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     
     NSString *diskDataLayerBackgroundCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:
-                                                  [NSString stringWithFormat:@"Data/Layers/%f-background.png", MiniScale]];
+                                                  [NSString stringWithFormat:@"Data/Layers/%f-background.jpg", MiniScale]];
     
     UIImage *layerBackgroundIMAGE;
     
     if (![fileManager fileExistsAtPath:diskDataLayerBackgroundCachePath])
     {
-
-        UIView *layerBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 0, fullX/Zoom/MiniScale, fullY/Zoom/MiniScale)];
-        layerBackground.backgroundColor = [UIColor clearColor];
+        UIView *layerBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 0, RoundUp(fullX/Zoom/MiniScale , 2), RoundUp(fullY/Zoom/MiniScale, 2))];
+        
+        UIImage *bgImg = [[UIImage alloc] initWithCGImage:[[UIImage imageNamed:@"Background1"] CGImage]
+                                                          scale:scale
+                                                    orientation:UIImageOrientationUp];
+        
+        
+        UIColor *backgroundColor = [[UIColor alloc] initWithPatternImage:bgImg];
+        
+        //NSLog(@"size %@", NSStringFromCGSize([UIImage imageNamed:@"Background1@2x.png"].size));
+        
+        layerBackground.backgroundColor = backgroundColor;
         
         NSMutableArray *ngImages = [NSMutableArray arrayWithObjects:  [((Asset *)[assets objectForKey:@"PSGroupBackground1"]) UIImage],
                                     [((Asset *)[assets objectForKey:@"PSGroupBackground2"]) UIImage],
@@ -480,7 +493,7 @@
         for (i = 0; i < [ngImages count]; i++) {
             UIImage *object = [ngImages objectAtIndex:i];
             
-            CGSize targetSize = CGSizeMake(object.size.width/MiniScale, object.size.height/MiniScale); //2.65;
+            CGSize targetSize = CGSizeMake(object.size.width/MiniScale*scale, object.size.height/MiniScale*scale); //2.65;
             
             UIGraphicsBeginImageContext(targetSize); // this will crop
             
@@ -496,7 +509,11 @@
             //pop the context to get back to the default
             UIGraphicsEndImageContext();
             
-            [ngImages replaceObjectAtIndex:i withObject:newImage];
+            UIImage *tmpImg = [[UIImage alloc] initWithCGImage:[newImage CGImage]
+                                                        scale:scale
+                                                  orientation:UIImageOrientationUp];
+            
+            [ngImages replaceObjectAtIndex:i withObject:tmpImg];
             
             
         }
@@ -529,21 +546,25 @@
         }
         
         UIImage *layerBackgroundIMAGEtmp = [layerBackground capture];
-        //[UIImageJPEGRepresentation(layerBackgroundIMAGEtmp, 0.9) writeToFile:diskDataLayerBackgroundCachePath atomically:YES];
-        [UIImagePNGRepresentation(layerBackgroundIMAGEtmp) writeToFile:diskDataLayerBackgroundCachePath atomically:YES];
+        [UIImageJPEGRepresentation(layerBackgroundIMAGEtmp, 0.8) writeToFile:diskDataLayerBackgroundCachePath atomically:YES];
+        //[UIImagePNGRepresentation(layerBackgroundIMAGEtmp) writeToFile:diskDataLayerBackgroundCachePath atomically:YES];
 
         layerBackgroundIMAGEtmp = nil;
         layerBackground = nil;
     }
-
-    CGFloat scale = 1.0;
-    if (IS_RETINA) scale = 2.0;
     
     layerBackgroundIMAGE = [[UIImage alloc] initWithCGImage:[[UIImage imageWithData:[NSData dataWithContentsOfFile:diskDataLayerBackgroundCachePath]] CGImage]
                                                       scale:scale
                                                 orientation:UIImageOrientationUp];
 
+    NSDictionary *attributes = [[NSFileManager defaultManager]
+                                attributesOfItemAtPath:diskDataLayerBackgroundCachePath error:NULL];
+
+    NSLog(@"size %@ filesize %dko", NSStringFromCGSize(layerBackgroundIMAGE.size), [[attributes objectForKey:NSFileSize] intValue]/1000);
+
+
     [self insertSubview:[[UIImageView alloc] initWithImage:layerBackgroundIMAGE] atIndex:10];
+
 
     [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP5] userInfo:nil];
 
@@ -564,7 +585,7 @@
     UIImage *layerLinksIMAGE;
 
     if (![fileManager fileExistsAtPath:diskDataLinksCachePath]) {
-        SkillLinksView *localskillLinksView = [[SkillLinksView alloc] initWithFrame:CGRectMake(0, 0, fullX/Zoom/MiniScale, fullY/Zoom/MiniScale) andLinks:skillLinks andSkills:skillNodes];
+        SkillLinksView *localskillLinksView = [[SkillLinksView alloc] initWithFrame:CGRectMake(0, 0, RoundUp(fullX/Zoom/MiniScale , 2), RoundUp(fullY/Zoom/MiniScale, 2)) andLinks:skillLinks andSkills:skillNodes];
         [localskillLinksView load];
         
         UIImage *layerLinksIMAGEtmp = [localskillLinksView capture];
@@ -575,16 +596,13 @@
         localskillLinksView = nil;
     }
     
-    CGFloat scale = 1.0;
-    if (IS_RETINA) scale = 2.0;
-    
     layerLinksIMAGE = [[UIImage alloc] initWithCGImage:[[UIImage imageWithData:[NSData dataWithContentsOfFile:diskDataLinksCachePath]] CGImage]
                                                       scale:scale
                                                 orientation:UIImageOrientationUp];
     
     [self insertSubview:[[UIImageView alloc] initWithImage:layerLinksIMAGE] atIndex:10];
     
-    self.skillLinksView = [[SkillLinksView alloc] initWithFrame:CGRectMake(0, 0, fullX/Zoom/MiniScale, fullY/Zoom/MiniScale) andLinks:skillLinks andSkills:skillNodes];
+    self.skillLinksView = [[SkillLinksView alloc] initWithFrame:CGRectMake(0, 0, RoundUp(fullX/Zoom/MiniScale , 2), RoundUp(fullY/Zoom/MiniScale, 2)) andLinks:skillLinks andSkills:skillNodes];
     [self insertSubview:self.skillLinksView atIndex:10];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP6] userInfo:nil];
@@ -610,11 +628,8 @@
     
     if (![fileManager fileExistsAtPath:diskDataLayerSkillsCachePath])
     {
-        UIView *layerSkills = [[UIView alloc] initWithFrame:CGRectMake(0, 0, fullX/Zoom/MiniScale, fullY/Zoom/MiniScale)];
+        UIView *layerSkills = [[UIView alloc] initWithFrame:CGRectMake(0, 0, RoundUp(fullX/Zoom/MiniScale , 2), RoundUp(fullY/Zoom/MiniScale, 2))];
         layerSkills.backgroundColor = [UIColor clearColor];
-        
-        CGFloat scale = 1.0;
-        if (IS_RETINA) scale = 2.0;
         
         for (NSString *key in self.skillNodes) {
             
@@ -664,6 +679,7 @@
                 
                 icontype = sn.isMastery ? 2.61f/Zoom/MiniScale : (sn.isKeystone ? 2.61f/Zoom/MiniScale : (sn.isNotable ? 2.61f/Zoom/MiniScale : 2.61f/Zoom/MiniScale));
                 icontype = icontype * scale;
+                //NSLog(@"%f", icontype);
                 //icontype = 2.61f;
                 CGRect rect = CGRectFromString([[[[iconInactiveSkills.skillPositions objectForKey:[sn icon]] objectForKey:iconkey] allValues] objectAtIndex:0]);
                 
@@ -779,13 +795,16 @@
         layerSkillsIMAGEtmp = nil;
         layerSkills = nil;
     }
-
-    CGFloat scale = 1.0;
-    if (IS_RETINA) scale = 2.0;
     
     layerSkillsIMAGE = [[UIImage alloc] initWithCGImage:[[UIImage imageWithData:[NSData dataWithContentsOfFile:diskDataLayerSkillsCachePath]] CGImage]
                                                  scale:scale
                                            orientation:UIImageOrientationUp];
+
+    
+    NSDictionary *attributes = [[NSFileManager defaultManager]
+                                attributesOfItemAtPath:diskDataLayerSkillsCachePath error:NULL];
+    
+    NSLog(@"size skills %@ filesize %dko", NSStringFromCGSize(layerSkillsIMAGE.size), [[attributes objectForKey:NSFileSize] intValue]/1000);
     
     [self insertSubview:[[UIImageView alloc] initWithImage:layerSkillsIMAGE] atIndex:10];
     
@@ -795,11 +814,8 @@
 }
 
 -(void)drawTouchLayer {
-
-    CGFloat scale = 1.0;
-    if (IS_RETINA) scale = 2.0;
     
-    self.touchLayer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, fullX/Zoom/MiniScale, fullY/Zoom/MiniScale)];
+    self.touchLayer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, RoundUp(fullX/Zoom/MiniScale , 2), RoundUp(fullY/Zoom/MiniScale, 2))];
     
     for (NSNumber *skillID in self.skillNodes) {
         
@@ -852,9 +868,6 @@
 -(void)drawActiveLayer:(NSArray *)forLinks {
     BOOL isFirstLoad = NO;
     NSLog(@"drawActiveLayer isFirstLoad %d", isFirstLoad);
-
-    CGFloat scale = 1.0;
-    if (IS_RETINA) scale = 2.0;
     
     //ACTIVATE START NODE
     if ([self.touchLayer viewWithTag:ACTIVEFACEID]) {
@@ -906,7 +919,7 @@
                     CGRect dexFrame;
                     CGRect strFrame;
                     
-                    if (IS_RETINA) {
+                    if (scale == 2.0f) {
                         intFrame = CGRectMake(imageView.center.x - 5         , imageView.center.y - 21.5   , 10, 10);
                         dexFrame = CGRectMake(imageView.center.x - 5 + 15    , imageView.center.y + 3   , 10, 10);
                         strFrame = CGRectMake(imageView.center.x - 5 - 14    , imageView.center.y + 3   , 10, 10);
@@ -934,6 +947,8 @@
                         {
                             ((UIScrollView *)[self superview]).zoomScale = ((UIScrollView *)[self superview]).minimumZoomScale;
                         }
+                        
+                        ((UIScrollView *)[self superview]).zoomScale = ((UIScrollView *)[self superview]).minimumZoomScale;
                         
                         [self.touchLayer insertSubview:currentIntelLabel atIndex:0];
                         [self.touchLayer insertSubview:currentStrLabel atIndex:0];

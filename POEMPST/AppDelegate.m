@@ -11,6 +11,7 @@
 
 float MiniScale;
 float MaxZoom;
+CGFloat scale;
 
 @implementation AppDelegate
 
@@ -20,12 +21,13 @@ float MaxZoom;
     {
         MiniScale = 3.00f;
         MaxZoom = 2.50f;
+        scale = 2.0f;
     }
     else
     {
         MiniScale = 2.00f;
         MaxZoom = 1.50f;
-        
+        scale = 1.0f;
     }
     
     NSLog(@"MiniScale %f", MiniScale);

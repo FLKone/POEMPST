@@ -123,9 +123,6 @@ float ceilfabs(float dec)
 
                 
                 if (startPoint.y > okP.y) {
-                    self.layer.borderColor = [UIColor brownColor].CGColor;
-                    self.layer.borderWidth = 1.0f;
-                    
                     offsetH += StrokeWidth/2/2;
 
                     r.size.height += offsetH;
@@ -133,11 +130,6 @@ float ceilfabs(float dec)
                 else if (startPoint.y == okP.y)
                 {
                     if (clockwise) {
-                        //NSLog(@"cw");
-                        
-                        self.layer.borderColor = [UIColor blueColor].CGColor;
-                        self.layer.borderWidth = 1.0f;
-                        
                         okP.y += offsetH;
                         r.origin.y -= offsetH;
                         r.size.height += offsetH;
@@ -145,19 +137,11 @@ float ceilfabs(float dec)
                     }
                     else
                     {
-                        self.layer.borderColor = [UIColor greenColor].CGColor;
-                        self.layer.borderWidth = 1.0f;
-                        
-                        
-                       // NSLog(@"!cw");
                         r.size.height += (offsetH + 5);
                     }
                 }
                 else
                 {
-                    self.layer.borderColor = [UIColor redColor].CGColor;
-                    self.layer.borderWidth = 1.0f;
-                    
                     offsetH += StrokeWidth/2;
                     
                     okP.y += offsetH;
@@ -173,9 +157,6 @@ float ceilfabs(float dec)
                 float offsetW = tmpSize.width - r.size.width + StrokeWidth/2;
                 
                 if (startPoint.x > okP.x) {
-                    
-                    self.layer.borderColor = [UIColor whiteColor].CGColor;
-                    self.layer.borderWidth = 1.0f;
                     offsetW += StrokeWidth/2;
                     r.size.width += offsetW;
                 }
@@ -186,8 +167,6 @@ float ceilfabs(float dec)
                 }
                 else
                 {
-                    self.layer.borderColor = [UIColor greenColor].CGColor;
-                    self.layer.borderWidth = 1.0f;
                     
                     offsetW += StrokeWidth/2;
                     
@@ -201,8 +180,7 @@ float ceilfabs(float dec)
             }
             else
             {
-                self.layer.borderColor = [UIColor yellowColor].CGColor;
-                self.layer.borderWidth = 1.0f;
+
                 
             }
 

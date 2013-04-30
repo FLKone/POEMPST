@@ -521,10 +521,9 @@
         [UIImagePNGRepresentation(layerBackgroundIMAGE) writeToFile:diskDataLayerBackgroundCachePath atomically:YES];
         
     }
-    else
-    {
-        layerBackgroundIMAGE = [UIImage imageWithContentsOfFile:diskDataLayerBackgroundCachePath];
-    }
+
+    layerBackgroundIMAGE = [UIImage imageWithContentsOfFile:diskDataLayerBackgroundCachePath];
+
 
     [self insertSubview:[[UIImageView alloc] initWithImage:layerBackgroundIMAGE] atIndex:10];
     
@@ -551,10 +550,9 @@
         layerLinksIMAGE = [localskillLinksView capture];
         [UIImagePNGRepresentation(layerLinksIMAGE) writeToFile:diskDataLinksCachePath atomically:YES];
     }
-    else
-    {
-        layerLinksIMAGE = [UIImage imageWithContentsOfFile:diskDataLinksCachePath];
-    }
+
+    layerLinksIMAGE = [UIImage imageWithContentsOfFile:diskDataLinksCachePath];
+
      
     [self insertSubview:[[UIImageView alloc] initWithImage:layerLinksIMAGE] atIndex:10];
     
@@ -728,10 +726,8 @@
         [UIImagePNGRepresentation(layerSkillsIMAGE) writeToFile:diskDataLayerSkillsCachePath atomically:YES];
         
     }
-    else
-    {
-        layerSkillsIMAGE = [UIImage imageWithContentsOfFile:diskDataLayerSkillsCachePath];
-    }
+
+    layerSkillsIMAGE = [UIImage imageWithContentsOfFile:diskDataLayerSkillsCachePath];
     
     [self insertSubview:[[UIImageView alloc] initWithImage:layerSkillsIMAGE] atIndex:10];
     

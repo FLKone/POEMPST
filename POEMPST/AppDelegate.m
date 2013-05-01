@@ -13,7 +13,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+#ifdef DEBUG
+    //NSLog(@"DEBUG");
+#else
     [Crittercism enableWithAppID:kCrittercismAPI];
+    //NSLog(@"NOT DEBUG");
+#endif
+    
+
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.

@@ -37,6 +37,7 @@
 @property (strong, nonatomic) NSDictionary *dicoNodeBackgroundsActive;
 @property (strong, nonatomic) NSMutableArray *snImages;
 @property (strong, nonatomic) NSMutableDictionary *spritesUnitedActive; //cached active images
+@property (strong, nonatomic) NSMutableDictionary *spritesUnitedInactive; //cached inactive images
 @property (strong, nonatomic) NSArray *arrayFaceNames;
 @property (strong, nonatomic) PESGraph *graph;
 
@@ -44,6 +45,7 @@
 @property float fullY;
 @property BOOL isFromURL;
 
+-(void)unload;
 - (id)initWithFrame:(CGRect)frame andJSON:(NSDictionary *)json;
 
 - (void)addActiveSkill:(NSNumber *)skillID;

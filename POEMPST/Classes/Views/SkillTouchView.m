@@ -23,7 +23,7 @@
         self.linksHighIDs = [NSMutableArray array];
         //self.layer.borderColor = [UIColor greenColor].CGColor;
         //self.layer.borderWidth = 1;
-        self.layer.cornerRadius = 12;
+        //self.layer.cornerRadius = 12;
         self.layer.masksToBounds = NO;
         self.clipsToBounds = NO;
     }
@@ -72,6 +72,7 @@
 
                 float icontype = sn.isMastery ? 2.61f/Zoom/MiniScale : (sn.isKeystone ? 2.61f/Zoom/MiniScale : (sn.isNotable ? 2.61f/Zoom/MiniScale : 2.61f/Zoom/MiniScale));
 
+                icontype = icontype*2;
                 UIImage *sprite = [localTreeView.iconActiveSkills.images objectForKey:spriteSheetName];
 
                 CGImageRef cgIcon = CGImageCreateWithImageInRect(sprite.CGImage, rect);
@@ -111,7 +112,14 @@
 
             }
             
-            UIImageView *imageView = [[UIImageView alloc] initWithImage:[[[localTreeView.spritesUnitedActive objectForKey:spriteSheetName] objectForKey:[sn icon]] objectForKey:iconkey]];
+            UIImage *OverlayTmp = [[UIImage alloc] initWithCGImage:[[[[localTreeView.spritesUnitedActive objectForKey:spriteSheetName] objectForKey:[sn icon]] objectForKey:iconkey] CGImage]
+                                                             scale:2
+                                                       orientation:UIImageOrientationUp];
+            
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:OverlayTmp];
+            
+            
+            //UIImageView *imageView = [[UIImageView alloc] initWithImage:[[[localTreeView.spritesUnitedActive objectForKey:spriteSheetName] objectForKey:[sn icon]] objectForKey:iconkey]];
             imageView.clipsToBounds = NO;
             imageView.center = CGPointMake(rect.size.width*self.scaleTouch/2, rect.size.height*self.scaleTouch/2);
             self.skillImage = imageView;
@@ -119,6 +127,47 @@
             //- SKILL SPRITE
             
             // SKILL OVERLAY
+            if (sn.isNotable) {
+                UIImage *OverlayTmp = [[UIImage alloc] initWithCGImage:[[localTreeView.snImages objectAtIndex:5] CGImage]
+                                                                 scale:2
+                                                           orientation:UIImageOrientationUp];
+                
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:OverlayTmp];
+                
+                //UIImageView *imageView = [[UIImageView alloc] initWithImage:[snImages objectAtIndex:3]];
+                imageView.center = CGPointMake(rect.size.width*self.scaleTouch/2, rect.size.height*self.scaleTouch/2);
+                imageView.tag = sn.id * SkillOverlayID;
+                self.overlayImage = imageView;
+                [self addSubview:self.overlayImage];
+            }
+            else if (sn.isKeystone) {
+                UIImage *OverlayTmp = [[UIImage alloc] initWithCGImage:[[localTreeView.snImages objectAtIndex:4] CGImage]
+                                                                 scale:2
+                                                           orientation:UIImageOrientationUp];
+                
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:OverlayTmp];
+                
+                //UIImageView *imageView = [[UIImageView alloc] initWithImage:[snImages objectAtIndex:2]];
+                imageView.center = CGPointMake(rect.size.width*self.scaleTouch/2, rect.size.height*self.scaleTouch/2);
+                imageView.tag = sn.id * SkillOverlayID;
+                self.overlayImage = imageView;
+                [self addSubview:self.overlayImage];
+            }
+            else {
+                UIImage *OverlayTmp = [[UIImage alloc] initWithCGImage:[[localTreeView.snImages objectAtIndex:1] CGImage]
+                                                                 scale:2
+                                                           orientation:UIImageOrientationUp];
+                
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:OverlayTmp];
+                
+                //UIImageView *imageView = [[UIImageView alloc] initWithImage:[snImages objectAtIndex:0]];
+                imageView.center = CGPointMake(rect.size.width*self.scaleTouch/2, rect.size.height*self.scaleTouch/2);
+                imageView.tag = sn.id * SkillOverlayID;
+                self.overlayImage = imageView;
+                [self addSubview:self.overlayImage];
+            }
+            
+            /*
             if (sn.isNotable) {
                 UIImageView *imageView = [[UIImageView alloc] initWithImage:[localTreeView.snImages objectAtIndex:5]];
                 imageView.clipsToBounds = NO;                
@@ -140,6 +189,7 @@
                 self.overlayImage = imageView;
                 [self addSubview:self.overlayImage];
             }
+             */
             //-- SKILL OVERLAY
             
             self.isActivated = YES;

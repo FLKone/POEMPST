@@ -24,7 +24,7 @@
 @synthesize scrollView = _scrollView;
 @synthesize containerView = _containerView;
 
-@synthesize  loadFromURLBtn, urlField, skillPointsView, progressView, loadingView, activityView, loadingLabel, finalUrlField, activeClassImageView, currentDextLabel, currentStrLabel, currentIntelLabel;
+@synthesize  loadFromURLBtn, urlField, skillPointsView, progressView, loadingView, activityView, loadingLabel, finalUrlField, activeClassImageView, currentDextLabel, currentStrLabel, currentIntelLabel, treeView;
 
 -(void)errorLoading:(NSNotification *)notif {
     
@@ -179,6 +179,8 @@
         
         if (![_menuView isHidden]) {
             [_menuView setHidden:YES];
+            self.treeView.alpha= 1;
+            [self.treeView setHidden:NO];
             [self.loadFromURLBtn setHidden:NO];
             [self.activityView setHidden:YES];
             self.progressView.progress = 0;
@@ -187,11 +189,7 @@
 }
 
 -(void)selectClass:(id)sender {
-
     [[NSNotificationCenter defaultCenter] postNotificationName:@"loadClass" object:sender userInfo:nil];
-    [_menuView setHidden:YES];
-    self.progressView.progress = 0;
-
 }
 
 -(IBAction)loadURL:(id) sender {
@@ -207,12 +205,37 @@
 
 }
 
--(void)changeProgress:(NSNotification *)notif {
-    NSLog(@"Progress %f", [notif.object floatValue]);
-    dispatch_async(dispatch_get_main_queue(), ^{
+-(void)progress:(id)value
+{
+    NSLog(@"Progress %f", [value floatValue]);
+    
+    self.progressView.progress = [value floatValue];
+    
+    if ([value intValue] == 1) {
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.70];
+        [UIView setAnimationDelay:0.0];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
 
-        self.progressView.progress = [notif.object floatValue];
-    });
+        [self.loadingView setAlpha:0];
+        [self.treeView setAlpha:0];
+
+        [UIView commitAnimations];
+    }
+}
+
+
+-(void)hideLoading
+{
+    NSLog(@"hideLoading");
+    
+    //self.treeView.alpha= 0;
+    //self.loadingView.alpha=0;
+    //self.loadingView.hidden= YES;
+}
+
+-(void)changeProgress:(NSNotification *)notif {
+    [self performSelectorOnMainThread:@selector(progress:) withObject:notif.object waitUntilDone:YES];
 }
 
 - (void)viewDidLoad
@@ -354,13 +377,12 @@
 }
 
 -(void)setup {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSLog(@"loadingView hidden");
-        self.progressView.progress = 0;
-        self.loadingView.alpha = 0.9;
-        self.loadingView.hidden = NO;
-    });
     
+    NSLog(@"loadingView hidden");
+    self.progressView.progress = 0;
+    self.loadingView.alpha = 0.9;
+    self.loadingView.hidden = NO;
+
     
     // DIRECTORIES
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
@@ -410,145 +432,120 @@
         
     }
     
+    NSLog(@"clientURL %@", clientURL);
+    
     NSURLRequest *request = [NSURLRequest requestWithURL:clientURL];
     
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    
+   
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        
-        
-        
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^ {
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP11] userInfo:nil];
 
-            NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-            
-            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-            NSString *diskDataCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data"];
-            
-            NSError *error;
-            BOOL succeed = [responseString writeToFile:[diskDataCachePath stringByAppendingPathComponent:@"tree.html"]
-                                            atomically:YES encoding:NSUTF8StringEncoding error:&error];
-            if (!succeed){
-                // Handle error here
-            }
-            
-            
-            NSString *regex = @"var passiveSkillTreeData(.*)";
-            
-            NSString *JSData = [[responseString stringByMatching:regex] stringByReplacingOccurrencesOfString:@"\\/" withString:@"/"];
-            
-            NSRange rangeToSearch = NSMakeRange(0, [JSData length]);
-            NSRange rangeOfSecondToLastSpace = [JSData rangeOfString:@"," options:NSBackwardsSearch range:rangeToSearch];
-            
-            
-            NSRange r = NSMakeRange(27, rangeOfSecondToLastSpace.location - 27);
-            JSData = [JSData substringWithRange: r];
-            NSDictionary *json = [JSData objectFromJSONString];
-            
-            
-            float min_x = [[json objectForKey:@"min_x"] floatValue];
-            float min_y = [[json objectForKey:@"min_y"] floatValue];
-            float max_x = [[json objectForKey:@"max_x"] floatValue];
-            float max_y = [[json objectForKey:@"max_y"] floatValue];
-            
-            float fullX, fullY;
-            
-            
-            fullX = (float)(MAX(abs(min_x),abs(max_x))*2.15)/Zoom/MiniScale;
-            fullY = (float)(MAX(abs(min_y),abs(max_y))*2.15)/Zoom/MiniScale;
-            
-            //NSLog(@"%f %f", fullX, fullY);
-            
-            // Set up the container view to hold your custom view hierarchy
-            CGSize containerSize = CGSizeMake(fullX, fullY);
-            NSLog(@"before async");
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                NSLog(@"in async");
-                self.containerView = nil;
-                self.containerView = [[SkillTreeView alloc] initWithFrame:(CGRect){.origin=CGPointMake(0.0f, 30.0f), .size=containerSize} andJSON:(NSDictionary *)json];
-                
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    NSLog(@"in async MAIN");
-                    
-                    [self.scrollView addSubview:self.containerView];
-                    
-                    // Tell the scroll view the size of the contents
-                    self.scrollView.contentSize = containerSize;
-                    
-                    // 3
-                    UITapGestureRecognizer *doubleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewDoubleTapped:)];
-                    doubleTapRecognizer.numberOfTapsRequired = 2;
-                    doubleTapRecognizer.numberOfTouchesRequired = 1;
-                    [self.scrollView addGestureRecognizer:doubleTapRecognizer];
-                    
-                    UITapGestureRecognizer *twoFingerTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewTwoFingerTapped:)];
-                    twoFingerTapRecognizer.numberOfTapsRequired = 1;
-                    twoFingerTapRecognizer.numberOfTouchesRequired = 2;
-                    [self.scrollView addGestureRecognizer:twoFingerTapRecognizer];
-                    
-                    
-                    // Set up the minimum & maximum zoom scales
-                    CGRect scrollViewFrame = self.scrollView.frame;
-                    CGFloat scaleWidth = scrollViewFrame.size.width / self.scrollView.contentSize.width;
-                    CGFloat scaleHeight = scrollViewFrame.size.height / self.scrollView.contentSize.height;
-                    CGFloat minScale = MIN(scaleWidth, scaleHeight);
-                    
-                    UIColor *backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background1.png"]];
-                    self.containerView.backgroundColor = backgroundColor;
-                    self.scrollView.backgroundColor = backgroundColor;
-                    
-                    self.scrollView.minimumZoomScale = minScale;
-                    self.scrollView.maximumZoomScale = MaxZoom;//0.3835f;
-                    self.scrollView.zoomScale = minScale;
-                    
-                    self.scrollView.autoresizesSubviews = NO;
-                    
-                    [self centerScrollViewContents];
-                    
-                    NSLog(@"END in async MAIN");
-                    
-                    BOOL hide = YES;
-                    
-                    [UIView animateWithDuration:0.5
-                                          delay:0.0
-                                        options:UIViewAnimationOptionCurveEaseOut
-                                     animations:^
-                     {
-                         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-                         if (hide)
-                             self.loadingView.alpha=0;
-                         else
-                         {
-                             self.loadingView.hidden= NO;
-                             self.loadingView.alpha=1;
-                         }
-                     }
-                                     completion:^(BOOL b)
-                     {
-                         if (hide)
-                             self.loadingView.hidden= YES;
-                     }
-                     ];
-                    
-                });
-                
-                
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP11] userInfo:nil];
+
+        NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+        NSString *diskDataCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data"];
+        
+        NSError *error;
+        BOOL succeed = [responseString writeToFile:[diskDataCachePath stringByAppendingPathComponent:@"tree.html"]
+                                        atomically:YES encoding:NSUTF8StringEncoding error:&error];
+        if (!succeed){
+            // Handle error here
+        }
+        
+        NSRange rangeOfStart = [responseString rangeOfString:@"var passiveSkillTreeData = "];
+        NSString *JSData = [responseString substringWithRange:
+                            NSMakeRange(rangeOfStart.location + rangeOfStart.length, responseString.length-rangeOfStart.location-rangeOfStart.length)];
+        NSRange rangeOfEnd = [JSData rangeOfString:@"zoomLevels"];
+        NSRange rangeToSearch = NSMakeRange(0, rangeOfEnd.location);
+        NSRange rangeOfSecondToLastSpace = [JSData rangeOfString:@"," options:NSBackwardsSearch range:rangeToSearch];
+        JSData = [JSData substringWithRange: NSMakeRange(0, rangeOfSecondToLastSpace.location)];
+        JSData = [JSData stringByReplacingOccurrencesOfString:@"\\/" withString:@"/"];
+
+        NSDictionary *json = [JSData objectFromJSONString];
+        //JSData = nil;
+        //json = nil;
+
+
+
+        float min_x = [[json objectForKey:@"min_x"] floatValue];
+        float min_y = [[json objectForKey:@"min_y"] floatValue];
+        float max_x = [[json objectForKey:@"max_x"] floatValue];
+        float max_y = [[json objectForKey:@"max_y"] floatValue];
+        
+        float fullX, fullY;
+        
+        
+        fullX = (float)(MAX(abs(min_x),abs(max_x))*2.15)/Zoom/MiniScale;
+        fullY = (float)(MAX(abs(min_y),abs(max_y))*2.15)/Zoom/MiniScale;
+        
+        NSLog(@"%f %f", fullX, fullY);
+                  
+        // Set up the container view to hold your custom view hierarchy
+        CGSize containerSize = CGSizeMake(fullX, fullY);
+        NSLog(@"before async");
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, (unsigned long)NULL), ^(void) {
+            NSLog(@"in async");
+            self.containerView = nil;
+            self.containerView = [[SkillTreeView alloc] initWithFrame:(CGRect){.origin=CGPointMake(0.0f, 30.0f), .size=containerSize} andJSON:(NSDictionary *)json];
+            NSLog(@"end");
+
+        
+        
+            NSLog(@"in async MAIN");
+        
+            dispatch_sync(dispatch_get_main_queue(), ^{
+
+                [self.scrollView addSubview:self.containerView];
+
+                // Tell the scroll view the size of the contents
+                self.scrollView.contentSize = containerSize;
+
+                // 3
+                UITapGestureRecognizer *doubleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewDoubleTapped:)];
+                doubleTapRecognizer.numberOfTapsRequired = 2;
+                doubleTapRecognizer.numberOfTouchesRequired = 1;
+                [self.scrollView addGestureRecognizer:doubleTapRecognizer];
+
+                UITapGestureRecognizer *twoFingerTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewTwoFingerTapped:)];
+                twoFingerTapRecognizer.numberOfTapsRequired = 1;
+                twoFingerTapRecognizer.numberOfTouchesRequired = 2;
+                [self.scrollView addGestureRecognizer:twoFingerTapRecognizer];
+
+
+                // Set up the minimum & maximum zoom scales
+                CGRect scrollViewFrame = self.scrollView.frame;
+                CGFloat scaleWidth = scrollViewFrame.size.width / self.scrollView.contentSize.width;
+                CGFloat scaleHeight = scrollViewFrame.size.height / self.scrollView.contentSize.height;
+                CGFloat minScale = MIN(scaleWidth, scaleHeight);
+
+                UIColor *backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background1.png"]];
+                //self.containerView.backgroundColor = backgroundColor;
+                self.scrollView.backgroundColor = backgroundColor;
+
+                self.scrollView.minimumZoomScale = minScale;
+                self.scrollView.maximumZoomScale = MaxZoom;//0.3835f;
+                self.scrollView.zoomScale = minScale;
+
+                self.scrollView.autoresizesSubviews = NO;
+
+                [self centerScrollViewContents];
+
+                NSLog(@"END in async MAIN");
+
             });
-            
-            
-        }];
-        
-        
-        
+
+            //[self hideLoading];
+            NSLog(@"END hidden");
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP9] userInfo:nil];
+
+        });
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
-    
+   
     [operation start];
     
 }
@@ -832,6 +829,7 @@
             }
             
             [_menuView setHidden:NO];
+            [self.treeView setHidden:YES];
         }
 
     }
@@ -873,6 +871,7 @@
             [fileManager removeItemAtPath:DataCachePath error:NULL];
         }
         
+        [self.containerView unload];
         [self.containerView removeFromSuperview];
         self.containerView = nil;
 
@@ -882,23 +881,26 @@
 }
 
 -(IBAction) settingMenu:(UIButton *) sender {
-    NSLog(@"SM");
     
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Settings"
                                                              delegate:self cancelButtonTitle:@"Hide"
-                                               destructiveButtonTitle:@"Clear app's cache"
-                                                    otherButtonTitles:[NSString stringWithFormat:@"Version: %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]],
+                                               destructiveButtonTitle:@"Clear cached data"
+                                                    otherButtonTitles:[NSString stringWithFormat:
+                                                                       @"Version %@ ﹅ Build %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"],
+                                                                       [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]],
                                   nil,
                                   nil];
     actionSheet.tag = 2;
 
     // use the same style as the nav bar
     actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
-    
+
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
         [actionSheet showFromRect:sender.frame inView:self.view animated:YES];
     }
+    
+    actionSheet = nil;
 }
 
 

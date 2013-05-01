@@ -17,6 +17,11 @@ CGFloat RadiansToDegrees(CGFloat radians)
     return radians * 180 / M_PI;
 };
 
+float ceilfabs(float dec)
+{
+    return ceilf(abs(dec));
+};
+
 @implementation SkillLinkView
 
 @synthesize startPoint, endPoint, isActivated, isHighlighted;
@@ -109,22 +114,25 @@ CGFloat RadiansToDegrees(CGFloat radians)
             }
 
             CGSize tmpSize = [tmpPath bounds].size;
-            
-            if (tmpSize.height > r.size.height) {
+
+            //self.layer.borderWidth = 1.0f;
+
+            if (ceilfabs(tmpSize.height - r.size.height + StrokeWidth) > 0) {
                 
-                float offsetH = tmpSize.height - r.size.height + StrokeWidth/2;
+                float offsetH = tmpSize.height - r.size.height + StrokeWidth;
                 
                 if (startPoint.y > okP.y) {
+                    //self.layer.borderColor = [UIColor cyanColor].CGColor;
+
                     r.size.height += offsetH;
                 }
                 else if (startPoint.y == okP.y)
                 {
-                    //self.layer.borderColor = [UIColor whiteColor].CGColor;
-                    //self.layer.borderWidth = 1.0f;
+
                                               
                     if (clockwise) {
-                        //NSLog(@"cw");
-                        
+                        //self.layer.borderColor = [UIColor brownColor].CGColor;
+ 
                         okP.y += offsetH;
                         r.origin.y -= offsetH;
                         r.size.height += offsetH;
@@ -132,76 +140,48 @@ CGFloat RadiansToDegrees(CGFloat radians)
                     }
                     else
                     {
-                       // NSLog(@"!cw");
-                        r.size.height += (offsetH + 5);
+                        //self.layer.borderColor = [UIColor purpleColor].CGColor;
+
+                        r.size.height += offsetH;
                     }
                 }
                 else
                 {
+                    //self.layer.borderColor = [UIColor orangeColor].CGColor;
+                    
                     okP.y += offsetH;
                     r.origin.y -= offsetH;
                     r.size.height += offsetH;
                 }
             }
-            else if (tmpSize.width > r.size.width)
+            else if (ceilfabs(tmpSize.width - r.size.width + StrokeWidth) > 0)
             {
-                float offsetW = tmpSize.width - r.size.width + StrokeWidth/2;
+                float offsetW = tmpSize.width - r.size.width + StrokeWidth;
                 
                 if (startPoint.x > okP.x) {
+                    //self.layer.borderColor = [UIColor redColor].CGColor;
+                    
                     r.size.width += offsetW;
                 }
                 else if (startPoint.x == okP.x)
                 {
-                    //ras
-                   // NSLog(@"gid2 %d", n1.nodeGroup.id);
+                    //self.layer.borderColor = [UIColor blueColor].CGColor;
                 }
                 else
                 {
+                    //self.layer.borderColor = [UIColor greenColor].CGColor;
+                    
                     okP.x += offsetW;
                     r.origin.x -= offsetW;
                     r.size.width += offsetW;
                 }
                 
             }
-            
-
-            //else
-             //   NSLog(@"OK Size");
-            /*
-            if (r.size.height >= r.size.width) {
-             
-                if (r.size.width < (orbitRadii[n1.orbit]/Zoom/MiniScale + StrokeWidth)) {
-                    NSLog(@"trop petit Width diff %f", (orbitRadii[n1.orbit]/Zoom/MiniScale + StrokeWidth) - r.size.width);
-                    
-                    float offset = ((orbitRadii[n1.orbit]/Zoom/MiniScale + StrokeWidth) - r.size.width);
-                    
-                    //r.origin.x -= offset/2;
-                    //r.size.width += offset;
-                    
-                    //okP = CGPointMake(okP.x + offset/2, okP.y);
-                }
-            }
             else
             {
-                if (r.size.height < (orbitRadii[n1.orbit]/Zoom/MiniScale + StrokeWidth)) {
-                    NSLog(@"trop petit height %f", (orbitRadii[n1.orbit]/Zoom/MiniScale + StrokeWidth) - r.size.height);
-                    
-                    float offset = ((orbitRadii[n1.orbit]/Zoom/MiniScale + StrokeWidth) - r.size.height);
-                    
-                    //r.origin.y -= offset/2;
-                    //r.size.height += offset;
-                    
-                    //okP = CGPointMake(okP.x, okP.y + offset/2);
-                    
-                   // if (okP.y < orbitRadii[n1.orbit]/Zoom/MiniScale) {
-                    //    float offset2 = orbitRadii[n1.orbit]/Zoom/MiniScale - okP.y;
-                   //     okP.y += offset2;
-                   //     r.size.height += offset2;
-                   // }
-                }
+                //self.layer.borderColor = [UIColor yellowColor].CGColor;
             }
-            
-            */
+ 
             if ((n1.Arc - n2.Arc > 0 && n1.Arc - n2.Arc <= M_PI) || n1.Arc - n2.Arc < -M_PI)
             {
                 [myPath addArcWithCenter:CGPointMake(okP.x,

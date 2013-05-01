@@ -24,7 +24,7 @@
 @synthesize scrollView = _scrollView;
 @synthesize containerView = _containerView;
 
-@synthesize  loadFromURLBtn, urlField, skillPointsView, progressView, loadingView, activityView, loadingLabel, finalUrlField, activeClassImageView, currentDextLabel, currentStrLabel, currentIntelLabel;
+@synthesize  loadFromURLBtn, urlField, skillPointsView, progressView, loadingView, activityView, loadingLabel, finalUrlField, activeClassImageView, currentDextLabel, currentStrLabel, currentIntelLabel, treeView;
 
 -(void)errorLoading:(NSNotification *)notif {
     
@@ -179,6 +179,8 @@
         
         if (![_menuView isHidden]) {
             [_menuView setHidden:YES];
+            self.treeView.alpha= 1;
+            [self.treeView setHidden:NO];
             [self.loadFromURLBtn setHidden:NO];
             [self.activityView setHidden:YES];
             self.progressView.progress = 0;
@@ -208,6 +210,18 @@
     NSLog(@"Progress %f", [value floatValue]);
     
     self.progressView.progress = [value floatValue];
+    
+    if ([value intValue] == 1) {
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.70];
+        [UIView setAnimationDelay:0.0];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+
+        [self.loadingView setAlpha:0];
+        [self.treeView setAlpha:0];
+
+        [UIView commitAnimations];
+    }
 }
 
 
@@ -215,8 +229,9 @@
 {
     NSLog(@"hideLoading");
     
-    self.loadingView.alpha=0;
-    self.loadingView.hidden= YES;
+    //self.treeView.alpha= 0;
+    //self.loadingView.alpha=0;
+    //self.loadingView.hidden= YES;
 }
 
 -(void)changeProgress:(NSNotification *)notif {
@@ -480,49 +495,51 @@
         
             NSLog(@"in async MAIN");
         
+            dispatch_sync(dispatch_get_main_queue(), ^{
 
-            [self.scrollView addSubview:self.containerView];
-            
-            // Tell the scroll view the size of the contents
-            self.scrollView.contentSize = containerSize;
-            
-            // 3
-            UITapGestureRecognizer *doubleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewDoubleTapped:)];
-            doubleTapRecognizer.numberOfTapsRequired = 2;
-            doubleTapRecognizer.numberOfTouchesRequired = 1;
-            [self.scrollView addGestureRecognizer:doubleTapRecognizer];
-            
-            UITapGestureRecognizer *twoFingerTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewTwoFingerTapped:)];
-            twoFingerTapRecognizer.numberOfTapsRequired = 1;
-            twoFingerTapRecognizer.numberOfTouchesRequired = 2;
-            [self.scrollView addGestureRecognizer:twoFingerTapRecognizer];
-            
-            
-            // Set up the minimum & maximum zoom scales
-            CGRect scrollViewFrame = self.scrollView.frame;
-            CGFloat scaleWidth = scrollViewFrame.size.width / self.scrollView.contentSize.width;
-            CGFloat scaleHeight = scrollViewFrame.size.height / self.scrollView.contentSize.height;
-            CGFloat minScale = MIN(scaleWidth, scaleHeight);
-            
-            UIColor *backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background1.png"]];
-            self.containerView.backgroundColor = backgroundColor;
-            self.scrollView.backgroundColor = backgroundColor;
-            
-            self.scrollView.minimumZoomScale = minScale;
-            self.scrollView.maximumZoomScale = MaxZoom;//0.3835f;
-            self.scrollView.zoomScale = minScale;
-            
-            self.scrollView.autoresizesSubviews = NO;
-            
-            [self centerScrollViewContents];
-            
-            NSLog(@"END in async MAIN");
-        
-        
-            [self performSelectorOnMainThread:@selector(hideLoading) withObject:NULL waitUntilDone:NO];
+                [self.scrollView addSubview:self.containerView];
 
+                // Tell the scroll view the size of the contents
+                self.scrollView.contentSize = containerSize;
+
+                // 3
+                UITapGestureRecognizer *doubleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewDoubleTapped:)];
+                doubleTapRecognizer.numberOfTapsRequired = 2;
+                doubleTapRecognizer.numberOfTouchesRequired = 1;
+                [self.scrollView addGestureRecognizer:doubleTapRecognizer];
+
+                UITapGestureRecognizer *twoFingerTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewTwoFingerTapped:)];
+                twoFingerTapRecognizer.numberOfTapsRequired = 1;
+                twoFingerTapRecognizer.numberOfTouchesRequired = 2;
+                [self.scrollView addGestureRecognizer:twoFingerTapRecognizer];
+
+
+                // Set up the minimum & maximum zoom scales
+                CGRect scrollViewFrame = self.scrollView.frame;
+                CGFloat scaleWidth = scrollViewFrame.size.width / self.scrollView.contentSize.width;
+                CGFloat scaleHeight = scrollViewFrame.size.height / self.scrollView.contentSize.height;
+                CGFloat minScale = MIN(scaleWidth, scaleHeight);
+
+                UIColor *backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Background1.png"]];
+                //self.containerView.backgroundColor = backgroundColor;
+                self.scrollView.backgroundColor = backgroundColor;
+
+                self.scrollView.minimumZoomScale = minScale;
+                self.scrollView.maximumZoomScale = MaxZoom;//0.3835f;
+                self.scrollView.zoomScale = minScale;
+
+                self.scrollView.autoresizesSubviews = NO;
+
+                [self centerScrollViewContents];
+
+                NSLog(@"END in async MAIN");
+
+            });
+
+            //[self hideLoading];
             NSLog(@"END hidden");
-            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP9] userInfo:nil];
+
         });
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -812,6 +829,7 @@
             }
             
             [_menuView setHidden:NO];
+            [self.treeView setHidden:YES];
         }
 
     }

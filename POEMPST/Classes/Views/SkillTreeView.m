@@ -892,8 +892,8 @@
                     
                     faceImg = [((Asset *)[assets objectForKey:[arrayFaceNames objectAtIndex:[arrayCharName indexOfObject:sn.name]]]) UIImage];
                     
-                    
-                    CGSize targetSize = CGSizeMake(faceImg.size.width/MiniScale,  faceImg.size.height/MiniScale);
+
+                    CGSize targetSize = CGSizeMake(faceImg.size.width/MiniScale*2,  faceImg.size.height/MiniScale*2);
                     
                     UIGraphicsBeginImageContext(targetSize); // this will crop
                     
@@ -906,7 +906,11 @@
                     
                     newImage = UIGraphicsGetImageFromCurrentImageContext();
                     
-                    UIImageView *imageView = [[UIImageView alloc] initWithImage:newImage];
+                    UIImage *newImageTmp = [[UIImage alloc] initWithCGImage:[newImage CGImage]
+                                                                     scale:2
+                                                               orientation:UIImageOrientationUp];
+                                           
+                    UIImageView *imageView = [[UIImageView alloc] initWithImage:newImageTmp];
                     
                     imageView.center = CGPointMake((sn.Position.x + fullX/2)/Zoom/MiniScale, (sn.Position.y + fullY/2)/Zoom/MiniScale);
                     imageView.tag = ACTIVEFACEID;
@@ -934,7 +938,7 @@
                             ((UIScrollView *)[self superview]).zoomScale = ((UIScrollView *)[self superview]).minimumZoomScale;
                         }
                         
-                        ((UIScrollView *)[self superview]).zoomScale = ((UIScrollView *)[self superview]).minimumZoomScale;
+                        //((UIScrollView *)[self superview]).zoomScale = ((UIScrollView *)[self superview]).minimumZoomScale;
 
                         [self.touchLayer insertSubview:currentIntelLabel atIndex:0];
                         [self.touchLayer insertSubview:currentStrLabel atIndex:0];

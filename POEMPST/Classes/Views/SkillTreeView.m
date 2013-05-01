@@ -477,7 +477,7 @@
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     
-    NSString *diskDataLayerBackgroundCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data/Layers/newbackground.png"];
+    NSString *diskDataLayerBackgroundCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data/Layers/background-v2.png"];
     
     UIImage *layerBackgroundIMAGE;
     
@@ -586,10 +586,10 @@
 
 
     
-    NSString *testPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data/Layers/test.png"];
+    NSString *diskDataLayerSkillsCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data/Layers/skills-v2.png"];
     UIImage *outputImage;
     
-    if (![fileManager fileExistsAtPath:diskDataLayerBackgroundCachePath])
+    if (![fileManager fileExistsAtPath:diskDataLayerSkillsCachePath])
     {
 
         // SKILLS LAYER
@@ -787,13 +787,13 @@
         outputImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         
-        [UIImagePNGRepresentation(outputImage) writeToFile:testPath atomically:NO];
+        [UIImagePNGRepresentation(outputImage) writeToFile:diskDataLayerSkillsCachePath atomically:NO];
 
         
     }
     
     
-    outputImage = [UIImage imageWithContentsOfFile:testPath];
+    outputImage = [UIImage imageWithContentsOfFile:diskDataLayerSkillsCachePath];
 
     UIImageView *tmpUIV = [[UIImageView alloc] initWithImage:[[UIImage alloc] initWithCGImage:[outputImage CGImage]
                                                                                         scale:2

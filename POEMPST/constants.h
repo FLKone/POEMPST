@@ -26,7 +26,7 @@ typedef enum {
 #define TouchLayerScaleDown 0.85
 #define TouchLayerScaleUp   1.00
 
-#define MaxZoom 1.50f
+#define MaxZoom 2.50f
 
 #define BTNID           100000000
 #define MARAUDERBTNID   100000000

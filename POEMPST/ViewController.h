@@ -9,6 +9,7 @@
 @class URLTextField;
 @interface ViewController : UIViewController <UIActionSheetDelegate, UIAlertViewDelegate, UIScrollViewDelegate>
 
+@property (nonatomic, strong) IBOutlet UIView *treeView;
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) IBOutlet UIView *menuView;
 @property (nonatomic, strong) IBOutlet UIImageView *menuImageView;

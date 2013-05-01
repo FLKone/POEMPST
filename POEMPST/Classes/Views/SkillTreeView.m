@@ -13,7 +13,7 @@
 @synthesize skillNodes, skillLinks, assets, nodeGroups, skillFaceGroups;
 @synthesize fullY, fullX, characterClassID, arrayCharName;
 @synthesize iconActiveSkills, iconInactiveSkills, activeSkills;
-@synthesize dicoNodeBackgrounds, dicoNodeBackgroundsActive, snImages, touchLayer, spritesUnitedActive, arrayFaceNames, graph, rootID, characterData;
+@synthesize dicoNodeBackgrounds, dicoNodeBackgroundsActive, snImages, touchLayer, spritesUnitedActive, spritesUnitedInactive, arrayFaceNames, graph, rootID, characterData;
 @synthesize currentDextLabel, currentStrLabel, currentIntelLabel;
 @synthesize skillPicker = _skillPicker;
 @synthesize skillPickerPopover = _skillPickerPopover;
@@ -141,6 +141,35 @@
     }
 }
 
+-(void)unload {
+    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"loadUrl"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"loadClass"];
+
+    self.skillLinksView = nil;
+    self.touchLayer = nil;
+    
+    self.skillNodes = nil;
+    self.skillLinks = nil;
+    self.assets = nil;
+    self.nodeGroups = nil;
+    self.skillFaceGroups = nil;
+    self.arrayCharName = nil;
+    self.iconActiveSkills = nil;
+    self.iconInactiveSkills = nil;
+    self.activeSkills = nil;
+    
+    self.characterData = nil;
+    
+    self.rootID = nil;
+    self.dicoNodeBackgrounds = nil;
+    self.dicoNodeBackgroundsActive = nil;
+    self.snImages = nil;
+    self.spritesUnitedActive = nil;
+    self.spritesUnitedInactive = nil;
+    self.arrayFaceNames = nil;
+    self.graph = nil;
+}
+
 - (id)initWithFrame:(CGRect)frame andJSON:(NSDictionary *)json
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP1] userInfo:nil];
@@ -149,9 +178,6 @@
     
     self = [super initWithFrame:frame];
     if (self) {
-        NSDate *then = [NSDate date]; 
-
-        //NSLog(@"self %@", self);
         
         // iVAR
         self.characterClassID = 0;
@@ -162,6 +188,7 @@
                                                                         forKeys:[NSArray arrayWithObjects:@"normal", @"notable", @"keystone", nil]];
         self.arrayFaceNames = [NSArray arrayWithObjects:@"centermarauder", @"centerranger", @"centerwitch", @"centerduelist", @"centertemplar", @"centershadow", nil];
         self.spritesUnitedActive = [NSMutableDictionary dictionary];
+        self.spritesUnitedInactive = [NSMutableDictionary dictionary];
         self.graph = [[PESGraph alloc] init];
         self.isFromURL = NO;
         
@@ -189,9 +216,7 @@
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadUrl:) name:@"loadUrl" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadClass:) name:@"loadClass" object:nil];
-        
-        NSDate *thenLOADURL = [NSDate date];
-        
+                
         //characterData
         self.characterData = [json objectForKey:@"characterData"];
         //-- characterData
@@ -258,7 +283,7 @@
         [iconActiveSkills OpenOrDownloadImages];
         [iconInactiveSkills OpenOrDownloadImages];
         //-- Skill Sprites
-        
+        NSLog(@"00");
         [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP2] userInfo:nil];
 
         // Assets
@@ -275,7 +300,8 @@
             
             [assets setObject:asset forKey:key];
         }
-        
+        NSLog(@"10");
+
         self.snImages = [NSMutableArray arrayWithObjects:
                                     [((Asset *)[assets objectForKey:[dicoNodeBackgrounds objectForKey:@"normal"]]) UIImage],
                                     [((Asset *)[assets objectForKey:[dicoNodeBackgroundsActive objectForKey:@"normal"]]) UIImage],
@@ -291,7 +317,7 @@
             UIImage *object = [snImages objectAtIndex:j];
             
             
-            float icontype = 2.61f/Zoom/MiniScale;
+            float icontype = 2.61f/Zoom/MiniScale*2;
             CGSize targetSize = CGSizeMake(object.size.width * icontype, object.size.height * icontype);
             
             UIGraphicsBeginImageContext(targetSize); // this will crop
@@ -311,8 +337,9 @@
             [snImages replaceObjectAtIndex:j withObject:newImage];
             
         }
-        //-- Assets
         
+        //-- Assets
+
         [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP3] userInfo:nil];
 
         // Nodes
@@ -331,7 +358,8 @@
             
         }
         //-- Nodes
-        
+        NSLog(@"30");
+
         // Groups
         nodeGroups = [NSMutableDictionary dictionary];
         
@@ -356,60 +384,77 @@
             }
         }
         //-- Groups
-        
+        NSLog(@"40");
+
         //LINKS
-        self.skillLinks = [NSMutableArray array];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+        NSString *diskLinksCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data/links.plist"];
         
-        for (NSString *key in self.skillNodes) {
-            
-            SkillNode *sn = [self.skillNodes objectForKey:key];
-            //if (sn.g != 49) { continue; }
-            
-            //if (sn.id != 62213) {
-            //    continue;
-            //}
-            
-            //NSLog(@"id %d", sn.id);
-            for (NSNumber *i in sn.linksID) {
+        if (![fileManager fileExistsAtPath:diskLinksCachePath])
+        {
+            self.skillLinks = [NSMutableArray array];
+            int i = 0;
+            for (NSString *key in self.skillNodes) {
+                //NSLog(@"400");
                 
-                NSIndexSet *indexSet = [self.skillLinks indexesOfObjectsPassingTest:
-                                        ^ BOOL(id obj, NSUInteger idx, BOOL *stop) {
-                                            
-                                            //NSLog(@"obj %@", obj);
-                                            
-                                            if (([obj objectAtIndex:0] == i && [[obj objectAtIndex:1] intValue] == sn.id) ||
-                                                ([obj objectAtIndex:1] == i && [[obj objectAtIndex:0] intValue] == sn.id)) {
-                                                return YES;
-                                            }
-                                            else
-                                                return NO;
-                                            
-                                            //NSLog(@"IOO %@ %d", obj, idx);
-                                            
-                                            //return YES;
-                                            /*
-                                             if ([[obj name] rangeOfString:theName options:NSCaseInsensitiveSearch].location != NSNotFound) {
-                                             return YES;
-                                             } else
-                                             return NO;
-                                             */
-                                        } ];
+                SkillNode *sn = [self.skillNodes objectForKey:key];
+                //if (sn.g != 49) { continue; }
                 
-                if (indexSet.count > 0) {
-                    //
+                //if (sn.id != 62213) {
+                //    continue;
+                //}
+                
+                //NSLog(@"id %d", sn.id);
+                for (NSNumber *i in sn.linksID) {
+                    
+                    NSIndexSet *indexSet = [self.skillLinks indexesOfObjectsPassingTest:
+                                            ^ BOOL(id obj, NSUInteger idx, BOOL *stop) {
+                                                
+                                                //NSLog(@"obj %@", obj);
+                                                
+                                                if (([obj objectAtIndex:0] == i && [[obj objectAtIndex:1] intValue] == sn.id) ||
+                                                    ([obj objectAtIndex:1] == i && [[obj objectAtIndex:0] intValue] == sn.id)) {
+                                                    return YES;
+                                                }
+                                                else
+                                                    return NO;
+                                                
+                                                //NSLog(@"IOO %@ %d", obj, idx);
+                                                
+                                                //return YES;
+                                                /*
+                                                 if ([[obj name] rangeOfString:theName options:NSCaseInsensitiveSearch].location != NSNotFound) {
+                                                 return YES;
+                                                 } else
+                                                 return NO;
+                                                 */
+                                            } ];
+                    
+                    if (indexSet.count > 0) {
+                        //
+                    }
+                    
+                    //NSLog(@"%d - %@ - %d", sn.id, i, indexSet.count);
+                    [self.skillLinks addObject:[NSArray arrayWithObjects:[NSNumber numberWithInt:sn.id], i, nil]];
+                    
+                    
                 }
                 
-                //NSLog(@"%d - %@ - %d", sn.id, i, indexSet.count);
-                [self.skillLinks addObject:[NSArray arrayWithObjects:[NSNumber numberWithInt:sn.id], i, nil]];
-                
-                
+                i++;
             }
+            
+            [self.skillLinks writeToFile:diskLinksCachePath atomically:YES];
         }
+        else
+        {
+            self.skillLinks = [NSArray arrayWithContentsOfFile:diskLinksCachePath];
+        }
+        
         //-- LINKS
         //NSLog(@"skillLinks a4 %@", skillLinks);
-        
-        NSDate *thenPARSE = [NSDate date];
-        
+        NSLog(@"50");
+
         float min_x = [[json objectForKey:@"min_x"] floatValue];
         float min_y = [[json objectForKey:@"min_y"] floatValue];
         float max_x = [[json objectForKey:@"max_x"] floatValue];
@@ -417,13 +462,6 @@
 
         fullX = (float)(MAX(abs(min_x),abs(max_x))*2.15);
         fullY = (float)(MAX(abs(min_y),abs(max_y))*2.15);
-        
-        
-        //NSLog(@"FINISH INIT");
-        NSDate *last = [NSDate date];
-        NSLog(@"Time elapsed thenLOADURL        : %f", [thenLOADURL timeIntervalSinceDate:then]);
-        NSLog(@"Time elapsed thenPARSE          : %f", [thenPARSE timeIntervalSinceDate:thenLOADURL]);
-        NSLog(@"Time elapsed TOTAL              : %f", [last timeIntervalSinceDate:then]);
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP4] userInfo:nil];
 
@@ -439,7 +477,7 @@
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     
-    NSString *diskDataLayerBackgroundCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data/Layers/background.png"];
+    NSString *diskDataLayerBackgroundCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data/Layers/newbackground.png"];
     
     UIImage *layerBackgroundIMAGE;
     
@@ -516,78 +554,58 @@
             [layerBackground addSubview:imageView];
             
         }
+    
+        //-- BACKGROUND
+        
+        // LINKS
+
+        SkillLinksView *localskillLinksView = [[SkillLinksView alloc] initWithFrame:CGRectMake(0, 0, fullX/Zoom/MiniScale, fullY/Zoom/MiniScale)
+                                                                           andLinks:skillLinks
+                                                                          andSkills:skillNodes];
+        [localskillLinksView load];
+            
+        [layerBackground addSubview:localskillLinksView];
+        
+
+        //-- LINKS
         
         layerBackgroundIMAGE = [layerBackground capture];
         [UIImagePNGRepresentation(layerBackgroundIMAGE) writeToFile:diskDataLayerBackgroundCachePath atomically:YES];
         
     }
-
+    
     layerBackgroundIMAGE = [UIImage imageWithContentsOfFile:diskDataLayerBackgroundCachePath];
-
-
+    
     [self insertSubview:[[UIImageView alloc] initWithImage:layerBackgroundIMAGE] atIndex:10];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP5] userInfo:nil];
 
-    [self drawLinksLayer];
-    
-
-}
-
--(void)drawLinksLayer {
-
-    
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *diskDataLinksCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data/Layers/links.png"];
-    
-    UIImage *layerLinksIMAGE;
-
-    if (![fileManager fileExistsAtPath:diskDataLinksCachePath]) {
-        SkillLinksView *localskillLinksView = [[SkillLinksView alloc] initWithFrame:CGRectMake(0, 0, fullX/Zoom/MiniScale, fullY/Zoom/MiniScale) andLinks:skillLinks andSkills:skillNodes];
-        [localskillLinksView load];
-        
-        layerLinksIMAGE = [localskillLinksView capture];
-        [UIImagePNGRepresentation(layerLinksIMAGE) writeToFile:diskDataLinksCachePath atomically:YES];
-    }
-
-    layerLinksIMAGE = [UIImage imageWithContentsOfFile:diskDataLinksCachePath];
-
-     
-    [self insertSubview:[[UIImageView alloc] initWithImage:layerLinksIMAGE] atIndex:10];
-    
     
     self.skillLinksView = [[SkillLinksView alloc] initWithFrame:CGRectMake(0, 0, fullX/Zoom/MiniScale, fullY/Zoom/MiniScale) andLinks:skillLinks andSkills:skillNodes];
     [self insertSubview:self.skillLinksView atIndex:10];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP6] userInfo:nil];
 
-    [self drawSkillsLayer];
-}
 
--(void)drawSkillsLayer {
-
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     
-    // SKILLS LAYER
-    float icontype;
-    NSMutableDictionary *spritesUnited = [NSMutableDictionary dictionary];
+    NSString *testPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data/Layers/test.png"];
+    UIImage *outputImage;
     
-    UIImage *newImage;
-    
-    NSString *diskDataLayerSkillsCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Data/Layers/skills.png"];
-    
-    UIImage *layerSkillsIMAGE;
-    
-    if (![fileManager fileExistsAtPath:diskDataLayerSkillsCachePath])
+    if (![fileManager fileExistsAtPath:diskDataLayerBackgroundCachePath])
     {
-        UIView *layerSkills = [[UIView alloc] initWithFrame:CGRectMake(0, 0, fullX/Zoom/MiniScale, fullY/Zoom/MiniScale)];
-        layerSkills.backgroundColor = [UIColor clearColor];
+
+        // SKILLS LAYER
+        CGFloat width = fullX/Zoom/MiniScale*2, height = fullY/Zoom/MiniScale*2;
+        UIGraphicsBeginImageContext(CGSizeMake(width, height));
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        UIGraphicsPushContext(context);
+        
+        //UIView *layerSkills = [[UIView alloc] initWithFrame:CGRectMake(0, 0, fullX/Zoom/MiniScale, fullY/Zoom/MiniScale)];
+        //layerSkills.backgroundColor = [UIColor clearColor];
+        UIImage *newImage;
+        
+        float icontype;
+        self.spritesUnitedInactive = [NSMutableDictionary dictionary];
         
         for (NSString *key in self.skillNodes) {
-            
-            
             
             SkillNode *sn = [self.skillNodes objectForKey:key];
             
@@ -596,39 +614,41 @@
                 
                 UIImage *faceImg = [((Asset *)[assets objectForKey:@"PSStartNodeBackgroundInactive"]) UIImage];
                 
-                CGSize targetSize = CGSizeMake(faceImg.size.width/MiniScale,  faceImg.size.height/MiniScale);
+                CGSize targetSize = CGSizeMake(faceImg.size.width/MiniScale*2,  faceImg.size.height/MiniScale*2);
                 
-                UIGraphicsBeginImageContext(targetSize); // this will crop
+                //UIGraphicsBeginImageContext(targetSize); // this will crop
                 
                 CGRect newSize = CGRectZero;
                 //thumbnailRect.origin = thumbnailPoint;
                 newSize.size.width  = targetSize.width;
                 newSize.size.height = targetSize.height;
+                newSize.origin.x = (sn.Position.x + fullX/2)/Zoom/MiniScale*2 - newSize.size.height / 2;
+                newSize.origin.y = (sn.Position.y + fullY/2)/Zoom/MiniScale*2 - newSize.size.height / 2;
                 
                 [faceImg drawInRect:newSize];
                 
-                newImage = UIGraphicsGetImageFromCurrentImageContext();
+                //newImage = UIGraphicsGetImageFromCurrentImageContext();
                 
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:newImage];
-                imageView.center = CGPointMake((sn.Position.x + fullX/2)/Zoom/MiniScale, (sn.Position.y + fullY/2)/Zoom/MiniScale);
-                [layerSkills addSubview:imageView];
+                //UIImageView *imageView = [[UIImageView alloc] initWithImage:newImage];
+                //imageView.center = CGPointMake((sn.Position.x + fullX/2)/Zoom/MiniScale, (sn.Position.y + fullY/2)/Zoom/MiniScale);
+                //[layerSkills addSubview:imageView];
                 
                 continue;
             }
             
             NSString *iconkey = sn.isMastery ? @"mastery" : (sn.isKeystone ? @"keystoneInactive" : (sn.isNotable ? @"notableInactive" : @"normalInactive"));
             NSString *spriteSheetName = [[[[iconInactiveSkills.skillPositions objectForKey:[sn icon]] objectForKey:iconkey] allKeys] objectAtIndex:0];
-
-            if ([spritesUnited objectForKey:spriteSheetName] && [[spritesUnited objectForKey:spriteSheetName] objectForKey:[sn icon]] && [[[spritesUnited objectForKey:spriteSheetName] objectForKey:[sn icon]] objectForKey:iconkey]) {
+            
+            if ([self.spritesUnitedInactive objectForKey:spriteSheetName] && [[spritesUnitedInactive objectForKey:spriteSheetName] objectForKey:[sn icon]] && [[[self.spritesUnitedInactive objectForKey:spriteSheetName] objectForKey:[sn icon]] objectForKey:iconkey]) {
                 //NSLog(@"OK DEJA");
                 //NSLog(@"D iconkey %@", iconkey);
                 
             }
             else
             {
-                
+                //continue;
                 icontype = sn.isMastery ? 2.61f/Zoom/MiniScale : (sn.isKeystone ? 2.61f/Zoom/MiniScale : (sn.isNotable ? 2.61f/Zoom/MiniScale : 2.61f/Zoom/MiniScale));
-                
+                icontype = icontype*2;
                 //icontype = 2.61f;
                 CGRect rect = CGRectFromString([[[[iconInactiveSkills.skillPositions objectForKey:[sn icon]] objectForKey:iconkey] allValues] objectAtIndex:0]);
                 
@@ -655,38 +675,44 @@
                 [icon drawInRect:newSize];
                 
                 newImage = UIGraphicsGetImageFromCurrentImageContext();
-
+                
                 
                 
                 //pop the context to get back to the default
                 UIGraphicsEndImageContext();
                 
-                if ([spritesUnited objectForKey:spriteSheetName]) {
-                    if ([[spritesUnited objectForKey:spriteSheetName] objectForKey:[sn icon]]) {
-                        [[[spritesUnited objectForKey:spriteSheetName] objectForKey:[sn icon]] setObject:newImage forKey:iconkey];
+                if ([self.spritesUnitedInactive objectForKey:spriteSheetName]) {
+                    if ([[self.spritesUnitedInactive objectForKey:spriteSheetName] objectForKey:[sn icon]]) {
+                        [[[self.spritesUnitedInactive objectForKey:spriteSheetName] objectForKey:[sn icon]] setObject:newImage forKey:iconkey];
                     }
                     else
                     {
-                        [[spritesUnited objectForKey:spriteSheetName] setObject:[NSMutableDictionary dictionaryWithObject:newImage forKey:iconkey] forKey:[sn icon]];
+                        [[self.spritesUnitedInactive objectForKey:spriteSheetName] setObject:[NSMutableDictionary dictionaryWithObject:newImage forKey:iconkey] forKey:[sn icon]];
                     }
                 }
                 else {
-                    [spritesUnited setObject:[NSMutableDictionary dictionaryWithObject:[NSMutableDictionary dictionaryWithObject:newImage forKey:iconkey] forKey:[sn icon]]
-                                      forKey:spriteSheetName];
+                    [self.spritesUnitedInactive setObject:[NSMutableDictionary dictionaryWithObject:[NSMutableDictionary dictionaryWithObject:newImage forKey:iconkey] forKey:[sn icon]]
+                                                   forKey:spriteSheetName];
                 }
                 
-
-              
+                
+                
             }
-           
-            UIImageView *imageView = [[UIImageView alloc] initWithImage:[[[spritesUnited objectForKey:spriteSheetName] objectForKey:[sn icon]] objectForKey:iconkey]];
-            imageView.center = CGPointMake((sn.Position.x + fullX/2)/Zoom/MiniScale, (sn.Position.y + fullY/2)/Zoom/MiniScale);
             
-            [layerSkills addSubview:imageView];
-
+            UIImage *tmpI = [[[self.spritesUnitedInactive objectForKey:spriteSheetName] objectForKey:[sn icon]] objectForKey:iconkey];
+            [tmpI drawInRect:
+             CGRectMake((sn.Position.x + fullX/2)/Zoom/MiniScale*2 - tmpI.size.width / 2, (sn.Position.y + fullY/2)/Zoom/MiniScale*2 - tmpI.size.height / 2, tmpI.size.width, tmpI.size.height)];
+            
+            //UIImageView *imageView = [[UIImageView alloc] initWithImage:[[[self.spritesUnitedInactive objectForKey:spriteSheetName] objectForKey:[sn icon]] objectForKey:iconkey]];
+            //imageView.center = CGPointMake((sn.Position.x + fullX/2)/Zoom/MiniScale, (sn.Position.y + fullY/2)/Zoom/MiniScale);
+            
+            //[layerSkills addSubview:imageView];
+            
+            
         }
-    
-            
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP6] userInfo:nil];
+        
         for (NSString *key in self.skillNodes) {
             
             SkillNode *sn = [self.skillNodes objectForKey:key];
@@ -701,35 +727,83 @@
             }
             
             if (sn.isNotable) {
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:[snImages objectAtIndex:3]];
-                imageView.center = CGPointMake((sn.Position.x + fullX/2)/Zoom/MiniScale, (sn.Position.y + fullY/2)/Zoom/MiniScale);
-                imageView.tag = sn.id * SkillOverlayID;
-                [layerSkills addSubview:imageView];
+                //UIImage *OverlayTmp = [[UIImage alloc] initWithCGImage:[[self.snImages objectAtIndex:3] CGImage]
+                //                                                 scale:2
+                //                                           orientation:UIImageOrientationUp];
+                
+                UIImage *tmpI = [self.snImages objectAtIndex:3];
+                [tmpI drawInRect:CGRectMake((sn.Position.x + fullX/2)/Zoom/MiniScale*2 - tmpI.size.width / 2,
+                                            (sn.Position.y + fullY/2)/Zoom/MiniScale*2 - tmpI.size.height / 2,
+                                            tmpI.size.width,
+                                            tmpI.size.height)];
+                
+                //UIImageView *imageView = [[UIImageView alloc] initWithImage:OverlayTmp];
+                
+                //UIImageView *imageView = [[UIImageView alloc] initWithImage:[snImages objectAtIndex:3]];
+                //imageView.center = CGPointMake((sn.Position.x + fullX/2)/Zoom/MiniScale, (sn.Position.y + fullY/2)/Zoom/MiniScale);
+                //imageView.tag = sn.id * SkillOverlayID;
+                //[layerSkills addSubview:imageView];
             }
             else if (sn.isKeystone) {
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:[snImages objectAtIndex:2]];
-                imageView.center = CGPointMake((sn.Position.x + fullX/2)/Zoom/MiniScale, (sn.Position.y + fullY/2)/Zoom/MiniScale);
-                imageView.tag = sn.id * SkillOverlayID;
-                [layerSkills addSubview:imageView];
+                //UIImage *OverlayTmp = [[UIImage alloc] initWithCGImage:[[self.snImages objectAtIndex:2] CGImage]
+                //                                                 scale:2
+                //                                           orientation:UIImageOrientationUp];
+                
+                UIImage *tmpI = [self.snImages objectAtIndex:2];
+                [tmpI drawInRect:CGRectMake((sn.Position.x + fullX/2)/Zoom/MiniScale*2 - tmpI.size.width / 2,
+                                            (sn.Position.y + fullY/2)/Zoom/MiniScale*2 - tmpI.size.height / 2,
+                                            tmpI.size.width,
+                                            tmpI.size.height)];
+                
+                //UIImageView *imageView = [[UIImageView alloc] initWithImage:OverlayTmp];
+                
+                //UIImageView *imageView = [[UIImageView alloc] initWithImage:[snImages objectAtIndex:2]];
+                //imageView.center = CGPointMake((sn.Position.x + fullX/2)/Zoom/MiniScale, (sn.Position.y + fullY/2)/Zoom/MiniScale);
+                //imageView.tag = sn.id * SkillOverlayID;
+                //[layerSkills addSubview:imageView];
             }
             else {
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:[snImages objectAtIndex:0]];
-                imageView.center = CGPointMake((sn.Position.x + fullX/2)/Zoom/MiniScale, (sn.Position.y + fullY/2)/Zoom/MiniScale);
-                imageView.tag = sn.id * SkillOverlayID;
-                [layerSkills addSubview:imageView];
+                //UIImage *OverlayTmp = [[UIImage alloc] initWithCGImage:[[self.snImages objectAtIndex:0] CGImage]
+                //                                                 scale:2
+                //                                           orientation:UIImageOrientationUp];
+                
+                UIImage *tmpI = [self.snImages objectAtIndex:0];
+                [tmpI drawInRect:CGRectMake((sn.Position.x + fullX/2)/Zoom/MiniScale*2 - tmpI.size.width / 2,
+                                            (sn.Position.y + fullY/2)/Zoom/MiniScale*2 - tmpI.size.height / 2,
+                                            tmpI.size.width,
+                                            tmpI.size.height)];
+                
+                //UIImageView *imageView = [[UIImageView alloc] initWithImage:OverlayTmp];
+                
+                //UIImageView *imageView = [[UIImageView alloc] initWithImage:[snImages objectAtIndex:0]];
+                //imageView.center = CGPointMake((sn.Position.x + fullX/2)/Zoom/MiniScale, (sn.Position.y + fullY/2)/Zoom/MiniScale);
+                //imageView.tag = sn.id * SkillOverlayID;
+                //[layerSkills addSubview:imageView];
             }
             
         }
         
-        layerSkillsIMAGE = [layerSkills capture];
+        UIGraphicsPopContext();
+        outputImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        [UIImagePNGRepresentation(outputImage) writeToFile:testPath atomically:NO];
 
-        [UIImagePNGRepresentation(layerSkillsIMAGE) writeToFile:diskDataLayerSkillsCachePath atomically:YES];
         
     }
-
-    layerSkillsIMAGE = [UIImage imageWithContentsOfFile:diskDataLayerSkillsCachePath];
     
-    [self insertSubview:[[UIImageView alloc] initWithImage:layerSkillsIMAGE] atIndex:10];
+    
+    outputImage = [UIImage imageWithContentsOfFile:testPath];
+
+    UIImageView *tmpUIV = [[UIImageView alloc] initWithImage:[[UIImage alloc] initWithCGImage:[outputImage CGImage]
+                                                                                        scale:2
+                                                                                  orientation:UIImageOrientationUp]];
+    [self insertSubview:tmpUIV atIndex:10];
+    
+    //[self insertSubview:layerSkills atIndex:10];
+
+    
+    
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"changeProgress" object:[NSNumber numberWithFloat:LOADSTEP7] userInfo:nil];
 
@@ -860,6 +934,8 @@
                             ((UIScrollView *)[self superview]).zoomScale = ((UIScrollView *)[self superview]).minimumZoomScale;
                         }
                         
+                        ((UIScrollView *)[self superview]).zoomScale = ((UIScrollView *)[self superview]).minimumZoomScale;
+
                         [self.touchLayer insertSubview:currentIntelLabel atIndex:0];
                         [self.touchLayer insertSubview:currentStrLabel atIndex:0];
                         [self.touchLayer insertSubview:currentDextLabel atIndex:0];

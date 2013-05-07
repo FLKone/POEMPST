@@ -240,7 +240,7 @@
 
 - (void)viewDidLoad
 {
-    NSLog(@"viewDidLoad");
+    //NSLog(@"viewDidLoad");
     [super viewDidLoad];
 
     // MAIN MENU
@@ -378,7 +378,7 @@
 
 -(void)setup {
     
-    NSLog(@"loadingView hidden");
+    //NSLog(@"loadingView hidden");
     self.progressView.progress = 0;
     self.loadingView.alpha = 0.9;
     self.loadingView.hidden = NO;
@@ -432,7 +432,7 @@
         
     }
     
-    NSLog(@"clientURL %@", clientURL);
+    //NSLog(@"clientURL %@", clientURL);
     
     NSURLRequest *request = [NSURLRequest requestWithURL:clientURL];
     
@@ -484,16 +484,16 @@
                   
         // Set up the container view to hold your custom view hierarchy
         CGSize containerSize = CGSizeMake(fullX, fullY);
-        NSLog(@"before async");
+        //NSLog(@"before async");
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, (unsigned long)NULL), ^(void) {
-            NSLog(@"in async");
+            //NSLog(@"in async");
             self.containerView = nil;
             self.containerView = [[SkillTreeView alloc] initWithFrame:(CGRect){.origin=CGPointMake(0.0f, 30.0f), .size=containerSize} andJSON:(NSDictionary *)json];
-            NSLog(@"end");
+            //NSLog(@"end");
 
         
         
-            NSLog(@"in async MAIN");
+            //NSLog(@"in async MAIN");
         
             dispatch_sync(dispatch_get_main_queue(), ^{
 
@@ -532,7 +532,7 @@
 
                 [self centerScrollViewContents];
 
-                NSLog(@"END in async MAIN");
+                //NSLog(@"END in async MAIN");
 
             });
 
@@ -561,7 +561,7 @@
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
 
-    NSLog(@"will %f %f", self.scrollView.contentOffset.x, self.scrollView.contentOffset.y);
+    //NSLog(@"will %f %f", self.scrollView.contentOffset.x, self.scrollView.contentOffset.y);
     
     if((interfaceOrientation == UIDeviceOrientationLandscapeLeft) || (interfaceOrientation == UIDeviceOrientationLandscapeRight)){
         [self setupMenuLandscape];
@@ -627,8 +627,8 @@
 }
 
 -(void)setupMenuPortrait {
-    float offsetY = 520;
-    float offsetX = 209;
+    float offsetY = 0;
+    float offsetX = 0;
     
     UIButton *marauderBtn = (UIButton*)[self.menuView viewWithTag:MARAUDERBTNID];
     marauderBtn.frame = CGRectMake(0 + offsetX, offsetY, marauderBtn.frame.size.width, marauderBtn.frame.size.height);
@@ -730,7 +730,7 @@
 }
 
 -(IBAction) resetAS:(id) sender{
-    NSLog(@"resetAS");
+    //NSLog(@"resetAS");
     
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Reset Tree ?"
                                                         delegate:self cancelButtonTitle:@"Cancel"
@@ -753,7 +753,7 @@
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSLog(@"buttonIndex %d", buttonIndex);
+    //NSLog(@"buttonIndex %d", buttonIndex);
     
     if (actionSheet.tag == 1) {
         if (buttonIndex == 0) {
@@ -854,7 +854,8 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    NSLog(@"buttonIndex %d", buttonIndex);
+    //NSLog(@"buttonIndex %d", buttonIndex);
+    
     if (buttonIndex == 0) {
         //OK
     }

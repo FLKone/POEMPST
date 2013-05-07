@@ -26,19 +26,27 @@ float ceilfabs(float dec)
 
 @synthesize startPoint, endPoint, isActivated, isHighlighted;
 
-- (id)initWithFrame:(CGRect)frame andStartNode:(SkillNode *)n1 andEndNode:(SkillNode *)n2 andFullSize:(CGSize)gSize
+- (id)initWithFrame:(CGRect)frame andStartNode:(SkillNode *)n1 andEndNode:(SkillNode *)n2 andFullSize:(CGSize)gSize andState:(SkillState)state
 {
     self = [super initWithFrame:frame];
     if (self) {
+        
+        if (!state) {
+            state = kDisable;
+        }
+        
+        
+        
+        
         // Initialization code
         
         self.isActivated = NO;
         self.isHighlighted = NO;
-        CGPoint startP = CGPointMake(([n1 Position].x + gSize.width*Zoom*MiniScale/2)/Zoom/MiniScale,
-                             ([n1 Position].y + gSize.height*Zoom*MiniScale/2)/Zoom/MiniScale);
+        CGPoint startP = CGPointMake(([n1 Position].x + gSize.width*Zoom*MiniScale/2)/Zoom/MiniScale*ImgScale,
+                             ([n1 Position].y + gSize.height*Zoom*MiniScale/2)/Zoom/MiniScale*ImgScale);
         
-        CGPoint endP = CGPointMake(([n2 Position].x + gSize.width*Zoom*MiniScale/2)/Zoom/MiniScale,
-                             ([n2 Position].y + gSize.height*Zoom*MiniScale/2)/Zoom/MiniScale);
+        CGPoint endP = CGPointMake(([n2 Position].x + gSize.width*Zoom*MiniScale/2)/Zoom/MiniScale*ImgScale,
+                             ([n2 Position].y + gSize.height*Zoom*MiniScale/2)/Zoom/MiniScale*ImgScale);
         
         CGRect r = CGRectMake(MIN(startP.x, endP.x) - StrokeWidth / 2,
                               MIN(startP.y, endP.y) - StrokeWidth / 2,
@@ -88,12 +96,28 @@ float ceilfabs(float dec)
         self.clipsToBounds = NO;
         self.backgroundColor=[UIColor clearColor];
         myPath=[[UIBezierPath alloc]init];
-        myPath.lineWidth=2;
-                
-        brushPattern=[UIColor colorWithRed:66/255.f green:58/255.f blue:32/255.f alpha:1.00];
+        
+        switch (state) {
+            case kActive:
+                myPath.lineWidth=1;
+                brushPattern=[UIColor redColor];//[UIColor colorWithRed:173/255.f green:151/255.f blue:107/255.f alpha:1.00];
+                break;
+            case kHighLight:
+                myPath.lineWidth=1;
+                brushPattern=[UIColor greenColor];//[UIColor colorWithRed:66/255.f green:58/255.f blue:32/255.f alpha:1.00];
+                break;
+            case kDisable:
+            default:
+                myPath.lineWidth=1;
+                brushPattern=[UIColor whiteColor];//[UIColor colorWithRed:66/255.f green:58/255.f blue:32/255.f alpha:1.00];
+                break;
+        }
+        
+        
+
         
         if (n1.nodeGroup == n2.nodeGroup && n1.orbit == n2.orbit) {
-            CGPoint tmpP = CGPointMake((n1.nodeGroup.position.x + gSize.width*Zoom*MiniScale/2)/Zoom/MiniScale, (n1.nodeGroup.position.y + gSize.height*Zoom*MiniScale/2)/Zoom/MiniScale);
+            CGPoint tmpP = CGPointMake((n1.nodeGroup.position.x + gSize.width*Zoom*MiniScale/2)/Zoom/MiniScale*ImgScale, (n1.nodeGroup.position.y + gSize.height*Zoom*MiniScale/2)/Zoom/MiniScale*ImgScale);
             CGPoint diff = CGPointMake((tmpP.x - startP.x), (tmpP.y - startP.y));
             CGPoint okP = CGPointMake(self.startPoint.x + diff.x, self.startPoint.y + diff.y);
             
@@ -103,12 +127,12 @@ float ceilfabs(float dec)
             if ((n1.Arc - n2.Arc > 0 && n1.Arc - n2.Arc <= M_PI) || n1.Arc - n2.Arc < -M_PI)
             {
                 [tmpPath addArcWithCenter:CGPointMake(okP.x,
-                                                     okP.y) radius:orbitRadii[n1.orbit]/Zoom/MiniScale startAngle:(n1.Arc - DegreesToRadians(90.0f)) endAngle:(n2.Arc - DegreesToRadians(90.0f)) clockwise:NO];
+                                                     okP.y) radius:orbitRadii[n1.orbit]/Zoom/MiniScale*ImgScale startAngle:(n1.Arc - DegreesToRadians(90.0f)) endAngle:(n2.Arc - DegreesToRadians(90.0f)) clockwise:NO];
             }
             else
             {
                 [tmpPath addArcWithCenter:CGPointMake(okP.x,
-                                                     okP.y) radius:orbitRadii[n1.orbit]/Zoom/MiniScale startAngle:(n1.Arc - DegreesToRadians(90.0f)) endAngle:(n2.Arc - DegreesToRadians(90.0f)) clockwise:YES];
+                                                     okP.y) radius:orbitRadii[n1.orbit]/Zoom/MiniScale*ImgScale startAngle:(n1.Arc - DegreesToRadians(90.0f)) endAngle:(n2.Arc - DegreesToRadians(90.0f)) clockwise:YES];
                 
                 clockwise = YES;
             }
@@ -122,7 +146,7 @@ float ceilfabs(float dec)
                 float offsetH = tmpSize.height - r.size.height + StrokeWidth;
                 
                 if (startPoint.y > okP.y) {
-                    //self.layer.borderColor = [UIColor cyanColor].CGColor;
+                    self.layer.borderColor = [UIColor cyanColor].CGColor;
 
                     r.size.height += offsetH;
                 }
@@ -131,7 +155,7 @@ float ceilfabs(float dec)
 
                                               
                     if (clockwise) {
-                        //self.layer.borderColor = [UIColor brownColor].CGColor;
+                        self.layer.borderColor = [UIColor brownColor].CGColor;
  
                         okP.y += offsetH;
                         r.origin.y -= offsetH;
@@ -140,14 +164,14 @@ float ceilfabs(float dec)
                     }
                     else
                     {
-                        //self.layer.borderColor = [UIColor purpleColor].CGColor;
+                        self.layer.borderColor = [UIColor purpleColor].CGColor;
 
                         r.size.height += offsetH;
                     }
                 }
                 else
                 {
-                    //self.layer.borderColor = [UIColor orangeColor].CGColor;
+                    self.layer.borderColor = [UIColor orangeColor].CGColor;
                     
                     okP.y += offsetH;
                     r.origin.y -= offsetH;
@@ -159,17 +183,17 @@ float ceilfabs(float dec)
                 float offsetW = tmpSize.width - r.size.width + StrokeWidth;
                 
                 if (startPoint.x > okP.x) {
-                    //self.layer.borderColor = [UIColor redColor].CGColor;
+                    self.layer.borderColor = [UIColor redColor].CGColor;
                     
                     r.size.width += offsetW;
                 }
                 else if (startPoint.x == okP.x)
                 {
-                    //self.layer.borderColor = [UIColor blueColor].CGColor;
+                    self.layer.borderColor = [UIColor blueColor].CGColor;
                 }
                 else
                 {
-                    //self.layer.borderColor = [UIColor greenColor].CGColor;
+                    self.layer.borderColor = [UIColor greenColor].CGColor;
                     
                     okP.x += offsetW;
                     r.origin.x -= offsetW;
@@ -179,19 +203,19 @@ float ceilfabs(float dec)
             }
             else
             {
-                //self.layer.borderColor = [UIColor yellowColor].CGColor;
+                self.layer.borderColor = [UIColor yellowColor].CGColor;
             }
  
             if ((n1.Arc - n2.Arc > 0 && n1.Arc - n2.Arc <= M_PI) || n1.Arc - n2.Arc < -M_PI)
             {
                 [myPath addArcWithCenter:CGPointMake(okP.x,
-                                                     okP.y) radius:orbitRadii[n1.orbit]/Zoom/MiniScale startAngle:(n1.Arc - DegreesToRadians(90.0f)) endAngle:(n2.Arc - DegreesToRadians(90.0f)) clockwise:NO];
+                                                     okP.y) radius:orbitRadii[n1.orbit]/Zoom/MiniScale*ImgScale startAngle:(n1.Arc - DegreesToRadians(90.0f)) endAngle:(n2.Arc - DegreesToRadians(90.0f)) clockwise:NO];
                 
             }
             else
             {
                 [myPath addArcWithCenter:CGPointMake(okP.x,
-                                                     okP.y) radius:orbitRadii[n1.orbit]/Zoom/MiniScale startAngle:(n1.Arc - DegreesToRadians(90.0f)) endAngle:(n2.Arc - DegreesToRadians(90.0f)) clockwise:YES];
+                                                     okP.y) radius:orbitRadii[n1.orbit]/Zoom/MiniScale*ImgScale startAngle:(n1.Arc - DegreesToRadians(90.0f)) endAngle:(n2.Arc - DegreesToRadians(90.0f)) clockwise:YES];
             }
             /*
             NSLog(@"startP      %@", NSStringFromCGPoint(startP));
@@ -205,7 +229,7 @@ float ceilfabs(float dec)
             NSLog(@"endPoint    %@", NSStringFromCGPoint(endPoint));
 
             NSLog(@"okP         %@", NSStringFromCGPoint(okP));
-            NSLog(@"radius      %f", orbitRadii[n1.orbit]/Zoom/MiniScale);
+            NSLog(@"radius      %f", orbitRadii[n1.orbit]/Zoom/MiniScale*ImgScale);
             NSLog(@"staAngle    %f", RadiansToDegrees((n1.Arc - DegreesToRadians(90.0f))));
             NSLog(@"endAngle    %f", RadiansToDegrees((n2.Arc - DegreesToRadians(90.0f))));
             
@@ -222,6 +246,11 @@ float ceilfabs(float dec)
             //self.frame = r;
             
         }
+        
+        r.origin.x = r.origin.x / ImgScale;
+        r.origin.y = r.origin.y / ImgScale;
+        
+        //self.layer.borderWidth = 1;
         self.frame = r;
     }
     return self;
@@ -233,7 +262,7 @@ float ceilfabs(float dec)
     self.isHighlighted = NO;
     
     myPath.lineWidth=2;
-    brushPattern=[UIColor colorWithRed:66/255.f green:58/255.f blue:32/255.f alpha:1.00];
+    brushPattern=[UIColor redColor];// colorWithRed:66/255.f green:58/255.f blue:32/255.f alpha:1.00];
     [self setNeedsDisplay];
 }
 
@@ -241,7 +270,7 @@ float ceilfabs(float dec)
     self.isHighlighted = NO;
     self.isActivated = YES;
     
-    brushPattern=[UIColor colorWithRed:173/255.f green:151/255.f blue:107/255.f alpha:1.00];
+    brushPattern=[UIColor yellowColor];//=[UIColor colorWithRed:173/255.f green:151/255.f blue:107/255.f alpha:1.00];
     myPath.lineWidth=4;
     [self setNeedsDisplay];
 }
@@ -260,9 +289,19 @@ float ceilfabs(float dec)
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
-    // Drawing code
+  //  CGContextRef context = UIGraphicsGetCurrentContext();
+//    CGContextSetShouldAntialias(context, NO);
+    
     [brushPattern setStroke];
+
     [myPath strokeWithBlendMode:kCGBlendModeNormal alpha:1.0];
+
+    [myPath stroke];
+    
+    
+    // Drawing code
+  //  [brushPattern setStroke];
+//    [myPath strokeWithBlendMode:kCGBlendModeNormal alpha:1.0];
     //[self sizeToFit];
 }
 

@@ -17,16 +17,25 @@ typedef enum {
 	kKeystone
 } IconType;
 
+typedef enum {
+	kDisable,
+    kHighLight,
+	kActive
+} SkillState;
+
 #define SkillOverlayID 1
 #define SkillLinkID 1
 
 #define Zoom 2.61f
-#define MiniScale 2
+#define MiniScale 4
 #define StrokeWidth 10
 #define TouchLayerScaleDown 0.85
 #define TouchLayerScaleUp   1.00
 
-#define MaxZoom 2.01f
+#define ImgScale 4
+
+
+#define MaxZoom 5.00f
 
 #define BTNID           100000000
 #define MARAUDERBTNID   100000000

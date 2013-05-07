@@ -96,6 +96,7 @@
         [self.validateBtn setEnabled:NO];
     }
     
+    NSLog(@"node %@ %d", [self.node name], [self.node id]);
     
     [self.titleLabel setText:[self.node name]];
     NSString *desc = [NSString stringWithFormat:@"∙ %@", [[self.node attributes] componentsJoinedByString:@"\n∙ "]];

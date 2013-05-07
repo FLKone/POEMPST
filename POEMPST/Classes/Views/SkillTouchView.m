@@ -72,7 +72,7 @@
 
                 float icontype = sn.isMastery ? 2.61f/Zoom/MiniScale : (sn.isKeystone ? 2.61f/Zoom/MiniScale : (sn.isNotable ? 2.61f/Zoom/MiniScale : 2.61f/Zoom/MiniScale));
 
-                icontype = icontype*2;
+                icontype = icontype*ImgScale;
                 UIImage *sprite = [localTreeView.iconActiveSkills.images objectForKey:spriteSheetName];
 
                 CGImageRef cgIcon = CGImageCreateWithImageInRect(sprite.CGImage, rect);
@@ -113,7 +113,7 @@
             }
             
             UIImage *OverlayTmp = [[UIImage alloc] initWithCGImage:[[[[localTreeView.spritesUnitedActive objectForKey:spriteSheetName] objectForKey:[sn icon]] objectForKey:iconkey] CGImage]
-                                                             scale:2
+                                                             scale:ImgScale
                                                        orientation:UIImageOrientationUp];
             
             UIImageView *imageView = [[UIImageView alloc] initWithImage:OverlayTmp];
@@ -129,7 +129,7 @@
             // SKILL OVERLAY
             if (sn.isNotable) {
                 UIImage *OverlayTmp = [[UIImage alloc] initWithCGImage:[[localTreeView.snImages objectAtIndex:5] CGImage]
-                                                                 scale:2
+                                                                 scale:ImgScale
                                                            orientation:UIImageOrientationUp];
                 
                 UIImageView *imageView = [[UIImageView alloc] initWithImage:OverlayTmp];
@@ -142,7 +142,7 @@
             }
             else if (sn.isKeystone) {
                 UIImage *OverlayTmp = [[UIImage alloc] initWithCGImage:[[localTreeView.snImages objectAtIndex:4] CGImage]
-                                                                 scale:2
+                                                                 scale:ImgScale
                                                            orientation:UIImageOrientationUp];
                 
                 UIImageView *imageView = [[UIImageView alloc] initWithImage:OverlayTmp];
@@ -155,7 +155,7 @@
             }
             else {
                 UIImage *OverlayTmp = [[UIImage alloc] initWithCGImage:[[localTreeView.snImages objectAtIndex:1] CGImage]
-                                                                 scale:2
+                                                                 scale:ImgScale
                                                            orientation:UIImageOrientationUp];
                 
                 UIImageView *imageView = [[UIImageView alloc] initWithImage:OverlayTmp];

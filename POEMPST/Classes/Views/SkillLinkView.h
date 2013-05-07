@@ -24,7 +24,7 @@
 @property BOOL isActivated;
 @property BOOL isHighlighted;
 
-- (id)initWithFrame:(CGRect)frame andStartNode:(SkillNode *)n1 andEndNode:(SkillNode *)n2 andFullSize:(CGSize)gSize;
+- (id)initWithFrame:(CGRect)frame andStartNode:(SkillNode *)n1 andEndNode:(SkillNode *)n2 andFullSize:(CGSize)gSize andState:(SkillState)state;
 
 - (void)disable;
 - (void)activate;

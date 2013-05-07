@@ -30,11 +30,28 @@
     
     for (NSArray *link in self.skillLinks) {
         
+        //NSLog(@"%d", [[link objectAtIndex:0] intValue]);
+        
         SkillLinkView *tmpView = [[SkillLinkView alloc] initWithFrame:CGRectZero
                                                          andStartNode:[self.skillNodes objectForKey:[link objectAtIndex:0]]
                                                            andEndNode:[self.skillNodes objectForKey:[link objectAtIndex:1]]
-                                                          andFullSize:self.frame.size];
-        tmpView.tag = [self.skillLinks indexOfObject:link] + SkillLinkID;
+                                                          andFullSize:self.frame.size
+                                                             andState:kDisable];
+        
+        
+        UIImage *OverlayTmp = [[UIImage alloc] initWithCGImage:[[tmpView capture] CGImage]
+                                                         scale:ImgScale
+                                                   orientation:UIImageOrientationUp];
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:OverlayTmp];
+        imageView.center = CGPointMake(tmpView.frame.origin.x, tmpView.frame.origin.y);
+        
+        imageView.tag = ([self.skillLinks indexOfObject:link] + SkillLinkID);
+        [self addSubview:imageView];
+        
+        
+        
+        //tmpView.tag = [self.skillLinks indexOfObject:link] + SkillLinkID;
         //tmpView.clipsToBounds = NO;
         
         //SkillLinkView *tmpView = [[SkillLinkView alloc] initWithFrame:CGRectZero
@@ -45,7 +62,7 @@
         
         //NSLog(@"link %@", link);
         //tmpView.backgroundColor = [UIColor redColor];
-        [self addSubview:tmpView];
+        //[self addSubview:tmpView];
 
              
 
@@ -110,13 +127,26 @@
         }
         else
         {
+            //NSLog(@"disableLinks SKILL");
+            
+            [linkView removeFromSuperview];
+            
             SkillLinkView *tmpView = [[SkillLinkView alloc] initWithFrame:CGRectZero
                                                              andStartNode:[self.skillNodes objectForKey:[[self.skillLinks objectAtIndex:[linkIDX intValue]] objectAtIndex:0]]
                                                                andEndNode:[self.skillNodes objectForKey:[[self.skillLinks objectAtIndex:[linkIDX intValue]] objectAtIndex:1]]
-                                                              andFullSize:self.frame.size];
-            tmpView.tag = ([linkIDX intValue] + SkillLinkID);
-            [self addSubview:tmpView];
-            [tmpView disable];
+                                                              andFullSize:self.frame.size
+                                                                 andState:kDisable];
+            
+            UIImage *OverlayTmp = [[UIImage alloc] initWithCGImage:[[tmpView capture] CGImage]
+                                                             scale:ImgScale
+                                                       orientation:UIImageOrientationUp];
+            
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:OverlayTmp];
+            imageView.center = CGPointMake(tmpView.frame.origin.x, tmpView.frame.origin.y);
+            
+            imageView.tag = ([linkIDX intValue] + SkillLinkID);
+            [self addSubview:imageView];
+            //[tmpView disable];
             
             //NSLog(@"linkView db %d %@", [linkIDX intValue] + SkillLinkID, [self viewWithTag:([linkIDX intValue] + SkillLinkID)]);
         }
@@ -138,16 +168,30 @@
         }
         else
         {
+            //NSLog(@"ACTIVATE SKILL");
+            
+            [linkView removeFromSuperview];
+            
             SkillLinkView *tmpView = [[SkillLinkView alloc] initWithFrame:CGRectZero
                                                              andStartNode:[self.skillNodes objectForKey:[[self.skillLinks objectAtIndex:[linkIDX intValue]] objectAtIndex:0]]
                                                                andEndNode:[self.skillNodes objectForKey:[[self.skillLinks objectAtIndex:[linkIDX intValue]] objectAtIndex:1]]
-                                                              andFullSize:self.frame.size];
-            tmpView.tag = ([linkIDX intValue] + SkillLinkID);
+                                                              andFullSize:self.frame.size
+                                                                 andState:kActive];
+            
+            UIImage *OverlayTmp = [[UIImage alloc] initWithCGImage:[[tmpView capture] CGImage]
+                                                             scale:ImgScale
+                                                       orientation:UIImageOrientationUp];
+            
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:OverlayTmp];
+            imageView.center = CGPointMake(tmpView.frame.origin.x, tmpView.frame.origin.y);
+            
+            
+            imageView.tag = ([linkIDX intValue] + SkillLinkID);
             runOnMainQueueWithoutDeadlocking(^{
 
-                [self addSubview:tmpView];
+                [self addSubview:imageView];
             
-                [tmpView activate];
+                //[tmpView activate];
             });
             //NSLog(@"linkView ac %d %@", [linkIDX intValue] + SkillLinkID, [self viewWithTag:([linkIDX intValue] + SkillLinkID)]);
         }
@@ -169,15 +213,29 @@
         }
         else
         {
+            //NSLog(@"highlightLinks SKILL");
+
+            [linkView removeFromSuperview];
             
             SkillLinkView *tmpView = [[SkillLinkView alloc] initWithFrame:CGRectZero
                                                              andStartNode:[self.skillNodes objectForKey:[[self.skillLinks objectAtIndex:[linkIDX intValue]] objectAtIndex:0]]
                                                                andEndNode:[self.skillNodes objectForKey:[[self.skillLinks objectAtIndex:[linkIDX intValue]] objectAtIndex:1]]
-                                                              andFullSize:self.frame.size];
-            tmpView.tag = ([linkIDX intValue] + SkillLinkID);
-            runOnMainQueueWithoutDeadlocking(^{                
-                [self addSubview:tmpView];
-                [tmpView highlight];
+                                                              andFullSize:self.frame.size
+                                                                 andState:kHighLight];
+            
+            UIImage *OverlayTmp = [[UIImage alloc] initWithCGImage:[[tmpView capture] CGImage]
+                                                             scale:ImgScale
+                                                       orientation:UIImageOrientationUp];
+            
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:OverlayTmp];
+            imageView.center = CGPointMake(tmpView.frame.origin.x, tmpView.frame.origin.y);
+            
+            
+            imageView.tag = ([linkIDX intValue] + SkillLinkID);
+            
+            runOnMainQueueWithoutDeadlocking(^{
+                [self addSubview:imageView];
+                //[tmpView highlight];
             });
             
             //NSLog(@"linkView hl %d %@", [linkIDX intValue] + SkillLinkID, [self viewWithTag:([linkIDX intValue] + SkillLinkID)]);
